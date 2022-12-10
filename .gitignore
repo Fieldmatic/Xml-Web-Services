@@ -4,6 +4,11 @@
 # Log file
 *.log
 
+.idea
+.mvn
+mvnw
+mvnw.cmd
+
 # BlueJ files
 *.ctxt
 

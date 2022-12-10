@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ks="http://www.xml.tim14.rs/korisnici"
+    xsi:schemaLocation="http://www.xml.tim14.rs/autorska_prava ../../tim14/data/a-1.xsd">
+    <podnosilac xsi:type="ks:TPravno_Lice">
+        <adresa xmlns="http://www.xml.tim14.rs/korisnici">
+            <mesto>Bijeljina</mesto>
+            <postanski_broj>76300</postanski_broj>
+            <ulica>Nikole Tesle</ulica>
+            <broj>10</broj>
+        </adresa>
+        <broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38165656426</broj_mobilnog_telefona>
+        <email xmlns="http://www.xml.tim14.rs/korisnici">milic@gmail.com</email>
+        <ks:poslovno_ime>MILIC-PROM</ks:poslovno_ime>
+    </podnosilac>
+    <punomocnik>
+        <ks:puno_ime>
+            <ks:ime>Mile</ks:ime>
+            <ks:prezime>Milic</ks:prezime>
+        </ks:puno_ime>
+        <ks:adresa>
+            <ks:mesto>Bijeljina</ks:mesto>
+            <ks:postanski_broj>76300</ks:postanski_broj>
+            <ks:ulica>Nikole Tesle</ks:ulica>
+            <ks:broj>11</ks:broj>
+        </ks:adresa>
+    </punomocnik>
+    <autorsko_delo>
+        <naslov_autorskog_dela>Covek po imenu Ive</naslov_autorskog_dela>
+        <vrsta_autorskog_dela>knjizevno_delo</vrsta_autorskog_dela>
+        <forma_zapisa>stampani_tekst</forma_zapisa>
+        <podaci_o_autoru>
+            <autor>
+                <licni_podaci>
+                    <ks:adresa>
+                        <ks:mesto>Novi Sad</ks:mesto>
+                        <ks:postanski_broj>21000</ks:postanski_broj>
+                        <ks:ulica>Dr Ivana Ribara</ks:ulica>
+                        <ks:broj>5</ks:broj>
+                    </ks:adresa>
+                    <ks:puno_ime>
+                        <ks:ime>Nikola</ks:ime>
+                        <ks:prezime>Stevanovic</ks:prezime>
+                    </ks:puno_ime>
+                    <ks:drzavljanstvo>
+                        <ks:tip_drzavljanstva>domace_drzavljanstvo</ks:tip_drzavljanstva>
+                        <ks:jmbg>3112999185855</ks:jmbg>
+                        <ks:broj_pasosa></ks:broj_pasosa>
+                    </ks:drzavljanstvo>
+                </licni_podaci>
+                <anonimni_autor>false</anonimni_autor>
+            </autor>
+        </podaci_o_autoru>
+        <izvorno_autorsko_delo>
+            <naslov_izvornog_autorskog_dela>Covek po imenu Uve</naslov_izvornog_autorskog_dela>
+            <autor_izvornog_autorskog_dela>
+                <licni_podaci>
+                    <ks:puno_ime>
+                        <ks:ime>Fredrik</ks:ime>
+                        <ks:prezime>Bakman</ks:prezime>
+                    </ks:puno_ime>
+                </licni_podaci>
+                <anonimni_autor>false</anonimni_autor>
+            </autor_izvornog_autorskog_dela>
+        </izvorno_autorsko_delo>
+        <stvoreno_u_radnom_odnosu>true</stvoreno_u_radnom_odnosu>
+        <nacin_koriscenja_autorskog_dela>da se koristi</nacin_koriscenja_autorskog_dela>
+        <primer_autorskog_dela>
+            <putanja_do_primera>data/primer1.pdf</putanja_do_primera>
+            <tip_primera>slika</tip_primera>
+        </primer_autorskog_dela>
+        <opis_autorskog_dela>
+            <putanja_do_opisa>data/opis1.pdf</putanja_do_opisa>
+        </opis_autorskog_dela>
+    </autorsko_delo>
+</zahtev_za_autorska_prava>
