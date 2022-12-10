@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta"
+    xmlns:ks="http://www.xml.tim14.rs/korisnici"
+    xmlns:p1="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta">
+    <xs:import namespace="http://www.xml.tim14.rs/korisnici" schemaLocation="korisnici.xsd"/>
+    <xs:element name="zahtev_za_priznanje_patenta">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="prijava" type="p1:TPrijava"/>
+                <xs:element name="pronalazak">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="naziv_pronalaska_rs" type="xs:string"/>
+                            <xs:element name="naziv_pronalaska_eng" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="podaci_o_podnosiocu">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="je_pronalazac" type="xs:boolean"/>
+                            <xs:element name="podnosilac" type="ks:TLice"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="podaci_o_pronalazacu">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ne_zeli_da_bude_naveden" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="putanja_do_izjave" type="xs:string"/>
+                            <xs:element minOccurs="0" name="tip_izjave" type="xs:string"/>
+                            <xs:element minOccurs="0" name="pronalazac" type="ks:TFizicko_Lice"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="podaci_o_punomocniku">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tip_punomocnika" type="p1:TTip_punomocnika"/>
+                            <xs:element name="punomocnik_za_prijem_pismena" type="xs:boolean"/>
+                            <xs:element name="punomocnik" type="ks:TLice"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="podaci_o_dostavljanju">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="nacin_dostavljanja" type="p1:TNacin_dostavljanja"> </xs:element>
+                            <xs:element minOccurs="0" ref="ks:adresa"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="osnovna_prijava" nillable="true" type="p1:TPrijava"/>
+                <xs:element name="zahtev_za_priznanje_prava_prvenstva_iz_ranijih_prijava">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="ranija_prijava"
+                                type="p1:TPrijava"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TPrijava">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="broj_prijave" type="xs:positiveInteger"/>
+            <xs:element minOccurs="1" name="datum_podnosenja" type="xs:date"/>
+            <xs:element minOccurs="0" name="datum_prijema" type="xs:date"/>
+            <xs:element minOccurs="0" name="oznaka_drzave">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-Z][A-Z]"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TTip_punomocnika">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="punomocnik_za_zastupanje"/>
+            <xs:enumeration value="zajednicki_predstavnik"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TNacin_dostavljanja">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="u_papirnoj_formi"/>
+            <xs:enumeration value="elektronskim_putem"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
