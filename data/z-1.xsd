@@ -17,38 +17,31 @@
                             <xs:element name="vrsta_znaka">
                                 <xs:complexType mixed="true">
                                     <xs:sequence minOccurs="0">
-                                        <xs:element name="druga_vrsta_znaka" type="xs:string"> </xs:element>
+                                        <xs:element name="druga_vrsta_znaka" type="xs:string">
+                                        </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="vrsta_znaka" type="z1:TVrsta_znaka"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="izgled_znaka" type="xs:string"/>
-                            <xs:element name="boje_znaka">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="boja_znaka" type="xs:string"
-                                            maxOccurs="unbounded"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="boje_znaka" type="xs:string"
+                                />
+                            </xs:sequence>
                             <xs:element minOccurs="0" name="transliteracija_znaka" type="xs:string"/>
                             <xs:element minOccurs="0" name="prevod_znaka" type="xs:string"/>
                             <xs:element name="opis_znaka" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="klase_robe_i_usluga">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="klasa_robe_ili_usluge" type="z1:TKlasa_robe"
-                                maxOccurs="45"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:sequence>
+                    <xs:element name="klase_robe_ili_usluge" type="z1:TKlasa_robe" maxOccurs="45"/>
+                </xs:sequence>
                 <xs:element name="pravo_prvenstva">
                     <xs:complexType>
                         <xs:sequence minOccurs="0">
-                            <xs:element minOccurs="0" name="osnov_prava_prvenstva" type="xs:string"/>
+                            <xs:element minOccurs="0" name="osnov_prava_prvenstva" type="xs:string"
+                            />
                         </xs:sequence>
                         <xs:attribute name="zatrazeno_pravo_prvenstva" type="xs:boolean"
                             use="required"/>
@@ -72,9 +65,12 @@
                             <xs:element name="punomocje" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="generalno_punomocje" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="naknadno_punomocje" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije"
+                                type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog"
+                                minOccurs="0"/>
+                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"
+                            />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
