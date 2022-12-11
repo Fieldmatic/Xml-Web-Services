@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 	"naslovAutorskogDela",
 	"vrstaAutorskogDela",
 	"formaZapisa",
-	"podaciOAutoru",
+	"podaciOAutorima",
 	"izvornoAutorskoDelo",
 	"stvorenoURadnomOdnosu",
 	"nacinKoriscenjaAutorskogDela",
@@ -25,8 +25,8 @@ public class AutorskoDelo {
 	protected TVrstaAutorskogDela vrstaAutorskogDela;
 	@XmlElement(name = "forma_zapisa", required = true)
 	protected TFormaZapisa formaZapisa;
-	@XmlElement(name = "podaci_o_autoru", required = true)
-	protected PodaciOAutoru podaciOAutoru;
+	@XmlElement(name = "podaci_o_autorima", required = true)
+	protected PodaciOAutorima podaciOAutorima;
 	@XmlElement(name = "izvorno_autorsko_delo")
 	protected IzvornoAutorskoDelo izvornoAutorskoDelo;
 	@XmlElement(name = "stvoreno_u_radnom_odnosu")
@@ -62,12 +62,12 @@ public class AutorskoDelo {
 		this.formaZapisa = value;
 	}
 
-	public PodaciOAutoru getPodaciOAutoru() {
-		return podaciOAutoru;
+	public PodaciOAutorima getPodaciOAutoru() {
+		return podaciOAutorima;
 	}
 
-	public void setPodaciOAutoru(PodaciOAutoru value) {
-		this.podaciOAutoru = value;
+	public void setPodaciOAutoru(PodaciOAutorima value) {
+		this.podaciOAutorima = value;
 	}
 
 	public IzvornoAutorskoDelo getIzvornoAutorskoDelo() {
@@ -116,7 +116,7 @@ public class AutorskoDelo {
 		sb.append("\n\t\tNaslov autorskog dela: '").append(naslovAutorskogDela).append('\'');
 		sb.append("\n\t\tVrsta autorskog dela: ").append(vrstaAutorskogDela);
 		sb.append("\n\t\tForma zapisa: ").append(formaZapisa);
-		sb.append("\n\t\tAutori: ").append(podaciOAutoru);
+		sb.append("\n\t\tAutori: ").append(podaciOAutorima);
 		sb.append("\n\t\tIzvorno autorsko delo: ").append(izvornoAutorskoDelo);
 		sb.append("\n\t\tStvoreno u radnom odnosu: ").append(stvorenoURadnomOdnosu);
 		sb.append("\n\t\tNacin koriscenja autorskog dela: '").append(nacinKoriscenjaAutorskogDela).append('\'');

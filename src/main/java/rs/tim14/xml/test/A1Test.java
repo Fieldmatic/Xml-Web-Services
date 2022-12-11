@@ -30,10 +30,9 @@ public class A1Test {
 		try {
 			JaxbParser jaxbParser = new JaxbParser();
 			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./data/a-1.xsd");
-			//ZahtevZaPriznanjeZiga zahtev_z1 = jaxbParser.unmarshall("./data/z1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_ziga", "./data/z-1.xsd");
 			System.out.println(zahtev_a1);
+			System.out.println();
 			jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
-			//jaxbParser.marshall(zahtev_z1, "rs.tim14.xml.model.zahtev_za_priznanje_ziga");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (DatatypeConfigurationException | SAXException e) {

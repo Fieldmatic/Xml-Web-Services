@@ -21,7 +21,7 @@
                             <xs:element name="naslov_autorskog_dela" type="xs:string"/>
                             <xs:element name="vrsta_autorskog_dela" type="a1:TVrsta_autorskog_dela"/>
                             <xs:element name="forma_zapisa" type="a1:TForma_zapisa"/>
-                            <xs:element name="podaci_o_autoru">
+                            <xs:element name="podaci_o_autorima">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="autor" minOccurs="0" nillable="true"

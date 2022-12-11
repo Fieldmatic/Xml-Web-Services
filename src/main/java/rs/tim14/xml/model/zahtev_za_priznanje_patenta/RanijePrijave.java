@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
 	"ranijaPrijava"
 })
-public class ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava {
+public class RanijePrijave {
 
 	@XmlElement(name = "ranija_prijava")
 	protected List<TPrijava> ranijaPrijava;

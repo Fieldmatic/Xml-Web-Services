@@ -16,7 +16,7 @@ import rs.tim14.xml.model.korisnici.TFizickoLice;
 @XmlType(name = "", propOrder = {
 	"autor"
 })
-public class PodaciOAutoru {
+public class PodaciOAutorima {
 
 	@XmlElement(nillable = true)
 	protected List<TAutor> autor;

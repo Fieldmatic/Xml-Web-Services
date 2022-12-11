@@ -8,18 +8,11 @@
 
 package rs.tim14.xml.model.zahtev_za_priznanje_patenta;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import rs.tim14.xml.model.korisnici.Adresa;
-import rs.tim14.xml.model.korisnici.TFizickoLice;
-import rs.tim14.xml.model.korisnici.TLice;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -30,7 +23,7 @@ import rs.tim14.xml.model.korisnici.TLice;
     "podaciOPunomocniku",
     "podaciODostavljanju",
     "osnovnaPrijava",
-    "zahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava"
+    "ranijePrijave"
 })
 @XmlRootElement(name = "zahtev_za_priznanje_patenta")
 public class ZahtevZaPriznanjePatenta {
@@ -49,8 +42,8 @@ public class ZahtevZaPriznanjePatenta {
     protected PodaciODostavljanju podaciODostavljanju;
     @XmlElement(name = "osnovna_prijava", required = false)
     protected TPrijava osnovnaPrijava;
-    @XmlElement(name = "zahtev_za_priznanje_prava_prvenstva_iz_ranijih_prijava", required = true)
-    protected ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava zahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava;
+    @XmlElement(name = "ranije_prijave", required = true)
+    protected RanijePrijave ranijePrijave;
 
     public TPrijava getPrijava() {
         return prijava;
@@ -94,11 +87,11 @@ public class ZahtevZaPriznanjePatenta {
     public void setOsnovnaPrijava(TPrijava value) {
         this.osnovnaPrijava = value;
     }
-    public ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava getZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava() {
-        return zahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava;
+    public RanijePrijave getRanijePrijave() {
+        return ranijePrijave;
     }
-    public void setZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava(ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava value) {
-        this.zahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava = value;
+    public void setRanijePrijave(RanijePrijave value) {
+        this.ranijePrijave = value;
     }
 
     @Override
@@ -111,7 +104,7 @@ public class ZahtevZaPriznanjePatenta {
         sb.append("\n\tPodaci o punomocniku: ").append(podaciOPunomocniku);
         sb.append("\n\tPodaci o dostavljanju: ").append(podaciODostavljanju);
         sb.append("\n\tOsnovna prijava: ").append(osnovnaPrijava);
-        sb.append("\n\tZahtev za priznanje prava prvenstva iz ranijih prijava:").append(zahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava);
+        sb.append("\n\tZahtev za priznanje prava prvenstva iz ranijih prijava:").append(ranijePrijave);
         sb.append('}');
         return sb.toString();
     }

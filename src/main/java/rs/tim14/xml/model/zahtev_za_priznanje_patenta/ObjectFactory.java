@@ -64,8 +64,8 @@ public class ObjectFactory {
         return new PodaciODostavljanju();
     }
 
-    public ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava createZahtevZaPriznanjePatentaZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava() {
-        return new ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava();
+    public RanijePrijave createZahtevZaPriznanjePatentaZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava() {
+        return new RanijePrijave();
     }
 
     @XmlElementDecl(namespace = "http://www.xml.tim14.rs/zahtev_za_priznanje_patenta", name = "osnovna_prijava", scope = ZahtevZaPriznanjePatenta.class)

@@ -52,7 +52,7 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element minOccurs="0" name="osnovna_prijava" nillable="true" type="p1:TPrijava"/>
-                <xs:element name="zahtev_za_priznanje_prava_prvenstva_iz_ranijih_prijava">
+                <xs:element name="ranije_prijave">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="ranija_prijava"

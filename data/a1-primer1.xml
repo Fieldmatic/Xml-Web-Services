@@ -32,7 +32,7 @@
         <naslov_autorskog_dela>Covek po imenu Ive</naslov_autorskog_dela>
         <vrsta_autorskog_dela>knjizevno_delo</vrsta_autorskog_dela>
         <forma_zapisa>stampani_tekst</forma_zapisa>
-        <podaci_o_autoru>
+        <podaci_o_autorima>
             <autor>
                 <licni_podaci>
                     <ks:adresa>
@@ -53,7 +53,7 @@
                 </licni_podaci>
                 <anonimni_autor>false</anonimni_autor>
             </autor>
-        </podaci_o_autoru>
+        </podaci_o_autorima>
         <izvorno_autorsko_delo>
             <naslov_izvornog_autorskog_dela>Covek po imenu Uve</naslov_izvornog_autorskog_dela>
             <autor_izvornog_autorskog_dela>

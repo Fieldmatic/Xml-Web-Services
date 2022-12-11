@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
-import rs.tim14.xml.model.autorska_prava.PodaciOAutoru.TAutor;
+import rs.tim14.xml.model.autorska_prava.PodaciOAutorima.TAutor;
 
 @XmlRegistry
 public class ObjectFactory {
@@ -38,8 +38,8 @@ public class ObjectFactory {
         return new TAutor();
     }
 
-    public PodaciOAutoru createZahtevZaAutorskaPravaAutorskoDeloPodaciOAutoru() {
-        return new PodaciOAutoru();
+    public PodaciOAutorima createZahtevZaAutorskaPravaAutorskoDeloPodaciOAutoru() {
+        return new PodaciOAutorima();
     }
 
     public IzvornoAutorskoDelo createZahtevZaAutorskaPravaAutorskoDeloIzvornoAutorskoDelo() {

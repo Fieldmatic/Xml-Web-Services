@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import rs.tim14.xml.model.autorska_prava.PodaciOAutoru.TAutor;
+import rs.tim14.xml.model.autorska_prava.PodaciOAutorima.TAutor;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {

@@ -23,7 +23,7 @@ import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TNacinDostavljanja;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TPrijava;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TTipPunomocnika;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
-import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava;
+import rs.tim14.xml.model.zahtev_za_priznanje_patenta.RanijePrijave;
 
 public class P1Test {
 	public void test() {
@@ -31,6 +31,7 @@ public class P1Test {
 			JaxbParser jaxbParser = new JaxbParser();
 			ZahtevZaPriznanjePatenta zahtev_p1 = jaxbParser.unmarshall("./data/p1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_patenta", "./data/p-1.xsd");
 			System.out.println(zahtev_p1);
+			System.out.println();
 			jaxbParser.marshall(kreirajP1(), "rs.tim14.xml.model.zahtev_za_priznanje_patenta");
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -49,7 +50,7 @@ public class P1Test {
 		p1.setPodaciOPunomocniku(kreirajPodatkeOPunomocniku());
 		p1.setPodaciODostavljanju(kreirajPodatkeODostavljanju());
 		p1.setOsnovnaPrijava(kreirajOsnovnuPrijavu());
-		p1.setZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava(kreirajPrvenstvo());
+		p1.setRanijePrijave(kreirajPrvenstvo());
 
 		return p1;
 	}
@@ -106,8 +107,8 @@ public class P1Test {
 		return prijava;
 	}
 
-	private ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava kreirajPrvenstvo() {
-		ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava zahtev = new ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava();
+	private RanijePrijave kreirajPrvenstvo() {
+		RanijePrijave zahtev = new RanijePrijave();
 		List<TPrijava> ranijePrijave = new ArrayList<>();
 		TPrijava prijava = kreirajOsnovnuPrijavu();
 		prijava.setOznakaDrzave("RS");
