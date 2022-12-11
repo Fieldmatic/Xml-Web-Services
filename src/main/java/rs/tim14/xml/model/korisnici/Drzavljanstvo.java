@@ -14,33 +14,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="tip_drzavljanstva" type="{http://www.xml.tim14.rs/korisnici}TTip_drzavljanstva"/>
- *         &lt;element name="jmbg">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.xml.tim14.rs/korisnici}TJmbg">
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="broj_pasosa" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "tipDrzavljanstva",
@@ -56,77 +29,32 @@ public class Drzavljanstvo {
     protected String jmbg;
     @XmlElement(name = "broj_pasosa", required = true)
     protected String brojPasosa;
-
-    /**
-     * Gets the value of the tipDrzavljanstva property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TTipDrzavljanstva }
-     *     
-     */
     public TTipDrzavljanstva getTipDrzavljanstva() {
         return tipDrzavljanstva;
     }
-
-    /**
-     * Sets the value of the tipDrzavljanstva property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TTipDrzavljanstva }
-     *     
-     */
     public void setTipDrzavljanstva(TTipDrzavljanstva value) {
         this.tipDrzavljanstva = value;
     }
-
-    /**
-     * Gets the value of the jmbg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getJmbg() {
         return jmbg;
     }
-
-    /**
-     * Sets the value of the jmbg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setJmbg(String value) {
         this.jmbg = value;
     }
-
-    /**
-     * Gets the value of the brojPasosa property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getBrojPasosa() {
         return brojPasosa;
     }
-
-    /**
-     * Sets the value of the brojPasosa property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setBrojPasosa(String value) {
         this.brojPasosa = value;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer();
+        sb.append("{tipDrzavljanstva: ").append(tipDrzavljanstva);
+        if (!jmbg.isEmpty()) sb.append(", jmbg: '").append(jmbg).append('\'');
+        if (!brojPasosa.isEmpty()) sb.append(", brojPasosa: '").append(brojPasosa).append('\'');
+        sb.append("}");
+        return sb.toString();
+    }
 }

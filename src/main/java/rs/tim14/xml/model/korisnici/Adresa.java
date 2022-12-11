@@ -13,36 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="mesto">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;minLength value="1"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="postanski_broj" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="ulica" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="broj" type="{http://www.xml.tim14.rs/korisnici}TBroj_ulice"/>
- *         &lt;element name="drzava" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "mesto",
@@ -62,135 +32,46 @@ public class Adresa {
     @XmlElement(required = true)
     protected String broj;
     protected String drzava;
-
-    /**
-     * Gets the value of the mesto property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getMesto() {
         return mesto;
     }
-
-    /**
-     * Sets the value of the mesto property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setMesto(String value) {
         this.mesto = value;
     }
-
-    /**
-     * Gets the value of the postanskiBroj property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getPostanskiBroj() {
         return postanskiBroj;
     }
-
-    /**
-     * Sets the value of the postanskiBroj property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setPostanskiBroj(String value) {
         this.postanskiBroj = value;
     }
-
-    /**
-     * Gets the value of the ulica property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getUlica() {
         return ulica;
     }
-
-    /**
-     * Sets the value of the ulica property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setUlica(String value) {
         this.ulica = value;
     }
-
-    /**
-     * Gets the value of the broj property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getBroj() {
         return broj;
     }
-
-    /**
-     * Sets the value of the broj property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setBroj(String value) {
         this.broj = value;
     }
-
-    /**
-     * Gets the value of the drzava property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getDrzava() {
         return drzava;
     }
-
-    /**
-     * Sets the value of the drzava property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setDrzava(String value) {
         this.drzava = value;
     }
 
     @Override
     public String toString() {
-        return "Adresa{" +
-            "mesto='" + mesto + '\'' +
-            ", postanskiBroj='" + postanskiBroj + '\'' +
-            ", ulica='" + ulica + '\'' +
-            ", broj='" + broj + '\'' +
-            ", drzava='" + drzava + '\'' +
-            '}';
+        final StringBuffer sb = new StringBuffer("{");
+        sb.append("mesto: '").append(mesto).append('\'');
+        sb.append(", postanskiBroj: '").append(postanskiBroj).append('\'');
+        sb.append(", ulica: '").append(ulica).append('\'');
+        sb.append(", broj: '").append(broj).append('\'');
+        if (drzava != null) sb.append(", drzava: '").append(drzava).append('\'');
+        sb.append("}");
+        return sb.toString();
     }
 }

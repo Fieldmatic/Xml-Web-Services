@@ -2,7 +2,9 @@
 <zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ks="http://www.xml.tim14.rs/korisnici"
-    xsi:schemaLocation="http://www.xml.tim14.rs/autorska_prava ../../tim14/data/a-1.xsd">
+    xsi:schemaLocation="http://www.xml.tim14.rs/autorska_prava ../data/a-1.xsd"
+    datum_podnosenja="2022-12-01"
+    broj_prijave="1">
     <podnosilac xsi:type="ks:TPravno_Lice">
         <adresa xmlns="http://www.xml.tim14.rs/korisnici">
             <mesto>Bijeljina</mesto>

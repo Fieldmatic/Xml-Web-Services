@@ -12,27 +12,6 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for TForma_zapisa.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * <p>
- * <pre>
- * &lt;simpleType name="TForma_zapisa">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="rukopis"/>
- *     &lt;enumeration value="stampani_tekst"/>
- *     &lt;enumeration value="muzicka_partitura"/>
- *     &lt;enumeration value="zvucni_zapis"/>
- *     &lt;enumeration value="vizuelni_zapis"/>
- *     &lt;enumeration value="audiovizuelni_zapis"/>
- *     &lt;enumeration value="digitalna_forma"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
- * </pre>
- * 
- */
 @XmlType(name = "TForma_zapisa")
 @XmlEnum
 public enum TFormaZapisa {

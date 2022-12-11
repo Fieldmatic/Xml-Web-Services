@@ -33,81 +33,41 @@ public class ObjectFactory {
 
     private final static QName _ZahtevZaPriznanjePatentaOsnovnaPrijava_QNAME = new QName("http://www.xml.tim14.rs/zahtev_za_priznanje_patenta", "osnovna_prijava");
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rs.tim14.xml.zahtev_za_priznanje_patenta
-     * 
-     */
     public ObjectFactory() {
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta }
-     * 
-     */
     public ZahtevZaPriznanjePatenta createZahtevZaPriznanjePatenta() {
         return new ZahtevZaPriznanjePatenta();
     }
 
-    /**
-     * Create an instance of {@link TPrijava }
-     * 
-     */
     public TPrijava createTPrijava() {
         return new TPrijava();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.Pronalazak }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.Pronalazak createZahtevZaPriznanjePatentaPronalazak() {
-        return new ZahtevZaPriznanjePatenta.Pronalazak();
+    public Pronalazak createZahtevZaPriznanjePatentaPronalazak() {
+        return new Pronalazak();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.PodaciOPodnosiocu }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.PodaciOPodnosiocu createZahtevZaPriznanjePatentaPodaciOPodnosiocu() {
-        return new ZahtevZaPriznanjePatenta.PodaciOPodnosiocu();
+    public PodaciOPodnosiocu createZahtevZaPriznanjePatentaPodaciOPodnosiocu() {
+        return new PodaciOPodnosiocu();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.PodaciOPronalazacu }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.PodaciOPronalazacu createZahtevZaPriznanjePatentaPodaciOPronalazacu() {
-        return new ZahtevZaPriznanjePatenta.PodaciOPronalazacu();
+    public PodaciOPronalazacu createZahtevZaPriznanjePatentaPodaciOPronalazacu() {
+        return new PodaciOPronalazacu();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.PodaciOPunomocniku }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.PodaciOPunomocniku createZahtevZaPriznanjePatentaPodaciOPunomocniku() {
-        return new ZahtevZaPriznanjePatenta.PodaciOPunomocniku();
+    public PodaciOPunomocniku createZahtevZaPriznanjePatentaPodaciOPunomocniku() {
+        return new PodaciOPunomocniku();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.PodaciODostavljanju }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.PodaciODostavljanju createZahtevZaPriznanjePatentaPodaciODostavljanju() {
-        return new ZahtevZaPriznanjePatenta.PodaciODostavljanju();
+    public PodaciODostavljanju createZahtevZaPriznanjePatentaPodaciODostavljanju() {
+        return new PodaciODostavljanju();
     }
 
-    /**
-     * Create an instance of {@link ZahtevZaPriznanjePatenta.ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava }
-     * 
-     */
-    public ZahtevZaPriznanjePatenta.ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava createZahtevZaPriznanjePatentaZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava() {
-        return new ZahtevZaPriznanjePatenta.ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava();
+    public ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava createZahtevZaPriznanjePatentaZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava() {
+        return new ZahtevZaPriznanjePravaPrvenstvaIzRanijihPrijava();
     }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TPrijava }{@code >}}
-     * 
-     */
     @XmlElementDecl(namespace = "http://www.xml.tim14.rs/zahtev_za_priznanje_patenta", name = "osnovna_prijava", scope = ZahtevZaPriznanjePatenta.class)
     public JAXBElement<TPrijava> createZahtevZaPriznanjePatentaOsnovnaPrijava(TPrijava value) {
         return new JAXBElement<TPrijava>(_ZahtevZaPriznanjePatentaOsnovnaPrijava_QNAME, TPrijava.class, ZahtevZaPriznanjePatenta.class, value);

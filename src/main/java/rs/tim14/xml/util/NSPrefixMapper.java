@@ -33,7 +33,8 @@ public class NSPrefixMapper extends NamespacePrefixMapper {
 		//addMapping("http://www.xml.tim14.rs/korisnici", "ex4");
 		addMapping("http://www.w3.org/2001/XMLSchema-instance", "xsi");
 		addMapping("http://www.xml.tim14.rs/autorska_prava", "a1");
-		addMapping("http://www.xml.tim14.rs/zahtev_za_priznanje_patenta", "a1");
+		addMapping("http://www.xml.tim14.rs/zahtev_za_priznanje_patenta", "p1");
+		addMapping("http://www.xml.tim14.rs/zahtev_za_priznanje_ziga", "z1");
 		addMapping("http://www.xml.tim14.rs/korisnici", "ks");
 	}
 

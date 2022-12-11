@@ -9,6 +9,8 @@
 package rs.tim14.xml.model.zahtev_za_priznanje_patenta;
 
 import java.math.BigInteger;
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,35 +18,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
-/**
- * <p>Java class for TPrijava complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="TPrijava">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="broj_prijave" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
- *         &lt;element name="datum_podnosenja" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="datum_prijema" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
- *         &lt;element name="oznaka_drzave" minOccurs="0">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="[A-Z][A-Z]"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPrijava", propOrder = {
     "brojPrijave",
@@ -59,116 +32,53 @@ public class TPrijava {
     protected BigInteger brojPrijave;
     @XmlElement(name = "datum_podnosenja", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar datumPodnosenja;
+    protected Date datumPodnosenja;
     @XmlElement(name = "datum_prijema")
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar datumPrijema;
+    protected Date datumPrijema;
     @XmlElement(name = "oznaka_drzave")
     protected String oznakaDrzave;
 
-    /**
-     * Gets the value of the brojPrijave property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
     public BigInteger getBrojPrijave() {
         return brojPrijave;
     }
 
-    /**
-     * Sets the value of the brojPrijave property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
     public void setBrojPrijave(BigInteger value) {
         this.brojPrijave = value;
     }
 
-    /**
-     * Gets the value of the datumPodnosenja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public XMLGregorianCalendar getDatumPodnosenja() {
+    public Date getDatumPodnosenja() {
         return datumPodnosenja;
     }
 
-    /**
-     * Sets the value of the datumPodnosenja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setDatumPodnosenja(XMLGregorianCalendar value) {
+    public void setDatumPodnosenja(Date value) {
         this.datumPodnosenja = value;
     }
 
-    /**
-     * Gets the value of the datumPrijema property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public XMLGregorianCalendar getDatumPrijema() {
+    public Date getDatumPrijema() {
         return datumPrijema;
     }
 
-    /**
-     * Sets the value of the datumPrijema property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setDatumPrijema(XMLGregorianCalendar value) {
+    public void setDatumPrijema(Date value) {
         this.datumPrijema = value;
     }
 
-    /**
-     * Gets the value of the oznakaDrzave property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getOznakaDrzave() {
         return oznakaDrzave;
     }
 
-    /**
-     * Sets the value of the oznakaDrzave property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setOznakaDrzave(String value) {
         this.oznakaDrzave = value;
     }
 
     @Override
     public String toString() {
-        return "TPrijava{" +
-            "brojPrijave=" + brojPrijave +
-            ", datumPodnosenja=" + datumPodnosenja +
-            ", datumPrijema=" + datumPrijema +
-            ", oznakaDrzave='" + oznakaDrzave + '\'' +
-            '}';
+        final StringBuffer sb = new StringBuffer("{");
+        sb.append("broj prijave: ").append(brojPrijave);
+        if (datumPodnosenja != null) sb.append(", datum podnosenja: ").append(datumPodnosenja);
+        if (datumPrijema != null) sb.append(", datum prijema: ").append(datumPrijema);
+        if (oznakaDrzave != null) sb.append(", oznaka drzave:'").append(oznakaDrzave).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

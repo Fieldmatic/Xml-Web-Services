@@ -12,22 +12,6 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for TTip_drzavljanstva.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * <p>
- * <pre>
- * &lt;simpleType name="TTip_drzavljanstva">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="domace_drzavljanstvo"/>
- *     &lt;enumeration value="strano_drzavljanstvo"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
- * </pre>
- * 
- */
 @XmlType(name = "TTip_drzavljanstva")
 @XmlEnum
 public enum TTipDrzavljanstva {

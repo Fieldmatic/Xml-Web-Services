@@ -16,29 +16,6 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for TLice complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="TLice">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{http://www.xml.tim14.rs/korisnici}adresa" minOccurs="0"/>
- *         &lt;element name="broj_mobilnog_telefona" type="{http://www.xml.tim14.rs/korisnici}TBroj_telefona" minOccurs="0"/>
- *         &lt;element name="broj_faksa" type="{http://www.xml.tim14.rs/korisnici}TBroj_telefona" minOccurs="0"/>
- *         &lt;element name="email" type="{http://www.xml.tim14.rs/korisnici}TEmail" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TLice", propOrder = {
     "adresa",
@@ -60,101 +37,37 @@ public abstract class TLice {
     protected JAXBElement<String> brojFaksa;
     @XmlElementRef(name = "email", namespace = "http://www.xml.tim14.rs/korisnici", type = JAXBElement.class, required = false)
     protected JAXBElement<String> email;
-
-    /**
-     * Gets the value of the adresa property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Adresa }
-     *     
-     */
     public Adresa getAdresa() {
         return adresa;
     }
-
-    /**
-     * Sets the value of the adresa property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Adresa }
-     *     
-     */
     public void setAdresa(Adresa value) {
         this.adresa = value;
     }
-
-    /**
-     * Gets the value of the brojMobilnogTelefona property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public JAXBElement<String> getBrojMobilnogTelefona() {
         return brojMobilnogTelefona;
     }
-
-    /**
-     * Sets the value of the brojMobilnogTelefona property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public void setBrojMobilnogTelefona(JAXBElement<String> value) {
         this.brojMobilnogTelefona = value;
     }
-
-    /**
-     * Gets the value of the brojFaksa property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public JAXBElement<String> getBrojFaksa() {
         return brojFaksa;
     }
-
-    /**
-     * Sets the value of the brojFaksa property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public void setBrojFaksa(JAXBElement<String> value) {
         this.brojFaksa = value;
     }
-
-    /**
-     * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public JAXBElement<String> getEmail() {
         return email;
     }
-
-    /**
-     * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link String }{@code >}
-     *     
-     */
     public void setEmail(JAXBElement<String> value) {
         this.email = value;
     }
 
+    public String toString(String prefix) {
+        final StringBuffer sb = new StringBuffer();
+        if (adresa != null) sb.append("\n").append(prefix).append("Adresa: ").append(adresa);
+        if (brojMobilnogTelefona != null) sb.append("\n").append(prefix).append("Broj mobilnog telefona: ").append(brojMobilnogTelefona.getValue());
+        if (brojFaksa != null) sb.append("\n").append(prefix).append("Broj faksa: ").append(brojFaksa.getValue());
+        if (email != null) sb.append("\n").append(prefix).append("Email: ").append(email.getValue());
+        return sb.toString();
+    }
 }

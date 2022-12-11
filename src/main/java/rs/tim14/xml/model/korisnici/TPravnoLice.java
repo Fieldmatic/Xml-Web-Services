@@ -13,26 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for TPravno_Lice complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="TPravno_Lice">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.xml.tim14.rs/korisnici}TLice">
- *       &lt;sequence>
- *         &lt;element name="poslovno_ime" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPravno_Lice", propOrder = {
     "poslovnoIme"
@@ -43,39 +23,17 @@ public class TPravnoLice
 
     @XmlElement(name = "poslovno_ime", required = true)
     protected String poslovnoIme;
-
-    /**
-     * Gets the value of the poslovnoIme property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getPoslovnoIme() {
         return poslovnoIme;
     }
-
-    /**
-     * Sets the value of the poslovnoIme property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setPoslovnoIme(String value) {
         this.poslovnoIme = value;
     }
 
-    @Override
-    public String toString() {
-        return "TPravnoLice{" +
-            "poslovnoIme='" + poslovnoIme + '\'' +
-            ", adresa=" + adresa +
-            ", brojMobilnogTelefona=" + brojMobilnogTelefona +
-            ", brojFaksa=" + brojFaksa +
-            ", email=" + email +
-            '}';
+    public String toString(String prefix) {
+        final StringBuffer sb = new StringBuffer();
+        sb.append("\n").append(prefix).append("Poslovno ime: '").append(poslovnoIme).append('\'');
+        sb.append(super.toString(prefix));
+        return sb.toString();
     }
 }

@@ -118,5 +118,4 @@ public class ObjectFactory {
     public JAXBElement<String> createTLiceBrojMobilnogTelefona(String value) {
         return new JAXBElement<String>(_TLiceBrojMobilnogTelefona_QNAME, String.class, TLice.class, value);
     }
-
 }
