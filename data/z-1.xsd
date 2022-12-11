@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga"
+    xmlns:ks="http://www.xml.tim14.rs/korisnici"
+    xmlns:z1="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga">
+    <xs:import namespace="http://www.xml.tim14.rs/korisnici" schemaLocation="korisnici.xsd"/>
+    <xs:element name="zahtev_za_priznanje_ziga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="podnosilac" type="ks:TLice"/>
+                <xs:element name="punomocnik" type="ks:TLice"/>
+                <xs:element minOccurs="0" name="zajednicki_predstavnik" type="ks:TLice"/>
+                <xs:element name="vrsta_ziga" type="z1:TVrsta_ziga"/>
+                <xs:element name="znak">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="vrsta_znaka">
+                                <xs:complexType mixed="true">
+                                    <xs:sequence minOccurs="0">
+                                        <xs:element name="druga_vrsta_znaka" type="xs:string"> </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="vrsta_znaka" type="z1:TVrsta_znaka"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="izgled_znaka" type="xs:string"/>
+                            <xs:element name="boje_znaka">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="boja_znaka" type="xs:string"
+                                            maxOccurs="unbounded"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="transliteracija_znaka" type="xs:string"/>
+                            <xs:element minOccurs="0" name="prevod_znaka" type="xs:string"/>
+                            <xs:element name="opis_znaka" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="klase_robe_i_usluga">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="klasa_robe_ili_usluge" type="z1:TKlasa_robe"
+                                maxOccurs="45"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="pravo_prvenstva">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0">
+                            <xs:element minOccurs="0" name="osnov_prava_prvenstva" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:attribute name="zatrazeno_pravo_prvenstva" type="xs:boolean"
+                            use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="takse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="osnovna_taksa" type="z1:TTaksa"/>
+                            <xs:element name="taksa_za_klase" type="z1:TTaksa"/>
+                            <xs:element name="taksa_za_graficko_resenje" type="z1:TTaksa"/>
+                        </xs:sequence>
+                        <xs:attribute name="ukupna_vrednost" type="z1:TTaksa" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Prilozi_uz_zahtev">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="primerak_znaka" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="spisak_robe_i_usluga" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="punomocje" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="generalno_punomocje" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="naknadno_punomocje" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="broj_prijave" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="datum_podnosenja" type="xs:date" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="TVrsta_ziga">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="INDUVIDUALNI"/>
+            <xs:enumeration value="KOLEKTIVNI"/>
+            <xs:enumeration value="ZIG_GARANCIJE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TVrsta_znaka">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="VERBALNI"/>
+            <xs:enumeration value="GRAFICKI"/>
+            <xs:enumeration value="KOMBINOVANI"/>
+            <xs:enumeration value="TRODIMENZIONALNI"/>
+            <xs:enumeration value="DRUGI"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TKlasa_robe">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="45"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TTaksa">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TPrilog">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>
