@@ -1,8 +1,6 @@
 package rs.tim14.xml;
 
 import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
@@ -22,6 +20,7 @@ import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava.AutorskoDelo;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.MyDatatypeConverter;
 
 @SpringBootApplication
@@ -34,10 +33,11 @@ public class Tim14Application {
 			JaxbParser jaxbParser = new JaxbParser();
 			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./data/a-1.xsd");
 			ZahtevZaPriznanjePatenta zahtev_p1 = jaxbParser.unmarshall("./data/p1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_patenta", "./data/p-1.xsd");
-
+			ZahtevZaPriznanjeZiga zahtev_z1 = jaxbParser.unmarshall("./data/z1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_ziga", "./data/z-1.xsd");
 
 			System.out.println(zahtev_p1);
 			jaxbParser.marshall(kreirajA1Obrazac(), "rs.tim14.xml.model.autorska_prava");
+			jaxbParser.marshall(zahtev_z1, "rs.tim14.xml.model.zahtev_za_priznanje_ziga");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (DatatypeConfigurationException e) {
