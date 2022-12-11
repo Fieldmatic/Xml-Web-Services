@@ -436,6 +436,22 @@ public class ZahtevZaPriznanjeZiga {
         this.datumPodnosenja = value;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Zahtev za priznanje ziga: ");
+        sb.append("\n\tPodnosilac: ").append(podnosilac.toString("\t\t"));
+        sb.append("\n\tPunomocnik: ").append(punomocnik.toString("\t\t"));
+        if (zajednickiPredstavnik != null) sb.append("\n\tZajednicki predstavnik: ").append(zajednickiPredstavnik);
+        sb.append("\n\tVrsta ziga: ").append(vrstaZiga);
+        sb.append("\n\tZnak: ").append(znak);
+        sb.append("\n\tKlase robe ili usluge: ").append(klaseRobeIliUsluge);
+        sb.append("\n\tPravo prvenstva: ").append(pravoPrvenstva);
+        sb.append("\n\tTakse: ").append(takse);
+        sb.append("\n\tPrilozi uz zahtev: ").append(priloziUzZahtev);
+        sb.append("\n\tBroj prijave: ").append(brojPrijave);
+        sb.append("\n\tDatum podnosenja: ").append(datumPodnosenja);
+        return sb.toString();
+    }
 
     /**
      * <p>Java class for anonymous complex type.
@@ -508,6 +524,13 @@ public class ZahtevZaPriznanjeZiga {
             this.zatrazenoPravoPrvenstva = value;
         }
 
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer();
+            sb.append("\n\t\tOsnov prava prvenstva: '").append(osnovPravaPrvenstva).append('\'');
+            sb.append("\n\t\tZatrazeno pravo prvenstva: ").append(zatrazenoPravoPrvenstva);
+            return sb.toString();
+        }
     }
 
 
@@ -758,6 +781,19 @@ public class ZahtevZaPriznanjeZiga {
             this.dokazOUplatiTakse = value;
         }
 
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer();
+            sb.append("\n\t\tPrimerak znaka: '").append(primerakZnaka).append('\'');
+            sb.append("\n\t\tSpisak robe i usluga: '").append(spisakRobeIUsluga).append('\'');
+            sb.append("\n\t\tPunomocje: '").append(punomocje).append('\'');
+            sb.append("\n\t\tGeneralno punomocje: '").append(generalnoPunomocje).append('\'');
+            if (naknadnoPunomocje != null) sb.append("\n\t\tNaknadno punomocje: '").append(naknadnoPunomocje).append('\'');
+            if (aktiOKolektivnomZigIliZiguGarancije != null) sb.append("\n\t\tAkti o kolektivnom zigu ili zigu garancije: '").append(aktiOKolektivnomZigIliZiguGarancije).append('\'');
+            sb.append("\n\t\tDokaz o pravu prvenstva: '").append(dokazOPravuPrvenstva).append('\'');
+            sb.append("\n\t\tDokaz o uplati takse: '").append(dokazOUplatiTakse).append('\'');
+            return sb.toString();
+        }
     }
 
 
@@ -864,6 +900,15 @@ public class ZahtevZaPriznanjeZiga {
             this.ukupnaVrednost = value;
         }
 
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer();
+            sb.append("\n\t\tOsnovna taksa: ").append(osnovnaTaksa);
+            sb.append("\n\t\tTaksa za klase: ").append(taksaZaKlase);
+            sb.append("\n\t\tTaksa za graficko resenje: ").append(taksaZaGrafickoResenje);
+            sb.append("\n\t\tUkupna vrednost: ").append(ukupnaVrednost);
+            return sb.toString();
+        }
     }
 
 
@@ -1077,6 +1122,17 @@ public class ZahtevZaPriznanjeZiga {
             this.opisZnaka = value;
         }
 
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer();
+            sb.append("\n\t\tVrstaZnaka: ").append(vrstaZnaka);
+            sb.append("\n\t\tIzgled znaka: '").append(izgledZnaka).append('\'');
+            sb.append("\n\t\tBoje znaka: ").append(bojeZnaka);
+            if (transliteracijaZnaka != null) sb.append("\n\t\tTransliteracija znaka: '").append(transliteracijaZnaka).append('\'');
+            if (prevodZnaka != null) sb.append("\n\t\tPrevod znaka: '").append(prevodZnaka).append('\'');
+            sb.append("\n\t\tOpis znaka:'").append(opisZnaka).append('\'');
+            return sb.toString();
+        }
 
         /**
          * <p>Java class for anonymous complex type.
@@ -1164,6 +1220,13 @@ public class ZahtevZaPriznanjeZiga {
                 this.vrstaZnaka = value;
             }
 
+            @Override
+            public String toString() {
+                final StringBuffer sb = new StringBuffer();
+                sb.append("\n\t\t\tSadrzaj: ").append(content);
+                if (vrstaZnaka != null) sb.append("\n\t\t\tVrsta znaka=").append(vrstaZnaka);
+                return sb.toString();
+            }
         }
 
     }

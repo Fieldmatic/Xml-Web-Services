@@ -27,9 +27,9 @@ public class Z1Test {
 			ZahtevZaPriznanjeZiga zahtev_z1 = jaxbParser.unmarshall("./data/z1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_ziga", "./data/z-1.xsd");
 			System.out.println(zahtev_z1);
 			jaxbParser.marshall(kreirajZ1Obrazac(), "rs.tim14.xml.model.zahtev_za_priznanje_ziga");
-		} catch (JAXBException | DatatypeConfigurationException e) {
+		} catch (JAXBException e) {
 			e.printStackTrace();
-		} catch (SAXException e) {
+		} catch (SAXException | DatatypeConfigurationException e) {
 			throw new RuntimeException(e);
 		}
 	}
