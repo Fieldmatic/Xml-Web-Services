@@ -24,7 +24,16 @@
         <xs:complexContent>
             <xs:extension base="ks:TLice">
                 <xs:sequence>
-                    <xs:element name="poslovno_ime" type="xs:string"/>
+                    <xs:element name="poslovno_ime">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="property"/>
+                                    <xs:attribute name="datatype"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
