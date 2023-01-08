@@ -54,6 +54,21 @@ public class ExistDbManager {
 		}
 	}
 
+	public XMLResource load(String collectionUri, String documentId) throws Exception  {
+		openConnection();
+		Collection collection = null;
+		XMLResource resource =  null;
+		try {
+			collection = DatabaseManager.getCollection(AuthenticationUtilities.loadProperties().uri + collectionUri,
+				AuthenticationUtilities.loadProperties().user,
+				AuthenticationUtilities.loadProperties().password);
+			resource = (XMLResource) collection.getResource(documentId);
+		} catch (Exception e) {
+			closeConnection(collection, resource);
+		}
+		return resource;
+	}
+
 	private static Collection getOrCreateCollection(String collectionUri) throws XMLDBException, IOException {
 		return getOrCreateCollection(collectionUri, 0);
 	}
