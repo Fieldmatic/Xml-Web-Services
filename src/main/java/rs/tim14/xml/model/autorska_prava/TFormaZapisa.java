@@ -16,20 +16,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TFormaZapisa {
 
-    @XmlEnumValue("rukopis")
-    RUKOPIS("rukopis"),
-    @XmlEnumValue("stampani_tekst")
-    STAMPANI_TEKST("stampani_tekst"),
-    @XmlEnumValue("muzicka_partitura")
-    MUZICKA_PARTITURA("muzicka_partitura"),
-    @XmlEnumValue("zvucni_zapis")
-    ZVUCNI_ZAPIS("zvucni_zapis"),
-    @XmlEnumValue("vizuelni_zapis")
-    VIZUELNI_ZAPIS("vizuelni_zapis"),
-    @XmlEnumValue("audiovizuelni_zapis")
-    AUDIOVIZUELNI_ZAPIS("audiovizuelni_zapis"),
-    @XmlEnumValue("digitalna_forma")
-    DIGITALNA_FORMA("digitalna_forma");
+    @XmlEnumValue("рукопис")
+    RUKOPIS("рукопис"),
+    @XmlEnumValue("штампани текст")
+    STAMPANI_TEKST("штампани текст"),
+    @XmlEnumValue("музичка партитура")
+    MUZICKA_PARTITURA("музичка партитура"),
+    @XmlEnumValue("звучни запис")
+    ZVUCNI_ZAPIS("звучни запис"),
+    @XmlEnumValue("визуелни запис")
+    VIZUELNI_ZAPIS("визуелни запис"),
+    @XmlEnumValue("аудиовизуелни запис")
+    AUDIOVIZUELNI_ZAPIS("аудиовизуелни запис"),
+    @XmlEnumValue("дигитална форма")
+    DIGITALNA_FORMA("дигитална форма");
     private final String value;
 
     TFormaZapisa(String v) {

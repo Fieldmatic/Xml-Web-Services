@@ -16,12 +16,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TTipPrimera {
 
-    @XmlEnumValue("slika")
-    SLIKA("slika"),
-    @XmlEnumValue("video_zapis")
-    VIDEO_ZAPIS("video_zapis"),
-    @XmlEnumValue("audio_zapis")
-    AUDIO_ZAPIS("audio_zapis");
+    @XmlEnumValue("слика")
+    SLIKA("слика"),
+    @XmlEnumValue("видео запис")
+    VIDEO_ZAPIS("видео запис"),
+    @XmlEnumValue("аудио запис")
+    AUDIO_ZAPIS("аудио запис");
     private final String value;
 
     TTipPrimera(String v) {

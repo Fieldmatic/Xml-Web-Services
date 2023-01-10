@@ -66,7 +66,16 @@
     <xs:complexType name="TPrijava">
         <xs:sequence>
             <xs:element minOccurs="1" name="broj_prijave" type="xs:positiveInteger"/>
-            <xs:element minOccurs="1" name="datum_podnosenja" type="xs:date"/>
+            <xs:element minOccurs="1" name="datum_podnosenja" type="xs:date">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:positiveInteger">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
             <xs:element minOccurs="0" name="datum_prijema" type="xs:date"/>
             <xs:element minOccurs="0" name="oznaka_drzave">
                 <xs:simpleType>

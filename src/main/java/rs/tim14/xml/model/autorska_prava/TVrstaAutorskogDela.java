@@ -40,26 +40,26 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TVrstaAutorskogDela {
 
-    @XmlEnumValue("knjizevno_delo")
-    KNJIZEVNO_DELO("knjizevno_delo"),
-    @XmlEnumValue("racunarski_program")
-    RACUNARSKI_PROGRAM("racunarski_program"),
-    @XmlEnumValue("muzicko_delo")
-    MUZICKO_DELO("muzicko_delo"),
-    @XmlEnumValue("dramsko_delo")
-    DRAMSKO_DELO("dramsko_delo"),
-    @XmlEnumValue("filmsko_delo")
-    FILMSKO_DELO("filmsko_delo"),
-    @XmlEnumValue("likovno_delo")
-    LIKOVNO_DELO("likovno_delo"),
-    @XmlEnumValue("primenjeno_delo")
-    PRIMENJENO_DELO("primenjeno_delo"),
-    @XmlEnumValue("patenti")
-    PATENTI("patenti"),
-    @XmlEnumValue("naucna_teorija")
-    NAUCNA_TEORIJA("naucna_teorija"),
-    @XmlEnumValue("naucna_delatnost")
-    NAUCNA_DELATNOST("naucna_delatnost");
+    @XmlEnumValue("књижевно дело")
+    KNJIZEVNO_DELO("књижевно дело"),
+    @XmlEnumValue("рачунарски програм")
+    RACUNARSKI_PROGRAM("рачунарски програм"),
+    @XmlEnumValue("музичко дело")
+    MUZICKO_DELO("музичко дело"),
+    @XmlEnumValue("драмско дело")
+    DRAMSKO_DELO("драмско дело"),
+    @XmlEnumValue("филмско дело")
+    FILMSKO_DELO("филмско дело"),
+    @XmlEnumValue("ликовно дело")
+    LIKOVNO_DELO("ликовно дело"),
+    @XmlEnumValue("примењено дело")
+    PRIMENJENO_DELO("примењено дело"),
+    @XmlEnumValue("патенти")
+    PATENTI("патенти"),
+    @XmlEnumValue("научна теорија")
+    NAUCNA_TEORIJA("научна теорија"),
+    @XmlEnumValue("научна делатност")
+    NAUCNA_DELATNOST("научна делатност");
     private final String value;
 
     TVrstaAutorskogDela(String v) {

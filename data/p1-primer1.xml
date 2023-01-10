@@ -6,6 +6,7 @@
     <prijava>
         <broj_prijave>2</broj_prijave>
         <datum_podnosenja>2022-11-30</datum_podnosenja>
+        <datum_podnosenja property="pred:birthDate" datatype="xs:date">2022-11-30</datum_podnosenja>
     </prijava>
     <pronalazak>
         <naziv_pronalaska_rs>pronalazak_na_srpskom</naziv_pronalaska_rs>
