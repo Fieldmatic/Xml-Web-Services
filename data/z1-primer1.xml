@@ -39,13 +39,15 @@
     </punomocnik>
     <vrsta_ziga>INDUVIDUALNI</vrsta_ziga>
     <znak>
-        <vrsta_znaka>VERBALNI</vrsta_znaka>
+        <vrsta_znaka vrsta_znaka="DRUGI">druga vrsta znaka</vrsta_znaka>
         <izgled_znaka>putanja-do-izgleda-znaka-prvog-primera</izgled_znaka>
         <boje_znaka>roze</boje_znaka>
         <opis_znaka>Primer opisa znaka (šta god to bilo)</opis_znaka>
     </znak>
     <klase_robe_ili_usluge>10</klase_robe_ili_usluge>
     <klase_robe_ili_usluge>12</klase_robe_ili_usluge>
+    <klase_robe_ili_usluge>23</klase_robe_ili_usluge>
+    <klase_robe_ili_usluge>45</klase_robe_ili_usluge>
     <pravo_prvenstva zatrazeno_pravo_prvenstva="true">
         <osnov_prava_prvenstva>Građanin sa prioritetom</osnov_prava_prvenstva>
     </pravo_prvenstva>
