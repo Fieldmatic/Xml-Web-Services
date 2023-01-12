@@ -40,8 +40,7 @@
 			<body>
 				<div style="border-bottom: 1px solid black; margin-right: 0px; margin-left: 0px">
 					<div class="header">
-						<p style="">
-							ЗАВОД ЗА ИНТЕЛЕКТУАЛНУ СВОЈИНУ</p>
+						<p>ЗАВОД ЗА ИНТЕЛЕКТУАЛНУ СВОЈИНУ</p>
 						<p>ОБРАЗАЦ А-1</p>
 					</div>
 					<p>Београд, Кнегиње Љубице 5</p>
@@ -88,7 +87,7 @@
 
 				<div class="section">
 					3) Име, презиме и адреса пуномоћника, ако се пријава подноси преко пуномоћника:
-					<xsl:if test="a1:punomocnik">
+					<xsl:if test="a1:zahtev_za_autorska_prava/a1:punomocnik">
 						<div style="padding: 15px">
 							Име и презиме: <xsl:value-of select="//a1:punomocnik//ks:puno_ime//ks:ime"/>
 							<xsl:value-of select="//a1:punomocnik//ks:puno_ime//ks:prezime"/><br/>
