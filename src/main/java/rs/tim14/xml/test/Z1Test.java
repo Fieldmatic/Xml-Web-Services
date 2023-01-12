@@ -15,9 +15,7 @@ import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TFizickoLice;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
-import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TVrstaZiga;
-import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TVrstaZnaka;
-import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.*;
 import rs.tim14.xml.util.MyDatatypeConverter;
 
 public class Z1Test {
@@ -79,8 +77,8 @@ public class Z1Test {
 
 		zahtevZaPriznanjeZiga.setVrstaZiga(TVrstaZiga.ZIG_GARANCIJE);
 
-		ZahtevZaPriznanjeZiga.Znak znak = new ZahtevZaPriznanjeZiga.Znak();
-		ZahtevZaPriznanjeZiga.Znak.VrstaZnaka vrstaZnaka = new ZahtevZaPriznanjeZiga.Znak.VrstaZnaka();
+		Znak znak = new Znak();
+		VrstaZnaka vrstaZnaka = new VrstaZnaka();
 		vrstaZnaka.setVrstaZnaka(TVrstaZnaka.TRODIMENZIONALNI);
 		znak.setVrstaZnaka(vrstaZnaka);
 
@@ -96,11 +94,11 @@ public class Z1Test {
 
 		zahtevZaPriznanjeZiga.getKlaseRobeIliUsluge().add(1);
 
-		ZahtevZaPriznanjeZiga.PravoPrvenstva pravoPrvenstva = new ZahtevZaPriznanjeZiga.PravoPrvenstva();
+		PravoPrvenstva pravoPrvenstva = new PravoPrvenstva();
 		pravoPrvenstva.setZatrazenoPravoPrvenstva(false);
 		zahtevZaPriznanjeZiga.setPravoPrvenstva(pravoPrvenstva);
 
-		ZahtevZaPriznanjeZiga.Takse takse = new ZahtevZaPriznanjeZiga.Takse();
+		Takse takse = new Takse();
 		takse.setOsnovnaTaksa(1000);
 		takse.setTaksaZaGrafickoResenje(5000);
 		takse.setTaksaZaKlase(500);

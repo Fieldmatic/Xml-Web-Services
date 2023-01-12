@@ -49,52 +49,52 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZahtevZaPriznanjeZiga.Znak }
+     * Create an instance of {@link Znak }
      * 
      */
-    public ZahtevZaPriznanjeZiga.Znak createZahtevZaPriznanjeZigaZnak() {
-        return new ZahtevZaPriznanjeZiga.Znak();
+    public Znak createZahtevZaPriznanjeZigaZnak() {
+        return new Znak();
     }
 
     /**
-     * Create an instance of {@link ZahtevZaPriznanjeZiga.PravoPrvenstva }
+     * Create an instance of {@link PravoPrvenstva }
      * 
      */
-    public ZahtevZaPriznanjeZiga.PravoPrvenstva createZahtevZaPriznanjeZigaPravoPrvenstva() {
-        return new ZahtevZaPriznanjeZiga.PravoPrvenstva();
+    public PravoPrvenstva createZahtevZaPriznanjeZigaPravoPrvenstva() {
+        return new PravoPrvenstva();
     }
 
     /**
-     * Create an instance of {@link ZahtevZaPriznanjeZiga.Takse }
+     * Create an instance of {@link Takse }
      * 
      */
-    public ZahtevZaPriznanjeZiga.Takse createZahtevZaPriznanjeZigaTakse() {
-        return new ZahtevZaPriznanjeZiga.Takse();
+    public Takse createZahtevZaPriznanjeZigaTakse() {
+        return new Takse();
     }
 
     /**
-     * Create an instance of {@link ZahtevZaPriznanjeZiga.PriloziUzZahtev }
+     * Create an instance of {@link PriloziUzZahtev }
      * 
      */
-    public ZahtevZaPriznanjeZiga.PriloziUzZahtev createZahtevZaPriznanjeZigaPriloziUzZahtev() {
-        return new ZahtevZaPriznanjeZiga.PriloziUzZahtev();
+    public PriloziUzZahtev createZahtevZaPriznanjeZigaPriloziUzZahtev() {
+        return new PriloziUzZahtev();
     }
 
     /**
-     * Create an instance of {@link ZahtevZaPriznanjeZiga.Znak.VrstaZnaka }
+     * Create an instance of {@link VrstaZnaka }
      * 
      */
-    public ZahtevZaPriznanjeZiga.Znak.VrstaZnaka createZahtevZaPriznanjeZigaZnakVrstaZnaka() {
-        return new ZahtevZaPriznanjeZiga.Znak.VrstaZnaka();
+    public VrstaZnaka createZahtevZaPriznanjeZigaZnakVrstaZnaka() {
+        return new VrstaZnaka();
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://www.xml.tim14.rs/zahtev_za_priznanje_ziga", name = "druga_vrsta_znaka", scope = ZahtevZaPriznanjeZiga.Znak.VrstaZnaka.class)
+    @XmlElementDecl(namespace = "http://www.xml.tim14.rs/zahtev_za_priznanje_ziga", name = "druga_vrsta_znaka", scope = VrstaZnaka.class)
     public JAXBElement<String> createZahtevZaPriznanjeZigaZnakVrstaZnakaDrugaVrstaZnaka(String value) {
-        return new JAXBElement<String>(_ZahtevZaPriznanjeZigaZnakVrstaZnakaDrugaVrstaZnaka_QNAME, String.class, ZahtevZaPriznanjeZiga.Znak.VrstaZnaka.class, value);
+        return new JAXBElement<String>(_ZahtevZaPriznanjeZigaZnakVrstaZnakaDrugaVrstaZnaka_QNAME, String.class, VrstaZnaka.class, value);
     }
 
 }
