@@ -11,6 +11,7 @@ import javax.xml.datatype.DatatypeFactory;
 
 import org.xml.sax.SAXException;
 
+import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
@@ -31,11 +32,17 @@ public class Z1Test {
 			System.out.println();
 			jaxbParser.marshall(kreirajZ1Obrazac(), "rs.tim14.xml.model.zahtev_za_priznanje_ziga");
 
-			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
 			final String inputFilePath = "data/z1-primer1.xml";
-			final String xslFilePath = "data/z1_fo.xsl";
-			final String outputFilePath = "data/z1.pdf";
-			xslfoTransformer.generatePDF(inputFilePath, xslFilePath, outputFilePath);
+			final String outputFilePath = "data/result/z1";
+			HTMLTransformer htmlTransformer = new HTMLTransformer();
+			final String xslFilePath = "data/xsl/z1.xsl";
+
+			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
+
+			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+			final String xslfoFilePath = "data/xsl_fo/z1_fo.xsl";
+
+			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (SAXException | DatatypeConfigurationException e) {
