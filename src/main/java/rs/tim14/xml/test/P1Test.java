@@ -1,5 +1,7 @@
 package rs.tim14.xml.test;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +13,7 @@ import javax.xml.namespace.QName;
 
 import org.xml.sax.SAXException;
 
+import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
@@ -24,18 +27,31 @@ import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TPrijava;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TTipPunomocnika;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.RanijePrijave;
+import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 public class P1Test {
 	public void test() {
 		try {
-			JaxbParser jaxbParser = new JaxbParser();
-			ZahtevZaPriznanjePatenta zahtev_p1 = jaxbParser.unmarshall("./data/p1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_patenta", "./data/p-1.xsd");
-			System.out.println(zahtev_p1);
-			System.out.println();
-			jaxbParser.marshall(kreirajP1(), "rs.tim14.xml.model.zahtev_za_priznanje_patenta");
+//			JaxbParser jaxbParser = new JaxbParser();
+//			ZahtevZaPriznanjePatenta zahtev_p1 = jaxbParser.unmarshall("./data/p1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_patenta", "./data/p-1.xsd");
+//			System.out.println(zahtev_p1);
+//			System.out.println();
+//			jaxbParser.marshall(kreirajP1(), "rs.tim14.xml.model.zahtev_za_priznanje_patenta");
+
+			final String inputFilePath = "data/p1-primer1.xml";
+			final String outputFilePath = "data/result/p1";
+			HTMLTransformer htmlTransformer = new HTMLTransformer();
+			final String xslFilePath = "data/xsl/p1.xsl";
+
+			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
+
+			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+			final String xslfoFilePath = "data/xsl_fo/p1_fo.xsl";
+
+			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
 		} catch (JAXBException e) {
 			e.printStackTrace();
-		} catch (SAXException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}

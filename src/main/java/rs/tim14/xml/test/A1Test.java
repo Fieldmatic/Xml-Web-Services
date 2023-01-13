@@ -1,5 +1,7 @@
 package rs.tim14.xml.test;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import javax.xml.namespace.QName;
 
 import org.xml.sax.SAXException;
 
+import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.AutorskoDelo;
 import rs.tim14.xml.model.autorska_prava.PrimerAutorskogDela;
@@ -23,6 +26,7 @@ import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
+import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 public class A1Test {
 
@@ -33,9 +37,21 @@ public class A1Test {
 			System.out.println(zahtev_a1);
 			System.out.println();
 			jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
+
+			final String inputFilePath = "data/a1-primer1.xml";
+			final String outputFilePath = "data/result/a1";
+			HTMLTransformer htmlTransformer = new HTMLTransformer();
+			final String xslFilePath = "data/xsl/a1.xsl";
+
+			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
+
+			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+			final String xslfoFilePath = "data/xsl_fo/a1_fo.xsl";
+
+			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
 		} catch (JAXBException e) {
 			e.printStackTrace();
-		} catch (DatatypeConfigurationException | SAXException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
