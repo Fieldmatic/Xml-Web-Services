@@ -15,15 +15,6 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-/**
- * Primer 4.
- * 
- * Primer demonstrira konverziju iz XML u objektni (unmarshalling),
- * a zatim iz objektnog u XML model (marshalling). Prilikom konverzije 
- * iz objektnog u XML model postavljaju se custom namespace prefiksi
- * koji su definisani "NSPrefixMapper" klasom.
- *  
- */
 public class JaxbParser {
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {

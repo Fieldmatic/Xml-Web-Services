@@ -2,7 +2,7 @@
 <zahtev_za_priznanje_ziga xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga"
                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                           xmlns:ks="http://www.xml.tim14.rs/korisnici"
-                          xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga file:/C:/Users/prijo/Desktop/Xml-Web-Services/data/z-1.xsd"
+                          xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga z-1.xsd"
                           broj_prijave="1"
                           datum_podnosenja="2022-12-12">
     <podnosilac xsi:type="ks:TFizicko_Lice">
