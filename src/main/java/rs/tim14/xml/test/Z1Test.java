@@ -1,5 +1,6 @@
 package rs.tim14.xml.test;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import javax.xml.datatype.DatatypeFactory;
 
 import org.xml.sax.SAXException;
 
+import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
@@ -19,6 +21,7 @@ import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TVrstaZiga;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TVrstaZnaka;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.MyDatatypeConverter;
+import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 public class Z1Test {
 	public void test() {
@@ -28,10 +31,26 @@ public class Z1Test {
 			System.out.println(zahtev_z1);
 			System.out.println();
 			jaxbParser.marshall(kreirajZ1Obrazac(), "rs.tim14.xml.model.zahtev_za_priznanje_ziga");
+
+			final String inputFilePath = "data/z1-primer1.xml";
+			final String outputFilePath = "data/result/z1";
+			HTMLTransformer htmlTransformer = new HTMLTransformer();
+			final String xslFilePath = "data/xsl/z1.xsl";
+
+			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
+
+			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+			final String xslfoFilePath = "data/xsl_fo/z1_fo.xsl";
+
+			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (SAXException | DatatypeConfigurationException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

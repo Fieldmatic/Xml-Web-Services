@@ -19,19 +19,19 @@
 
   <!-- default page-height and page-width, in case
        value is specified as auto -->
-  <default-page-settings height="11in" width="8.26in"/>
+
+  <default-page-settings height="11in" width="8.5in"/>
 
   <!-- Use file name nl_Bel instead of the default nl_BE -->
   <hyphenation-pattern lang="nl" country="BE">nl_Bel</hyphenation-pattern>
 
   <renderers>
     <renderer mime="application/pdf">
-      <fonts>
-        <auto-detect/>
-      </fonts>
+       <fonts>
+          <!-- automatically detect operating system installed fonts -->
+          <auto-detect/>
+       </fonts>
     </renderer>
   </renderers>
 
-
-  <!-- etc. etc..... -->
 </fop>
