@@ -111,10 +111,19 @@
 						<body>
 							<!-- Naziv pronalaska -->
 							<tr>
-								<td colspan="3" style="border-bottom:1px solid black;">
-									<p style="font-weight:770; margin:8px;">
+								<td colspan="3">
+									<p style="font-weight:770; margin:8px 0px 3px 8px;">
 										Поље број I - НАЗИВ ПРОНАЛАСКА
 									</p>
+								</td>
+							</tr>
+
+							<tr>
+								<td colspan="3" style="padding-left:8px; padding-bottom:8px; border-bottom:1px solid black">
+									<span>
+										* Назив проналаска треба да јасно и сажето изражава суштину проналаска и не сме да садржи измишљене или комерцијалне називе,
+										жигове, имена, шифре, уобичајене скраћенице за производе и сл.
+									</span>
 								</td>
 							</tr>
 
@@ -198,24 +207,25 @@
 											<xsl:value-of select="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:broj_faksa"/>
 										</p>
 									</p>
-									<p style="border-top: 1px solid black;">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p style="margin:5px 5px 0px 5px">Држављанство:
+										<xsl:if test="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:puno_ime">
+												<xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:tip_drzavljanstva"/><br/>
+												Јмбг: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:jmbg"/>;
+												Број пасоша: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:broj_pasosa"/><br/>
+										</xsl:if>
+									</p>
+								</td>
+								<td style="border-left: 1px solid black;">
+									<p>
 										<p style="margin:5px;">Е-пошта:</p>
 										<p style="margin:5px">
 											<xsl:value-of select="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:email"/>
 										</p>
 									</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<p style="margin:5px">Држављанство:</p>
-									<xsl:if test="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:puno_ime">
-										<p style="margin:12px">
-											Тип држаљанства: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:tip_drzavljanstva"/><br/>
-											Јмбг: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:jmbg"/><br/>
-											Број пасоша: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:broj_pasosa"/><br/>
-										</p>
-									</xsl:if>
 								</td>
 							</tr>
 						</body>
@@ -226,7 +236,7 @@
 							<!-- Pronalazac -->
 					<table class="center" style="border:2px solid black; border-collapse:collapse">
 						<body>
-							<tr style="border-top:2px solid black; border-bottom: 1px solid black">
+							<tr style="border-top:2px solid black;">
 								<td colspan="2" style="padding:8px">
 									<p style="font-weight:bold">
 										Поље број III - ПРОНАЛАЗАЧ
@@ -237,6 +247,22 @@
 										<p style="font-weight:500; color:red; text-align:center">Проналазач не жели да буде наведен у пријави</p>
 									</td>
 								</xsl:if>
+							</tr>
+
+							<tr>
+								<td colspan="3" style="padding-left:10px; padding-bottom:8px">
+									<p>
+										* Ако сви подносиоци пријаве нису и проналазачи, доставља се изјава подносилаца пријаве о основу стицања права на подношење
+										пријаве у односу на проналазаче који нису и подносиоци пријаве и у том случају у поље број III се уносе подаци о свим проналазачим
+									</p>
+								</td>
+							</tr>
+							<tr style="border-bottom:1px solid black">
+								<td colspan="3" style="padding-left:10px; padding-bottom: 8px">
+									<p>
+										*Ако проналазач не жели да буде наведен у пријави, потребно је доставити потписану изјаву проналазача да не жели да буде наведен.
+									</p>
+								</td>
 							</tr>
 
 							<tr>
@@ -296,7 +322,7 @@
 					<!-- Punomocnik -->
 					<table class="center" style="border:2px solid black; border-collapse: collapse">
 						<body>
-							<tr style="border-top:2px solid black; border-bottom: 1px solid black">
+							<tr style="border-top:2px solid black;">
 								<td style="padding:8px">
 									<p style="font-weight:bold">Поље број IV</p>
 								</td>
@@ -315,6 +341,30 @@
 										<p style="font-weight:bold; color:green">ПУНОМОЋНИК ЗА ПРИЈЕМ ПИСМЕНА</p>
 									</td>
 								</xsl:if>
+							</tr>
+
+							<tr>
+								<td colspan="3" style="padding-left:8px; padding-bottom:3px">
+									<p>
+										* Пуномоћник за заступање је лице које по овлашћењу подносиоца пријаве предузима радње у управном поступку у границама пуномоћја
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="padding-left:8px; padding-bottom:3px">
+									<p>
+										* Пуномоћник за пријем писмена је лице које је подносилац пријаве одредио као лице коме се упућују сва писмена насловљена на
+										подносиоца
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border-bottom:1px solid black; padding-left:8px; padding-bottom:8px">
+									<p>
+										* Заједничи преставник је подносилац пријаве кога су подносиоци пријаве, у случају да пријаву подноси више лица, одредили да иступа у
+										поступку пред органом ако подносиоци нису именовали заједничког пуномоћника за заступање
+									</p>
+								</td>
 							</tr>
 
 							<tr>
@@ -493,7 +543,7 @@
 							<xsl:for-each select="p1:zahtev_za_priznanje_patenta/p1:ranije_prijave/p1:ranija_prijava">
 								<tr>
 									<td>
-										<p style="margin: 10px; text-align: center">
+										<p style="text-align: center; margin: 10px">
 											<xsl:value-of select="p1:datum_podnosenja"/>
 										</p>
 									</td>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_priznanje_patenta xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ks="http://www.xml.tim14.rs/korisnici"
+    xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta p-1.xsd">
+    <prijava>
+        <broj_prijave>2</broj_prijave>
+        <datum_podnosenja>2022-11-30</datum_podnosenja>
+        <datum_prijema>2022-12-30</datum_prijema>
+        <datum_podnosenja property="pred:birthDate" datatype="xs:date">2022-11-30</datum_podnosenja>
+    </prijava>
+    <pronalazak>
+        <naziv_pronalaska_rs>pronalazak_na_srpskom</naziv_pronalaska_rs>
+        <naziv_pronalaska_eng>pronalazak_na_engleskom</naziv_pronalaska_eng>
+    </pronalazak>
+    <podaci_o_podnosiocu>
+        <je_pronalazac>false</je_pronalazac>
+        <podnosilac xsi:type="ks:TFizicko_Lice">
+            <ks:adresa xmlns="http://www.xml.tim14.rs/korisnici">
+                <mesto>Subotica</mesto>
+                <postanski_broj>24000</postanski_broj>
+                <ulica>Dragiše Mišovića</ulica>
+                <broj>30</broj>
+                <drzava>Srbija</drzava>
+            </ks:adresa>
+            <ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38166430250</ks:broj_mobilnog_telefona>
+            <ks:broj_faksa>055490900</ks:broj_faksa>
+            <ks:email xmlns="http://www.xml.tim14.rs/korisnici">prijovic.uros13@gmail.com</ks:email>
+            <ks:puno_ime>
+                <ks:ime>Uroš</ks:ime>
+                <ks:prezime>Prijović</ks:prezime>
+            </ks:puno_ime>
+            <ks:drzavljanstvo>
+                <ks:tip_drzavljanstva>домаће</ks:tip_drzavljanstva>
+                <ks:jmbg>3112999185655</ks:jmbg>
+                <ks:broj_pasosa>123123123</ks:broj_pasosa>
+            </ks:drzavljanstvo>
+        </podnosilac>
+    </podaci_o_podnosiocu>
+    <podaci_o_pronalazacu>
+        <ne_zeli_da_bude_naveden>false</ne_zeli_da_bude_naveden>
+        <pronalazac>
+            <ks:adresa>
+                <ks:mesto>Bijeljina</ks:mesto>
+                <ks:postanski_broj>76300</ks:postanski_broj>
+                <ks:ulica>Nikole Tesle</ks:ulica>
+                <ks:broj>11</ks:broj>
+            </ks:adresa>
+            <ks:broj_mobilnog_telefona>065908739</ks:broj_mobilnog_telefona>
+            <ks:broj_faksa>055133111</ks:broj_faksa>
+            <ks:email>lemy@gmail.com</ks:email>
+            <ks:puno_ime>
+                <ks:ime>Mile</ks:ime>
+                <ks:prezime>Milic</ks:prezime>
+            </ks:puno_ime>
+        </pronalazac>
+    </podaci_o_pronalazacu>
+    <podaci_o_punomocniku>
+        <tip_punomocnika>punomocnik_za_zastupanje</tip_punomocnika>
+        <punomocnik_za_prijem_pismena>true</punomocnik_za_prijem_pismena>
+        <punomocnik xsi:type="ks:TFizicko_Lice">
+            <ks:adresa>
+                <ks:mesto>Bijeljina</ks:mesto>
+                <ks:postanski_broj>76300</ks:postanski_broj>
+                <ks:ulica>Nikole Pasic</ks:ulica>
+                <ks:broj>11</ks:broj>
+            </ks:adresa>
+            <ks:broj_mobilnog_telefona>065908739</ks:broj_mobilnog_telefona>
+            <ks:broj_faksa>055133111</ks:broj_faksa>
+            <ks:email>rada@gmail.com</ks:email>
+            <ks:puno_ime>
+                <ks:ime>Radmila</ks:ime>
+                <ks:prezime>Milic</ks:prezime>
+            </ks:puno_ime>
+        </punomocnik>
+    </podaci_o_punomocniku>
+    <podaci_o_dostavljanju>
+        <nacin_dostavljanja>elektronskim_putem</nacin_dostavljanja>
+    </podaci_o_dostavljanju>
+    <osnovna_prijava>
+        <broj_prijave>4</broj_prijave>
+        <datum_podnosenja>2022-11-20</datum_podnosenja>
+    </osnovna_prijava>
+    <ranije_prijave>
+        <ranija_prijava>
+            <broj_prijave>4</broj_prijave>
+            <datum_podnosenja>2022-11-20</datum_podnosenja>
+        </ranija_prijava>
+    </ranije_prijave>
+</zahtev_za_priznanje_patenta>

@@ -98,11 +98,13 @@
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
-                                <fo:table-cell number-columns-spanned="2" padding="25px 0px 15px 5px">
-                                    <fo:block padding="15px">
+                                <fo:table-cell number-columns-spanned="2">
+                                    <fo:block margin="10px 0px 10px 20px">
                                         <xsl:if test="a1:zahtev_za_autorska_prava/a1:autorsko_delo/a1:podaci_o_autorima/a1:autor">
                                                 <xsl:for-each select="a1:zahtev_za_autorska_prava/a1:autorsko_delo/a1:podaci_o_autorima/a1:autor">
-                                                    - <xsl:value-of select="a1:pseudonim"/>
+                                                    <xsl:if test="a1:pseudonim">
+                                                        <xsl:value-of select="a1:pseudonim"/>
+                                                    </xsl:if>
                                                 </xsl:for-each>
                                         </xsl:if>
                                     </fo:block>
@@ -273,7 +275,7 @@
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="2" padding="15px 0px 15px 5px">
                                     <fo:block>
-                                        12) Прилози који се подносе уз захтев:
+                                        11) Прилози који се подносе уз захтев:
                                     </fo:block>
                                 </fo:table-cell>
                             </fo:table-row>

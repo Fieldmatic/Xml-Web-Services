@@ -78,9 +78,17 @@
 							<fo:table-body>
 								<!-- Naziv pronalaska -->
 								<fo:table-row>
-									<fo:table-cell number-columns-spanned="3" padding="8px 0px 8px 10px" border-bottom="1px solid black">
+									<fo:table-cell number-columns-spanned="3" padding="8px 0px 3px 10px">
 										<fo:block font-weight="bold">
 											Поље број I - <fo:inline>НАЗИВ ПРОНАЛАСКА</fo:inline>
+										</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								<fo:table-row>
+									<fo:table-cell number-columns-spanned="3" padding-left="10px" padding-bottom="8px" border-bottom="1px solid black">
+										<fo:block font-size="8">
+											* Назив проналаска треба да јасно и сажето изражава суштину проналаска и не сме да садржи измишљене или комерцијалне називе,
+											жигове, имена, шифре, уобичајене скраћенице за производе и сл.
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -158,30 +166,33 @@
 												<xsl:value-of select="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:broj_mobilnog_telefona"/>
 											</fo:block>
 										</fo:block>
-										<fo:block border-bottom="1px solid black" border-top="1px solid black">
+										<fo:block border-top="1px solid black">
 											<fo:block margin="5px">Број факса:</fo:block>
 											<fo:block margin="5px">
 												<xsl:value-of select="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:broj_faksa"/>
 											</fo:block>
 										</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								<fo:table-row>
+									<fo:table-cell number-columns-spanned="2">
+										<fo:block margin="5px">Држављанство:
+											<xsl:if test="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:puno_ime">
+													<xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:tip_drzavljanstva"/>
+													<fo:block margin-top="3px">
+														Јмбг: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:jmbg"/>;
+														Број пасоша: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:broj_pasosa"/>
+													</fo:block>
+											</xsl:if>
+										</fo:block>
+									</fo:table-cell>
+									<fo:table-cell border-left="1px solid black">
 										<fo:block margin="5px" >
 											<fo:block>Е-пошта:</fo:block>
 											<fo:block margin-top="5px">
 												<xsl:value-of select="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:email"/>
 											</fo:block>
 										</fo:block>
-									</fo:table-cell>
-								</fo:table-row>
-								<fo:table-row>
-									<fo:table-cell>
-										<fo:block margin="5px">Држављанство:</fo:block>
-										<xsl:if test="//p1:podaci_o_podnosiocu/p1:podnosilac//ks:puno_ime">
-											<fo:block margin="12px">
-												Тип држаљанства: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:tip_drzavljanstva"/><br/>
-												Јмбг: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:jmbg"/><br/>
-												Број пасоша: <xsl:value-of select="//p1:podaci_o_podnosiocu//p1:podnosilac//ks:drzavljanstvo//ks:broj_pasosa"/><br/>
-											</fo:block>
-										</xsl:if>
 									</fo:table-cell>
 								</fo:table-row>
 							</fo:table-body>
@@ -195,8 +206,8 @@
 							<fo:table-column column-width="33%"/>
 							<fo:table-column column-width="33%"/>
 							<fo:table-body>
-								<fo:table-row border-top="2px solid black" border-bottom="1px solid black">
-									<fo:table-cell number-columns-spanned="2" padding="8px 0px 8px 10px">
+								<fo:table-row border-top="2px solid black">
+									<fo:table-cell number-columns-spanned="2" padding="8px 0px 3px 10px">
 										<fo:block font-weight="bold">
 											Поље број III - <fo:inline>ПРОНАЛАЗАЧ</fo:inline>
 										</fo:block>
@@ -206,6 +217,22 @@
 											<fo:block font-weight="500" color="red" text-align="center">Проналазач не жели да буде наведен у пријави</fo:block>
 										</fo:table-cell>
 									</xsl:if>
+								</fo:table-row>
+
+								<fo:table-row>
+									<fo:table-cell number-columns-spanned="3" padding-left="10px" padding-bottom="8px">
+										<fo:block font-size="8">
+											* Ако сви подносиоци пријаве нису и проналазачи, доставља се изјава подносилаца пријаве о основу стицања права на подношење
+											пријаве у односу на проналазаче који нису и подносиоци пријаве и у том случају у поље број III се уносе подаци о свим проналазачим
+										</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								<fo:table-row border-bottom="1px solid black">
+									<fo:table-cell number-columns-spanned="3" padding-left="10px" padding-bottom="8px">
+										<fo:block font-size="8">
+											*Ако проналазач не жели да буде наведен у пријави, потребно је доставити потписану изјаву проналазача да не жели да буде наведен.
+										</fo:block>
+									</fo:table-cell>
 								</fo:table-row>
 
 								<fo:table-row>
@@ -238,21 +265,21 @@
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell number-columns-spanned="1" border="1px solid black">
-										<fo:block margin="8px">
+										<fo:block margin="5px">
 											<fo:block>Број телефона:</fo:block>
-											<fo:block>
+											<fo:block margin-top="5px">
 												<xsl:value-of select="//p1:podaci_o_pronalazacu/p1:pronalazac//ks:broj_mobilnog_telefona"/>
 											</fo:block>
 										</fo:block>
 										<fo:block border-bottom="1px solid black" border-top="1px solid black">
-											<fo:block margin="8px">Број факса:</fo:block>
-											<fo:block margin="8px">
+											<fo:block margin="5px">Број факса:</fo:block>
+											<fo:block margin="5px">
 												<xsl:value-of select="//p1:podaci_o_pronalazacu/p1:pronalazac//ks:broj_faksa"/>
 											</fo:block>
 										</fo:block>
-										<fo:block  margin="8px">
+										<fo:block  margin="5px">
 											<fo:block>Е-пошта:</fo:block>
-											<fo:block>
+											<fo:block margin-top="5px">
 												<xsl:value-of select="//p1:podaci_o_pronalazacu/p1:pronalazac//ks:email"/>
 											</fo:block>
 										</fo:block>
@@ -269,7 +296,7 @@
 							<fo:table-column column-width="33%"/>
 							<fo:table-column column-width="33%"/>
 							<fo:table-body>
-								<fo:table-row border-top="2px solid black" border-bottom="1px solid black">
+								<fo:table-row border-top="2px solid black">
 									<fo:table-cell number-columns-spanned="1" padding="8px">
 										<fo:block font-weight="bold">Поље број IV</fo:block>
 									</fo:table-cell>
@@ -288,6 +315,29 @@
 											<fo:block font-weight="bold" color="green">ПУНОМОЋНИК ЗА ПРИЈЕМ ПИСМЕНА</fo:block>
 										</fo:table-cell>
 									</xsl:if>
+								</fo:table-row>
+
+								<fo:table-row>
+									<fo:table-cell number-columns-spanned="3" padding-left="8px" padding-bottom="3px">
+										<fo:block font-size="8px">
+											* Пуномоћник за заступање је лице које по овлашћењу подносиоца пријаве предузима радње у управном поступку у границама пуномоћја
+										</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								<fo:table-row>
+									<fo:table-cell number-columns-spanned="3" padding-left="8px" padding-bottom="3px">
+										<fo:block font-size="8px">
+											* Пуномоћник за пријем писмена је лице које је подносилац пријаве одредио као лице коме се упућују сва писмена насловљена на
+											подносиоца										</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								<fo:table-row>
+									<fo:table-cell border-bottom="1px solid black" number-columns-spanned="3" padding-left="8px" padding-bottom="8px">
+										<fo:block font-size="8px">
+											* Заједничи преставник је подносилац пријаве кога су подносиоци пријаве, у случају да пријаву подноси више лица, одредили да иступа у
+											поступку пред органом ако подносиоци нису именовали заједничког пуномоћника за заступање
+										</fo:block>
+									</fo:table-cell>
 								</fo:table-row>
 
 								<fo:table-row>
@@ -332,15 +382,15 @@
 									</fo:table-cell>
 									<fo:table-cell number-columns-spanned="1" border="1px solid black">
 										<fo:block border-bottom="1px solid black">
-											<fo:block margin="8px">Број телефона:</fo:block>
-											<fo:block margin="8px">
+											<fo:block margin="5px">Број телефона:</fo:block>
+											<fo:block margin="5px">
 												<xsl:value-of
 													select="//p1:podaci_o_punomocniku/p1:punomocnik//ks:broj_mobilnog_telefona"/>
 											</fo:block>
 										</fo:block>
-										<fo:block margin="8px">
+										<fo:block margin="5px">
 											<fo:block>Е-пошта:</fo:block>
-											<fo:block margin-top="8px">
+											<fo:block margin-top="5px">
 												<xsl:value-of select="//p1:podaci_o_punomocniku/p1:punomocnik//ks:email"/>
 											</fo:block>
 										</fo:block>
@@ -464,7 +514,7 @@
 								<xsl:for-each select="p1:zahtev_za_priznanje_patenta/p1:ranije_prijave/p1:ranija_prijava">
 									<fo:table-row>
 										<fo:table-cell>
-											<fo:block text-align="center" margin="10px">
+											<fo:block margin="10px" text-align="center">
 												<xsl:value-of select="p1:datum_podnosenja"/>
 											</fo:block>
 										</fo:table-cell>

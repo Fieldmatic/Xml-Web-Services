@@ -7,9 +7,9 @@
     broj_prijave="1">
     <podnosilac xsi:type="ks:TPravno_Lice">
         <adresa xmlns="http://www.xml.tim14.rs/korisnici">
-            <mesto>Бијељина </mesto>
-            <postanski_broj>76300 </postanski_broj>
-            <ulica>Николе Тесле </ulica>
+            <mesto>Бијељина</mesto>
+            <postanski_broj>76300</postanski_broj>
+            <ulica>Николе Тесле</ulica>
             <broj>10</broj>
         </adresa>
         <broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38165656426</broj_mobilnog_telefona>
@@ -22,9 +22,9 @@
             <ks:prezime>Милић</ks:prezime>
         </ks:puno_ime>
         <ks:adresa>
-            <ks:mesto>Бијељина </ks:mesto>
-            <ks:postanski_broj>76300 </ks:postanski_broj>
-            <ks:ulica>Николе Тесле </ks:ulica>
+            <ks:mesto>Бијељина</ks:mesto>
+            <ks:postanski_broj>76300</ks:postanski_broj>
+            <ks:ulica>Николе Тесле</ks:ulica>
             <ks:broj>11</ks:broj>
         </ks:adresa>
     </punomocnik>
@@ -37,9 +37,9 @@
                 <pseudonim>PSEUDO</pseudonim>
                 <licni_podaci>
                     <ks:adresa>
-                        <ks:mesto>Нови Сад </ks:mesto>
-                        <ks:postanski_broj>21000 </ks:postanski_broj>
-                        <ks:ulica>Др Ивана Рибара </ks:ulica>
+                        <ks:mesto>Нови Сад</ks:mesto>
+                        <ks:postanski_broj>21000</ks:postanski_broj>
+                        <ks:ulica>Др Ивана Рибара</ks:ulica>
                         <ks:broj>5</ks:broj>
                     </ks:adresa>
                     <ks:puno_ime>
