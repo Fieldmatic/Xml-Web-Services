@@ -26,109 +26,9 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="podnosilac" type="{http://www.xml.tim14.rs/korisnici}TLice"/>
- *         &lt;element name="punomocnik" type="{http://www.xml.tim14.rs/korisnici}TLice"/>
- *         &lt;element name="zajednicki_predstavnik" type="{http://www.xml.tim14.rs/korisnici}TLice" minOccurs="0"/>
- *         &lt;element name="vrsta_ziga" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TVrsta_ziga"/>
- *         &lt;element name="znak">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="vrsta_znaka">
- *                     &lt;complexType>
- *                       &lt;complexContent>
- *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                           &lt;sequence minOccurs="0">
- *                             &lt;element name="druga_vrsta_znaka" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                           &lt;/sequence>
- *                           &lt;attribute name="vrsta_znaka" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TVrsta_znaka" />
- *                         &lt;/restriction>
- *                       &lt;/complexContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
- *                   &lt;element name="izgled_znaka" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                   &lt;sequence>
- *                     &lt;element name="boje_znaka" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
- *                   &lt;/sequence>
- *                   &lt;element name="transliteracija_znaka" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *                   &lt;element name="prevod_znaka" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *                   &lt;element name="opis_znaka" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;sequence>
- *           &lt;element name="klase_robe_ili_usluge" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TKlasa_robe" maxOccurs="45"/>
- *         &lt;/sequence>
- *         &lt;element name="pravo_prvenstva">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence minOccurs="0">
- *                   &lt;element name="osnov_prava_prvenstva" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *                 &lt;/sequence>
- *                 &lt;attribute name="zatrazeno_pravo_prvenstva" use="required" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="takse">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="osnovna_taksa" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TTaksa"/>
- *                   &lt;element name="taksa_za_klase" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TTaksa"/>
- *                   &lt;element name="taksa_za_graficko_resenje" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TTaksa"/>
- *                 &lt;/sequence>
- *                 &lt;attribute name="ukupna_vrednost" use="required" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TTaksa" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="Prilozi_uz_zahtev">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="primerak_znaka" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="spisak_robe_i_usluga" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="punomocje" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="generalno_punomocje" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="naknadno_punomocje" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="akti_o_kolektivnom_zig_ili_zigu_garancije" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="dokaz_o_pravu_prvenstva" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                   &lt;element name="dokaz_o_uplati_takse" type="{http://www.xml.tim14.rs/zahtev_za_priznanje_ziga}TPrilog" minOccurs="0"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="broj_prijave" use="required" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
- *       &lt;attribute name="datum_podnosenja" use="required" type="{http://www.w3.org/2001/XMLSchema}date" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "prijava",
     "podnosilac",
     "punomocnik",
     "zajednickiPredstavnik",
@@ -141,6 +41,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 @XmlRootElement(name = "zahtev_za_priznanje_ziga")
 public class ZahtevZaPriznanjeZiga {
+
+    @XmlElement(required = true)
+    protected TPrijava prijava;
 
     @XmlElement(required = true)
     protected TLice podnosilac;
@@ -160,12 +63,14 @@ public class ZahtevZaPriznanjeZiga {
     protected Takse takse;
     @XmlElement(name = "Prilozi_uz_zahtev", required = true)
     protected PriloziUzZahtev priloziUzZahtev;
-    @XmlAttribute(name = "broj_prijave", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger brojPrijave;
-    @XmlAttribute(name = "datum_podnosenja", required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar datumPodnosenja;
+
+    public TPrijava getPrijava() {
+        return prijava;
+    }
+    public void setPrijava(TPrijava value) {
+        this.prijava = value;
+    }
+
 
     /**
      * Gets the value of the podnosilac property.
@@ -396,45 +301,6 @@ public class ZahtevZaPriznanjeZiga {
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getBrojPrijave() {
-        return brojPrijave;
-    }
-
-    /**
-     * Sets the value of the brojPrijave property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setBrojPrijave(BigInteger value) {
-        this.brojPrijave = value;
-    }
-
-    /**
-     * Gets the value of the datumPodnosenja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public XMLGregorianCalendar getDatumPodnosenja() {
-        return datumPodnosenja;
-    }
-
-    /**
-     * Sets the value of the datumPodnosenja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setDatumPodnosenja(XMLGregorianCalendar value) {
-        this.datumPodnosenja = value;
-    }
 
     @Override
     public String toString() {
@@ -448,8 +314,8 @@ public class ZahtevZaPriznanjeZiga {
         sb.append("\n\tPravo prvenstva: ").append(pravoPrvenstva);
         sb.append("\n\tTakse: ").append(takse);
         sb.append("\n\tPrilozi uz zahtev: ").append(priloziUzZahtev);
-        sb.append("\n\tBroj prijave: ").append(brojPrijave);
-        sb.append("\n\tDatum podnosenja: ").append(datumPodnosenja);
+        sb.append("\n\tBroj prijave: ").append(prijava.brojPrijave);
+        sb.append("\n\tDatum podnosenja: ").append(prijava.datumPodnosenja);
         return sb.toString();
     }
 

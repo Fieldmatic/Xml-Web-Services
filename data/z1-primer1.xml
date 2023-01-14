@@ -2,9 +2,12 @@
 <zahtev_za_priznanje_ziga xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga"
                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                           xmlns:ks="http://www.xml.tim14.rs/korisnici"
-                          xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga file:/C:/Users/prijo/Desktop/Xml-Web-Services/data/z-1.xsd"
-                          broj_prijave="1"
-                          datum_podnosenja="2022-12-12">
+                          xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/"
+                          xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga file:/C:/Users/prijo/Desktop/Xml-Web-Services/data/z-1.xsd">
+    <prijava>
+        <broj_prijave property="pred:brojPrijave" datatype="xs:positiveInteger">1</broj_prijave>
+        <datum_podnosenja property="pred:datumPodnosenja" datatype="xs:date">2022-12-12</datum_podnosenja>
+    </prijava>
     <podnosilac xsi:type="ks:TFizicko_Lice">
         <ks:adresa xmlns="http://www.xml.tim14.rs/korisnici">
             <mesto>Subotica</mesto>
@@ -17,8 +20,8 @@
         <ks:broj_faksa>055490900</ks:broj_faksa>
         <ks:email xmlns="http://www.xml.tim14.rs/korisnici">prijovic.uros13@gmail.com</ks:email>
         <ks:puno_ime>
-            <ks:ime>Uroš</ks:ime>
-            <ks:prezime>Prijović</ks:prezime>
+            <ks:ime property="pred:imePodnosioca" datatype="xs:string">Uroš</ks:ime>
+            <ks:prezime property="pred:prezimePodnosioca" datatype="xs:string">Prijović</ks:prezime>
         </ks:puno_ime>
     </podnosilac>
     <punomocnik xsi:type="ks:TFizicko_Lice">
@@ -37,7 +40,7 @@
             <ks:prezime>Karlaš</ks:prezime>
         </ks:puno_ime>
     </punomocnik>
-    <vrsta_ziga>INDUVIDUALNI</vrsta_ziga>
+    <vrsta_ziga property="pred:vrstaZiga" datatype="z1:TVrsta_ziga">INDUVIDUALNI</vrsta_ziga>
     <znak>
         <vrsta_znaka>VERBALNI</vrsta_znaka>
         <izgled_znaka>putanja-do-izgleda-znaka-prvog-primera</izgled_znaka>

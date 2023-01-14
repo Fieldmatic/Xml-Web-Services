@@ -1,6 +1,7 @@
 package rs.tim14.xml.test;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import javax.xml.datatype.DatatypeFactory;
 import org.xml.sax.SAXException;
 
 import rs.tim14.xml.jaxb.JaxbParser;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TPrijava;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TFizickoLice;
@@ -107,11 +109,11 @@ public class Z1Test {
 		takse.setUkupnaVrednost(6500);
 		zahtevZaPriznanjeZiga.setTakse(takse);
 
-		zahtevZaPriznanjeZiga.setBrojPrijave(BigInteger.valueOf(2));
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(Objects.requireNonNull(MyDatatypeConverter.parseDate("2022-12-13")));
-		zahtevZaPriznanjeZiga.setDatumPodnosenja(DatatypeFactory.newInstance()
-			.newXMLGregorianCalendar(gc));
+		TPrijava prijava = new TPrijava();
+		prijava.setDatumPodnosenja(new Date());
+		prijava.setBrojPrijave(BigInteger.valueOf(2));
+
+		zahtevZaPriznanjeZiga.setPrijava(prijava);
 
 		return zahtevZaPriznanjeZiga;
 	}

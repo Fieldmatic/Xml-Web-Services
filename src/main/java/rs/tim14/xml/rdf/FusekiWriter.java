@@ -24,7 +24,7 @@ public class FusekiWriter {
 
 		System.out.println("[INFO] Loading triples from an RDF/XML to a model...");
 
-		String rdfFilePath = "data/rdf/p1.rdf";
+		String rdfFilePath = "data/rdf/a1.rdf";
 
 		Model model = ModelFactory.createDefaultModel();
 		model.read(rdfFilePath);
@@ -36,11 +36,7 @@ public class FusekiWriter {
 		System.out.println("[INFO] Rendering model as RDF/XML...");
 		model.write(System.out, SparqlUtil.RDF_XML);
 
-		UpdateRequest request = UpdateFactory.create() ;
-        request.add(SparqlUtil.dropAll());
-
-        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.updateEndpoint);
-        processor.execute();
+		UpdateProcessor processor;
 
      	System.out.println("[INFO] Writing the triples to a named graph \"" + PATENT_GRAPH_URI + "\".");
 		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + PATENT_GRAPH_URI, out.toString());

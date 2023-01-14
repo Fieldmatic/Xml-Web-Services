@@ -58,8 +58,26 @@
     <xs:element name="puno_ime">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ime" type="xs:string"/>
-                <xs:element name="prezime" type="xs:string"/>
+                <xs:element name="ime">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="property"/>
+                                <xs:attribute name="datatype"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="prezime">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="property"/>
+                                <xs:attribute name="datatype"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
