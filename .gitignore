@@ -9,6 +9,8 @@
 mvnw
 mvnw.cmd
 
+target/
+
 # BlueJ files
 *.ctxt
 

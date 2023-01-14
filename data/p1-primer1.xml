@@ -2,10 +2,12 @@
 <zahtev_za_priznanje_patenta xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ks="http://www.xml.tim14.rs/korisnici"
-    xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta p-1.xsd">
+    xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta p-1.xsd"
+    xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/">
     <prijava>
-        <broj_prijave>2</broj_prijave>
-        <datum_podnosenja>2022-11-30</datum_podnosenja>
+        <broj_prijave property="pred:brojPrijave" datatype="xs:positiveInteger">2</broj_prijave>
+        <datum_podnosenja property="pred:datumPodnosenja" datatype="xs:date">2022-11-30</datum_podnosenja>
+        <datum_prijema property="pred:datumPrijema" datatype="xs:date">2022-12-05</datum_prijema>
     </prijava>
     <pronalazak>
         <naziv_pronalaska_rs>pronalazak_na_srpskom</naziv_pronalaska_rs>
@@ -23,7 +25,7 @@
             <ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38165656426</ks:broj_mobilnog_telefona>
             <ks:broj_faksa>055490900</ks:broj_faksa>
             <ks:email xmlns="http://www.xml.tim14.rs/korisnici">milic@gmail.com</ks:email>
-            <ks:poslovno_ime>MILIC-PROM</ks:poslovno_ime>
+            <ks:poslovno_ime property="pred:poslovnoIme" datatype="xs:string">MILIC-PROM</ks:poslovno_ime>
         </podnosilac>
     </podaci_o_podnosiocu>
     <podaci_o_pronalazacu>

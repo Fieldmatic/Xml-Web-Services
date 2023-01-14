@@ -28,6 +28,7 @@ import rs.tim14.xml.model.korisnici.TLice;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "prijava",
     "podnosilac",
     "punomocnik",
     "autorskoDelo"
@@ -36,18 +37,22 @@ import rs.tim14.xml.model.korisnici.TLice;
 public class ZahtevZaAutorskaPrava {
 
     @XmlElement(required = true)
+    protected TPrijava prijava;
+
+    @XmlElement(required = true)
     protected TLice podnosilac;
 
     @XmlElement(name = "punomocnik", required = false)
     protected Punomocnik punomocnik;
     @XmlElement(name = "autorsko_delo", required = true)
     protected AutorskoDelo autorskoDelo;
-    @XmlAttribute(name = "datum_podnosenja")
-    @XmlSchemaType(name = "date")
-    protected Date datumPodnosenja;
-    @XmlAttribute(name = "broj_prijave")
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger brojPrijave;
+
+    public TPrijava getPrijava() {
+        return prijava;
+    }
+    public void setPrijava(TPrijava value) {
+        this.prijava = value;
+    }
 
     public TLice getPodnosilac() {
         return podnosilac;
@@ -73,28 +78,13 @@ public class ZahtevZaAutorskaPrava {
         this.autorskoDelo = value;
     }
 
-    public Date getDatumPodnosenja() {
-        return datumPodnosenja;
-    }
-
-    public void setDatumPodnosenja(Date value) {
-        this.datumPodnosenja = value;
-    }
-
-    public BigInteger getBrojPrijave() {
-        return brojPrijave;
-    }
-
-    public void setBrojPrijave(BigInteger value) {
-        this.brojPrijave = value;
-    }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer();
         sb.append("Zahtev za autorska prava:");
-        sb.append("\n\tDatum podnosenja: ").append(datumPodnosenja);
-        sb.append("\n\tBroj prijave: ").append(brojPrijave);
+        sb.append("\n\tDatum podnosenja: ").append(prijava.datumPodnosenja);
+        sb.append("\n\tBroj prijave: ").append(prijava.brojPrijave);
         sb.append("\n\tPodnosilac:").append(podnosilac.toString("\t\t"));
         sb.append("\n\tPunomocnik: ").append(punomocnik);
         sb.append("\n\tAutorsko delo: ").append(autorskoDelo);

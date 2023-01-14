@@ -6,6 +6,7 @@
     <xs:element name="zahtev_za_autorska_prava">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="prijava" type="a1:TPrijava"/>
                 <xs:element name="podnosilac" type="ks:TLice"/>
                 <xs:element name="punomocnik" minOccurs="0" nillable="true">
                     <xs:complexType>
@@ -18,7 +19,16 @@
                 <xs:element name="autorsko_delo">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="naslov_autorskog_dela" type="xs:string"/>
+                            <xs:element name="naslov_autorskog_dela">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="property"/>
+                                            <xs:attribute name="datatype"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                             <xs:element name="vrsta_autorskog_dela" type="a1:TVrsta_autorskog_dela"/>
                             <xs:element name="forma_zapisa" type="a1:TForma_zapisa"/>
                             <xs:element name="podaci_o_autorima">
@@ -67,10 +77,32 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="datum_podnosenja" type="xs:date"/>
-            <xs:attribute name="broj_prijave" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="TPrijava">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="broj_prijave">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:positiveInteger">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="1" name="datum_podnosenja">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:date">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="TAutor">
         <xs:sequence>
             <xs:element name="pseudonim" minOccurs="0" nillable="false">

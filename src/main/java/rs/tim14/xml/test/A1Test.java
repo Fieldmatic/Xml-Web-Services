@@ -11,13 +11,7 @@ import javax.xml.namespace.QName;
 import org.xml.sax.SAXException;
 
 import rs.tim14.xml.jaxb.JaxbParser;
-import rs.tim14.xml.model.autorska_prava.AutorskoDelo;
-import rs.tim14.xml.model.autorska_prava.PrimerAutorskogDela;
-import rs.tim14.xml.model.autorska_prava.Punomocnik;
-import rs.tim14.xml.model.autorska_prava.TFormaZapisa;
-import rs.tim14.xml.model.autorska_prava.TTipPrimera;
-import rs.tim14.xml.model.autorska_prava.TVrstaAutorskogDela;
-import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
+import rs.tim14.xml.model.autorska_prava.*;
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
@@ -43,13 +37,19 @@ public class A1Test {
 	public static ZahtevZaAutorskaPrava kreirajA1() throws DatatypeConfigurationException {
 		ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = new ZahtevZaAutorskaPrava();
 
-		zahtevZaAutorskaPrava.setDatumPodnosenja(new Date());
-		zahtevZaAutorskaPrava.setBrojPrijave(BigInteger.valueOf(100));
+		zahtevZaAutorskaPrava.setPrijava(kreirajPrijavu());
 		zahtevZaAutorskaPrava.setPodnosilac(kreirajPravnoLice());
 		zahtevZaAutorskaPrava.setPunomocnik(kreirajPunomocnika());
 		zahtevZaAutorskaPrava.setAutorskoDelo(kreirajAutorskoDelo());
 
 		return zahtevZaAutorskaPrava;
+	}
+
+	public static TPrijava kreirajPrijavu() {
+		TPrijava prijava = new TPrijava();
+		prijava.setDatumPodnosenja(new Date());
+		prijava.setBrojPrijave(BigInteger.valueOf(100));
+		return prijava;
 	}
 
 	public static TPravnoLice kreirajPravnoLice() {

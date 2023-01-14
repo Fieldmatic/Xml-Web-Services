@@ -7,17 +7,35 @@
     <xs:element name="zahtev_za_priznanje_ziga">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="prijava" type="z1:TPrijava"/>
                 <xs:element name="podnosilac" type="ks:TLice"/>
                 <xs:element name="punomocnik" type="ks:TLice"/>
                 <xs:element minOccurs="0" name="zajednicki_predstavnik" type="ks:TLice"/>
-                <xs:element name="vrsta_ziga" type="z1:TVrsta_ziga"/>
+                <xs:element name="vrsta_ziga">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="z1:TVrsta_ziga">
+                                <xs:attribute name="property"/>
+                                <xs:attribute name="datatype"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="znak">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="vrsta_znaka">
                                 <xs:complexType mixed="true">
                                     <xs:sequence minOccurs="0">
-                                        <xs:element name="druga_vrsta_znaka" type="xs:string">
+                                        <xs:element name="druga_vrsta_znaka">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                  <xs:attribute name="property"/>
+                                                  <xs:attribute name="datatype"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
                                     <xs:attribute name="vrsta_znaka" type="z1:TVrsta_znaka"/>
@@ -75,11 +93,33 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="broj_prijave" type="xs:positiveInteger" use="required"/>
-            <xs:attribute name="datum_podnosenja" type="xs:date" use="required"/>
         </xs:complexType>
     </xs:element>
 
+    <xs:complexType name="TPrijava">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="broj_prijave">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:positiveInteger">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="1" name="datum_podnosenja">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:date">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:simpleType name="TVrsta_ziga">
         <xs:restriction base="xs:string">
             <xs:enumeration value="INDUVIDUALNI"/>
