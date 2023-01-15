@@ -5,7 +5,7 @@
   <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/a1/primer1">
     <pred:brojPrijave>1</pred:brojPrijave>
     <pred:datumPodnosenja>2022-12-12</pred:datumPodnosenja>
-    <pred:poslovnoIme>MILIC-PROM</pred:poslovnoIme>
+    <pred:poslovnoImePodnosioca>MILIC-PROM</pred:poslovnoImePodnosioca>
     <pred:naslovAutorskogDela>Covek po imenu Ive</pred:naslovAutorskogDela>
     <pred:imeAutora>Nikola</pred:imeAutora>
     <pred:prezimeAutora>Stevanovic</pred:prezimeAutora>

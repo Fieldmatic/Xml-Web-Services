@@ -9,6 +9,7 @@
 package rs.tim14.xml.model.autorska_prava;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -20,28 +21,105 @@ import java.util.Date;
 public class TPrijava {
 
     @XmlElement(name = "broj_prijave", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger brojPrijave;
+    protected BrojPrijave brojPrijave;
     @XmlElement(name = "datum_podnosenja", required = true)
-    @XmlSchemaType(name = "date")
-    protected Date datumPodnosenja;
+    protected DatumPodnosenja datumPodnosenja;
 
-    public BigInteger getBrojPrijave() {
+    public BrojPrijave getBrojPrijave() {
         return brojPrijave;
     }
 
-    public void setBrojPrijave(BigInteger value) {
+    public void setBrojPrijave(BrojPrijave value) {
         this.brojPrijave = value;
     }
 
-    public Date getDatumPodnosenja() {
+    public DatumPodnosenja getDatumPodnosenja() {
         return datumPodnosenja;
     }
 
-    public void setDatumPodnosenja(Date value) {
+    public void setDatumPodnosenja(DatumPodnosenja value) {
         this.datumPodnosenja = value;
     }
 
+
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class BrojPrijave {
+
+        @XmlValue
+        @XmlSchemaType(name = "positiveInteger")
+        protected BigInteger value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+        public BigInteger getValue() {
+            return value;
+        }
+
+        public void setValue(BigInteger value) {
+            this.value = value;
+        }
+        public String getProperty() {
+            return property;
+        }
+
+        public void setProperty(String value) {
+            this.property = value;
+        }
+        public String getDatatype() {
+            return datatype;
+        }
+
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class DatumPodnosenja {
+
+        @XmlValue
+        @XmlSchemaType(name = "date")
+        protected XMLGregorianCalendar value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+
+        public XMLGregorianCalendar getValue() {
+            return value;
+        }
+
+        public void setValue(XMLGregorianCalendar value) {
+            this.value = value;
+        }
+        public String getProperty() {
+            return property;
+        }
+        public void setProperty(String value) {
+            this.property = value;
+        }
+        public String getDatatype() {
+            return datatype;
+        }
+
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
 
     @Override
     public String toString() {

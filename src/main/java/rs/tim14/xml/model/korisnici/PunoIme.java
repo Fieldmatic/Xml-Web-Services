@@ -8,35 +8,109 @@
 
 package rs.tim14.xml.model.korisnici;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "ime",
-    "prezime"
+        "ime",
+        "prezime"
 })
 @XmlRootElement(name = "puno_ime")
 public class PunoIme {
 
     @XmlElement(required = true)
-    protected String ime;
+    protected PunoIme.Ime ime;
     @XmlElement(required = true)
-    protected String prezime;
-    public String getIme() {
+    protected PunoIme.Prezime prezime;
+    public PunoIme.Ime getIme() {
         return ime;
     }
-    public void setIme(String value) {
+
+    public void setIme(PunoIme.Ime value) {
         this.ime = value;
     }
-    public String getPrezime() {
+
+    public PunoIme.Prezime getPrezime() {
         return prezime;
     }
-    public void setPrezime(String value) {
+    public void setPrezime(PunoIme.Prezime value) {
         this.prezime = value;
+    }
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class Ime {
+
+        @XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getProperty() {
+            return property;
+        }
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        public String getDatatype() {
+            return datatype;
+        }
+
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class Prezime {
+
+        @XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getProperty() {
+            return property;
+        }
+
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        public String getDatatype() {
+            return datatype;
+        }
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
     }
 
     @Override

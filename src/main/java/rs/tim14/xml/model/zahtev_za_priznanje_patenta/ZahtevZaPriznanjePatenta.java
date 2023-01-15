@@ -8,11 +8,10 @@
 
 package rs.tim14.xml.model.zahtev_za_priznanje_patenta;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -44,6 +43,14 @@ public class ZahtevZaPriznanjePatenta {
     protected TPrijava osnovnaPrijava;
     @XmlElement(name = "ranije_prijave", required = true)
     protected RanijePrijave ranijePrijave;
+
+    @XmlAnyAttribute
+    private Map<QName, String> references = new HashMap<QName, String>();
+
+    public Map<QName, String> getReferences() {
+        return references;
+    }
+
 
     public TPrijava getPrijava() {
         return prijava;

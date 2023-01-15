@@ -9,19 +9,12 @@
 package rs.tim14.xml.model.autorska_prava;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+
 import rs.tim14.xml.model.korisnici.Adresa;
 import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TLice;
@@ -46,6 +39,12 @@ public class ZahtevZaAutorskaPrava {
     protected Punomocnik punomocnik;
     @XmlElement(name = "autorsko_delo", required = true)
     protected AutorskoDelo autorskoDelo;
+    @XmlAnyAttribute
+    private Map<QName, String> references = new HashMap<QName, String>();
+
+    public Map<QName, String> getReferences() {
+        return references;
+    }
 
     public TPrijava getPrijava() {
         return prijava;

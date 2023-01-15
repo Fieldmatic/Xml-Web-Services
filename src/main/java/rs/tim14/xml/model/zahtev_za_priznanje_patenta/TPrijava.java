@@ -11,65 +11,450 @@ package rs.tim14.xml.model.zahtev_za_priznanje_patenta;
 import java.math.BigInteger;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPrijava", propOrder = {
-    "brojPrijave",
-    "datumPodnosenja",
-    "datumPrijema",
-    "oznakaDrzave"
+        "brojPrijave",
+        "datumPodnosenja",
+        "datumPrijema",
+        "oznakaDrzave"
 })
 public class TPrijava {
 
     @XmlElement(name = "broj_prijave", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger brojPrijave;
+    protected TPrijava.BrojPrijave brojPrijave;
     @XmlElement(name = "datum_podnosenja", required = true)
-    @XmlSchemaType(name = "date")
-    protected Date datumPodnosenja;
+    protected TPrijava.DatumPodnosenja datumPodnosenja;
     @XmlElement(name = "datum_prijema")
-    @XmlSchemaType(name = "date")
-    protected Date datumPrijema;
+    protected TPrijava.DatumPrijema datumPrijema;
     @XmlElement(name = "oznaka_drzave")
     protected String oznakaDrzave;
 
-    public BigInteger getBrojPrijave() {
+    /**
+     * Gets the value of the brojPrijave property.
+     *
+     * @return
+     *     possible object is
+     *     {@link TPrijava.BrojPrijave }
+     *
+     */
+    public TPrijava.BrojPrijave getBrojPrijave() {
         return brojPrijave;
     }
 
-    public void setBrojPrijave(BigInteger value) {
+    /**
+     * Sets the value of the brojPrijave property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link TPrijava.BrojPrijave }
+     *
+     */
+    public void setBrojPrijave(TPrijava.BrojPrijave value) {
         this.brojPrijave = value;
     }
 
-    public Date getDatumPodnosenja() {
+    /**
+     * Gets the value of the datumPodnosenja property.
+     *
+     * @return
+     *     possible object is
+     *     {@link TPrijava.DatumPodnosenja }
+     *
+     */
+    public TPrijava.DatumPodnosenja getDatumPodnosenja() {
         return datumPodnosenja;
     }
 
-    public void setDatumPodnosenja(Date value) {
+    /**
+     * Sets the value of the datumPodnosenja property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link TPrijava.DatumPodnosenja }
+     *
+     */
+    public void setDatumPodnosenja(TPrijava.DatumPodnosenja value) {
         this.datumPodnosenja = value;
     }
 
-    public Date getDatumPrijema() {
+    /**
+     * Gets the value of the datumPrijema property.
+     *
+     * @return
+     *     possible object is
+     *     {@link TPrijava.DatumPrijema }
+     *
+     */
+    public TPrijava.DatumPrijema getDatumPrijema() {
         return datumPrijema;
     }
 
-    public void setDatumPrijema(Date value) {
+    /**
+     * Sets the value of the datumPrijema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link TPrijava.DatumPrijema }
+     *
+     */
+    public void setDatumPrijema(TPrijava.DatumPrijema value) {
         this.datumPrijema = value;
     }
 
+    /**
+     * Gets the value of the oznakaDrzave property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
     public String getOznakaDrzave() {
         return oznakaDrzave;
     }
 
+    /**
+     * Sets the value of the oznakaDrzave property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public void setOznakaDrzave(String value) {
         this.oznakaDrzave = value;
     }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     *
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     *
+     * <pre>
+     * &lt;complexType>
+     *   &lt;simpleContent>
+     *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>positiveInteger">
+     *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *       &lt;attribute name="datatype" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *     &lt;/extension>
+     *   &lt;/simpleContent>
+     * &lt;/complexType>
+     * </pre>
+     *
+     *
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class BrojPrijave {
+
+        @XmlValue
+        @XmlSchemaType(name = "positiveInteger")
+        protected BigInteger value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+
+        /**
+         * Gets the value of the value property.
+         *
+         * @return
+         *     possible object is
+         *     {@link BigInteger }
+         *
+         */
+        public BigInteger getValue() {
+            return value;
+        }
+
+        /**
+         * Sets the value of the value property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link BigInteger }
+         *
+         */
+        public void setValue(BigInteger value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets the value of the property property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getProperty() {
+            return property;
+        }
+
+        /**
+         * Sets the value of the property property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        /**
+         * Gets the value of the datatype property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getDatatype() {
+            return datatype;
+        }
+
+        /**
+         * Sets the value of the datatype property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     *
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     *
+     * <pre>
+     * &lt;complexType>
+     *   &lt;simpleContent>
+     *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>date">
+     *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *       &lt;attribute name="datatype" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *     &lt;/extension>
+     *   &lt;/simpleContent>
+     * &lt;/complexType>
+     * </pre>
+     *
+     *
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class DatumPodnosenja {
+
+        @XmlValue
+        @XmlSchemaType(name = "date")
+        protected XMLGregorianCalendar value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+
+        /**
+         * Gets the value of the value property.
+         *
+         * @return
+         *     possible object is
+         *     {@link XMLGregorianCalendar }
+         *
+         */
+        public XMLGregorianCalendar getValue() {
+            return value;
+        }
+
+        /**
+         * Sets the value of the value property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link XMLGregorianCalendar }
+         *
+         */
+        public void setValue(XMLGregorianCalendar value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets the value of the property property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getProperty() {
+            return property;
+        }
+
+        /**
+         * Sets the value of the property property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        /**
+         * Gets the value of the datatype property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getDatatype() {
+            return datatype;
+        }
+
+        /**
+         * Sets the value of the datatype property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     *
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     *
+     * <pre>
+     * &lt;complexType>
+     *   &lt;simpleContent>
+     *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>date">
+     *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *       &lt;attribute name="datatype" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+     *     &lt;/extension>
+     *   &lt;/simpleContent>
+     * &lt;/complexType>
+     * </pre>
+     *
+     *
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class DatumPrijema {
+
+        @XmlValue
+        @XmlSchemaType(name = "date")
+        protected XMLGregorianCalendar value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+
+        /**
+         * Gets the value of the value property.
+         *
+         * @return
+         *     possible object is
+         *     {@link XMLGregorianCalendar }
+         *
+         */
+        public XMLGregorianCalendar getValue() {
+            return value;
+        }
+
+        /**
+         * Sets the value of the value property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link XMLGregorianCalendar }
+         *
+         */
+        public void setValue(XMLGregorianCalendar value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets the value of the property property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getProperty() {
+            return property;
+        }
+
+        /**
+         * Sets the value of the property property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        /**
+         * Gets the value of the datatype property.
+         *
+         * @return
+         *     possible object is
+         *     {@link String }
+         *
+         */
+        public String getDatatype() {
+            return datatype;
+        }
+
+        /**
+         * Sets the value of the datatype property.
+         *
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *
+         */
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
+
 
     @Override
     public String toString() {

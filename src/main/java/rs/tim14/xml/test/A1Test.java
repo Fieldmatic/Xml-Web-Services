@@ -20,90 +20,90 @@ import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 
 public class A1Test {
 
-	public void test() {
-		try {
-			JaxbParser jaxbParser = new JaxbParser();
-			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./data/a-1.xsd");
-			System.out.println(zahtev_a1);
-			System.out.println();
-			jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (DatatypeConfigurationException | SAXException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public static ZahtevZaAutorskaPrava kreirajA1() throws DatatypeConfigurationException {
-		ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = new ZahtevZaAutorskaPrava();
-
-		zahtevZaAutorskaPrava.setPrijava(kreirajPrijavu());
-		zahtevZaAutorskaPrava.setPodnosilac(kreirajPravnoLice());
-		zahtevZaAutorskaPrava.setPunomocnik(kreirajPunomocnika());
-		zahtevZaAutorskaPrava.setAutorskoDelo(kreirajAutorskoDelo());
-
-		return zahtevZaAutorskaPrava;
-	}
-
-	public static TPrijava kreirajPrijavu() {
-		TPrijava prijava = new TPrijava();
-		prijava.setDatumPodnosenja(new Date());
-		prijava.setBrojPrijave(BigInteger.valueOf(100));
-		return prijava;
-	}
-
-	public static TPravnoLice kreirajPravnoLice() {
-		TPravnoLice pravnoLice = new TPravnoLice();
-		pravnoLice.setAdresa(kreirajAdresu());
-		pravnoLice.setBrojMobilnogTelefona(new JAXBElement<>(new QName("http://www.xml.tim14.rs/korisnici", "broj_mobilnog_telefona", "ks"), String.class, "065684500"));
-		pravnoLice.setEmail(new JAXBElement<>(new QName("http://www.xml.tim14.rs/korisnici", "email", "ks"), String.class, "pravnoLice@gmail.com"));
-		pravnoLice.setPoslovnoIme("REMIX");
-		return pravnoLice;
-	}
-
-	public static Punomocnik kreirajPunomocnika() {
-		Punomocnik punomocnik = new Punomocnik();
-		punomocnik.setAdresa(kreirajAdresu());
-		punomocnik.setPunoIme(kreirajPunoIme());
-		return punomocnik;
-	}
-
-	public static AutorskoDelo kreirajAutorskoDelo() {
-		AutorskoDelo autorskoDelo = new AutorskoDelo();
-		autorskoDelo.setNaslovAutorskogDela("Sava i Dunav");
-		autorskoDelo.setFormaZapisa(TFormaZapisa.MUZICKA_PARTITURA);
-		autorskoDelo.setNacinKoriscenjaAutorskogDela("da se koristi");
-		autorskoDelo.setVrstaAutorskogDela(TVrstaAutorskogDela.MUZICKO_DELO);
-		autorskoDelo.setStvorenoURadnomOdnosu(true);
-		autorskoDelo.setPrimerAutorskogDela(kreirajPrimerAutorskogDela());
-		return autorskoDelo;
-	}
-
-	public static PrimerAutorskogDela kreirajPrimerAutorskogDela() {
-		PrimerAutorskogDela primerAutorskogDela = new PrimerAutorskogDela();
-		primerAutorskogDela.setPutanjaDoPrimera("../data/primer-a1");
-		primerAutorskogDela.setTipPrimera(TTipPrimera.AUDIO_ZAPIS);
-		return primerAutorskogDela;
-	}
-
-	public static PunoIme kreirajPunoIme() {
-		PunoIme punoIme = new PunoIme();
-		punoIme.setIme("Mile");
-		punoIme.setPrezime("Stevanovic");
-		return punoIme;
-	}
-
-	public static Adresa kreirajAdresu() {
-		Adresa adresa = new Adresa();
-		adresa.setMesto("Novi Sad");
-		adresa.setBroj("10");
-		adresa.setUlica("Dr Ivana Ribara");
-		adresa.setPostanskiBroj("21000");
-		return adresa;
-	}
-
-	public static void main(String[] args) {
-		A1Test test = new A1Test();
-		test.test();
-	}
+//	public void test() {
+//		try {
+//			JaxbParser jaxbParser = new JaxbParser();
+//			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./data/a-1.xsd");
+//			System.out.println(zahtev_a1);
+//			System.out.println();
+//			jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
+//		} catch (DatatypeConfigurationException | SAXException e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
+//
+//	public static ZahtevZaAutorskaPrava kreirajA1() throws DatatypeConfigurationException {
+//		ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = new ZahtevZaAutorskaPrava();
+//
+//		zahtevZaAutorskaPrava.setPrijava(kreirajPrijavu());
+//		zahtevZaAutorskaPrava.setPodnosilac(kreirajPravnoLice());
+//		zahtevZaAutorskaPrava.setPunomocnik(kreirajPunomocnika());
+//		zahtevZaAutorskaPrava.setAutorskoDelo(kreirajAutorskoDelo());
+//
+//		return zahtevZaAutorskaPrava;
+//	}
+//
+//	public static TPrijava kreirajPrijavu() {
+//		TPrijava prijava = new TPrijava();
+//		prijava.setDatumPodnosenja(new Date());
+//		prijava.setBrojPrijave(BigInteger.valueOf(100));
+//		return prijava;
+//	}
+//
+//	public static TPravnoLice kreirajPravnoLice() {
+//		TPravnoLice pravnoLice = new TPravnoLice();
+//		pravnoLice.setAdresa(kreirajAdresu());
+//		pravnoLice.setBrojMobilnogTelefona(new JAXBElement<>(new QName("http://www.xml.tim14.rs/korisnici", "broj_mobilnog_telefona", "ks"), String.class, "065684500"));
+//		pravnoLice.setEmail(new JAXBElement<>(new QName("http://www.xml.tim14.rs/korisnici", "email", "ks"), String.class, "pravnoLice@gmail.com"));
+//		pravnoLice.setPoslovnoIme("REMIX");
+//		return pravnoLice;
+//	}
+//
+//	public static Punomocnik kreirajPunomocnika() {
+//		Punomocnik punomocnik = new Punomocnik();
+//		punomocnik.setAdresa(kreirajAdresu());
+//		punomocnik.setPunoIme(kreirajPunoIme());
+//		return punomocnik;
+//	}
+//
+//	public static AutorskoDelo kreirajAutorskoDelo() {
+//		AutorskoDelo autorskoDelo = new AutorskoDelo();
+//		autorskoDelo.setNaslovAutorskogDela("Sava i Dunav");
+//		autorskoDelo.setFormaZapisa(TFormaZapisa.MUZICKA_PARTITURA);
+//		autorskoDelo.setNacinKoriscenjaAutorskogDela("da se koristi");
+//		autorskoDelo.setVrstaAutorskogDela(TVrstaAutorskogDela.MUZICKO_DELO);
+//		autorskoDelo.setStvorenoURadnomOdnosu(true);
+//		autorskoDelo.setPrimerAutorskogDela(kreirajPrimerAutorskogDela());
+//		return autorskoDelo;
+//	}
+//
+//	public static PrimerAutorskogDela kreirajPrimerAutorskogDela() {
+//		PrimerAutorskogDela primerAutorskogDela = new PrimerAutorskogDela();
+//		primerAutorskogDela.setPutanjaDoPrimera("../data/primer-a1");
+//		primerAutorskogDela.setTipPrimera(TTipPrimera.AUDIO_ZAPIS);
+//		return primerAutorskogDela;
+//	}
+//
+//	public static PunoIme kreirajPunoIme() {
+//		PunoIme punoIme = new PunoIme();
+//		punoIme.setIme("Mile");
+//		punoIme.setPrezime("Stevanovic");
+//		return punoIme;
+//	}
+//
+//	public static Adresa kreirajAdresu() {
+//		Adresa adresa = new Adresa();
+//		adresa.setMesto("Novi Sad");
+//		adresa.setBroj("10");
+//		adresa.setUlica("Dr Ivana Ribara");
+//		adresa.setPostanskiBroj("21000");
+//		return adresa;
+//	}
+//
+//	public static void main(String[] args) {
+//		A1Test test = new A1Test();
+//		test.test();
+//	}
 }

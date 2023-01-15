@@ -1,9 +1,6 @@
 package rs.tim14.xml.model.autorska_prava;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -20,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 public class AutorskoDelo {
 
 	@XmlElement(name = "naslov_autorskog_dela", required = true)
-	protected String naslovAutorskogDela;
+	protected NaslovAutorskogDela naslovAutorskogDela;
 	@XmlElement(name = "vrsta_autorskog_dela", required = true)
 	protected TVrstaAutorskogDela vrstaAutorskogDela;
 	@XmlElement(name = "forma_zapisa", required = true)
@@ -38,11 +35,11 @@ public class AutorskoDelo {
 	@XmlElement(name = "opis_autorskog_dela")
 	protected OpisAutorskogDela opisAutorskogDela;
 
-	public String getNaslovAutorskogDela() {
+	public AutorskoDelo.NaslovAutorskogDela getNaslovAutorskogDela() {
 		return naslovAutorskogDela;
 	}
 
-	public void setNaslovAutorskogDela(String value) {
+	public void setNaslovAutorskogDela(NaslovAutorskogDela value) {
 		this.naslovAutorskogDela = value;
 	}
 
@@ -110,6 +107,44 @@ public class AutorskoDelo {
 		this.opisAutorskogDela = value;
 	}
 
+	@XmlAccessorType(XmlAccessType.FIELD)
+	@XmlType(name = "", propOrder = {
+			"value"
+	})
+	public static class NaslovAutorskogDela {
+
+		@XmlValue
+		protected String value;
+		@XmlAttribute(name = "property")
+		@XmlSchemaType(name = "anySimpleType")
+		protected String property;
+		@XmlAttribute(name = "datatype")
+		@XmlSchemaType(name = "anySimpleType")
+		protected String datatype;
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
+		}
+
+		public String getProperty() {
+			return property;
+		}
+		public void setProperty(String value) {
+			this.property = value;
+		}
+		public String getDatatype() {
+			return datatype;
+		}
+
+		public void setDatatype(String value) {
+			this.datatype = value;
+		}
+
+	}
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer();

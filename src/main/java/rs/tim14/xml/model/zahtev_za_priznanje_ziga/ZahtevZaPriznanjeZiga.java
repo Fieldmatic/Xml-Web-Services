@@ -12,15 +12,12 @@ import rs.tim14.xml.model.korisnici.TLice;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import java.util.Map;
+import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -48,7 +45,7 @@ public class ZahtevZaPriznanjeZiga {
     @XmlElement(name = "zajednicki_predstavnik")
     protected TLice zajednickiPredstavnik;
     @XmlElement(name = "vrsta_ziga", required = true)
-    protected TVrstaZiga vrstaZiga;
+    protected VrstaZiga vrstaZiga;
     @XmlElement(required = true)
     protected Znak znak;
     @XmlElement(name = "klase_robe_ili_usluge", type = Integer.class)
@@ -59,6 +56,14 @@ public class ZahtevZaPriznanjeZiga {
     protected Takse takse;
     @XmlElement(name = "Prilozi_uz_zahtev", required = true)
     protected PriloziUzZahtev priloziUzZahtev;
+
+    @XmlAnyAttribute
+    private Map<QName, String> references = new HashMap<QName, String>();
+
+    public Map<QName, String> getReferences() {
+        return references;
+    }
+
 
     public TPrijava getPrijava() {
         return prijava;
@@ -86,10 +91,10 @@ public class ZahtevZaPriznanjeZiga {
     public void setZajednickiPredstavnik(TLice value) {
         this.zajednickiPredstavnik = value;
     }
-    public TVrstaZiga getVrstaZiga() {
+    public ZahtevZaPriznanjeZiga.VrstaZiga getVrstaZiga() {
         return vrstaZiga;
     }
-    public void setVrstaZiga(TVrstaZiga value) {
+    public void setVrstaZiga(ZahtevZaPriznanjeZiga.VrstaZiga value) {
         this.vrstaZiga = value;
     }
     public Znak getZnak() {
@@ -123,14 +128,50 @@ public class ZahtevZaPriznanjeZiga {
         this.priloziUzZahtev = value;
     }
 
-    /**
-     * Gets the value of the brojPrijave property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class VrstaZiga {
+
+        @XmlValue
+        protected TVrstaZiga value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+
+
+        public TVrstaZiga getValue() {
+            return value;
+        }
+
+
+        public void setValue(TVrstaZiga value) {
+            this.value = value;
+        }
+
+
+        public String getProperty() {
+            return property;
+        }
+
+
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+        public String getDatatype() {
+            return datatype;
+        }
+
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
+    }
 
     @Override
     public String toString() {

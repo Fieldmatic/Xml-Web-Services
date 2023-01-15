@@ -8,26 +8,62 @@
 
 package rs.tim14.xml.model.korisnici;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPravno_Lice", propOrder = {
-    "poslovnoIme"
+        "poslovnoIme"
 })
 public class TPravnoLice
     extends TLice
 {
 
     @XmlElement(name = "poslovno_ime", required = true)
-    protected String poslovnoIme;
-    public String getPoslovnoIme() {
+    protected TPravnoLice.PoslovnoIme poslovnoIme;
+
+    public TPravnoLice.PoslovnoIme getPoslovnoIme() {
         return poslovnoIme;
     }
-    public void setPoslovnoIme(String value) {
+
+    public void setPoslovnoIme(TPravnoLice.PoslovnoIme value) {
         this.poslovnoIme = value;
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "value"
+    })
+    public static class PoslovnoIme {
+
+        @XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datatype;
+        public String getValue() {
+            return value;
+        }
+        public void setValue(String value) {
+            this.value = value;
+        }
+        public String getProperty() {
+            return property;
+        }
+
+        public void setProperty(String value) {
+            this.property = value;
+        }
+        public String getDatatype() {
+            return datatype;
+        }
+
+        public void setDatatype(String value) {
+            this.datatype = value;
+        }
+
     }
 
     public String toString(String prefix) {

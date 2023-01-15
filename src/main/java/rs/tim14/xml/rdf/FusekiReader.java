@@ -17,7 +17,6 @@ public class FusekiReader {
 	}
 
 	public static void run(AuthenticationUtilities.ConnectionProperties conn) throws IOException {
-		System.out.println("[INFO] Selecting the triples from the named graph \"" + PATENT_GRAPH_URI + "\".");
 		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + PATENT_GRAPH_URI, "?s ?p ?o");
 
 		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
@@ -43,7 +42,6 @@ public class FusekiReader {
 		
 		query.close() ;
 		
-		System.out.println("[INFO] End.");
 	}
 
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.xml.transform.OutputKeys;
 
 import org.exist.xmldb.EXistResource;
+import org.springframework.stereotype.Service;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -15,6 +16,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import rs.tim14.xml.util.AuthenticationUtilities;
 
+@Service
 public class ExistDbManager {
 
 	private void openConnection() throws Exception {
@@ -33,7 +35,7 @@ public class ExistDbManager {
 		}
 	}
 
-	public void store(String collectionId, String documentId, String filePath) throws Exception {
+	public void store(String collectionId, String documentId, String xmlString) throws Exception {
 		openConnection();
 		Collection col = null;
 		XMLResource res = null;
@@ -42,11 +44,7 @@ public class ExistDbManager {
 
 			col = getOrCreateCollection(collectionId);
 			res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-			File f = new File(filePath);
-			if(!f.canRead()) {
-				return;
-			}
-			res.setContent(f);
+			res.setContent(xmlString);
 			col.storeResource(res);
 		}
 		finally {
@@ -62,6 +60,7 @@ public class ExistDbManager {
 			collection = DatabaseManager.getCollection(AuthenticationUtilities.loadProperties().uri + collectionUri,
 				AuthenticationUtilities.loadProperties().user,
 				AuthenticationUtilities.loadProperties().password);
+			collection.setProperty(OutputKeys.INDENT, "yes");
 			resource = (XMLResource) collection.getResource(documentId);
 		} catch (Exception e) {
 			closeConnection(collection, resource);

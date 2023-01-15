@@ -6,47 +6,38 @@ import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
+import org.springframework.stereotype.Service;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Service
 public class FusekiWriter {
+	private AuthenticationUtilities.ConnectionProperties conn;
 
-	private static final String PATENT_GRAPH_URI = "/metadata";
-
-	
-	public static void main(String[] args) throws Exception {
-		run(AuthenticationUtilities.loadProperties());
+	public FusekiWriter() throws IOException {
+	 this.conn = AuthenticationUtilities.loadProperties();
 	}
 
-	public static void run(AuthenticationUtilities.ConnectionProperties conn) throws IOException {
-
-		System.out.println("[INFO] Loading triples from an RDF/XML to a model...");
-
-		String rdfFilePath = "data/rdf/a1.rdf";
+	public void saveRdf(ByteArrayInputStream rdfTriples, String GRAPH_URI) throws IOException {
 
 		Model model = ModelFactory.createDefaultModel();
-		model.read(rdfFilePath);
-		
+		model.read(rdfTriples, "");
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		
+
 		model.write(out, SparqlUtil.NTRIPLES);
-		
-		System.out.println("[INFO] Rendering model as RDF/XML...");
 		model.write(System.out, SparqlUtil.RDF_XML);
 
 		UpdateProcessor processor;
-
-     	System.out.println("[INFO] Writing the triples to a named graph \"" + PATENT_GRAPH_URI + "\".");
-		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + PATENT_GRAPH_URI, out.toString());
+		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + GRAPH_URI, out.toString());
 		System.out.println(sparqlUpdate);
 
 		UpdateRequest update = UpdateFactory.create(sparqlUpdate);
 		processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
 		processor.execute();
-	
-	    System.out.println("[INFO] End.");
 	}
 
 }
