@@ -119,34 +119,34 @@
     </xs:complexType>
     <xs:simpleType name="TVrsta_autorskog_dela">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="knjizevno_delo"/>
-            <xs:enumeration value="racunarski_program"/>
-            <xs:enumeration value="muzicko_delo"/>
-            <xs:enumeration value="dramsko_delo"/>
-            <xs:enumeration value="filmsko_delo"/>
-            <xs:enumeration value="likovno_delo"/>
-            <xs:enumeration value="primenjeno_delo"/>
-            <xs:enumeration value="patenti"/>
-            <xs:enumeration value="naucna_teorija"/>
-            <xs:enumeration value="naucna_delatnost"/>
+            <xs:enumeration value="књижевно дело"/>
+            <xs:enumeration value="рачунарски програм"/>
+            <xs:enumeration value="музичко дело"/>
+            <xs:enumeration value="драмско дело"/>
+            <xs:enumeration value="филмско дело"/>
+            <xs:enumeration value="ликовно дело"/>
+            <xs:enumeration value="примењено дело"/>
+            <xs:enumeration value="патенти"/>
+            <xs:enumeration value="научна теорија"/>
+            <xs:enumeration value="научна делатност"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TForma_zapisa">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="rukopis"/>
-            <xs:enumeration value="stampani_tekst"/>
-            <xs:enumeration value="muzicka_partitura"/>
-            <xs:enumeration value="zvucni_zapis"/>
-            <xs:enumeration value="vizuelni_zapis"/>
-            <xs:enumeration value="audiovizuelni_zapis"/>
-            <xs:enumeration value="digitalna_forma"/>
+            <xs:enumeration value="рукопис"/>
+            <xs:enumeration value="штампани текст"/>
+            <xs:enumeration value="музичка партитура"/>
+            <xs:enumeration value="звучни запис"/>
+            <xs:enumeration value="визуелни запис"/>
+            <xs:enumeration value="аудиовизуелни запис"/>
+            <xs:enumeration value="дигитална форма"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TTip_primera">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="slika"/>
-            <xs:enumeration value="video_zapis"/>
-            <xs:enumeration value="audio_zapis"/>
+            <xs:enumeration value="слика"/>
+            <xs:enumeration value="видео запис"/>
+            <xs:enumeration value="аудио запис"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

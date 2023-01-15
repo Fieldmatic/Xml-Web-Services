@@ -16,10 +16,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TTipDrzavljanstva {
 
-    @XmlEnumValue("domace_drzavljanstvo")
-    DOMACE_DRZAVLJANSTVO("domace_drzavljanstvo"),
-    @XmlEnumValue("strano_drzavljanstvo")
-    STRANO_DRZAVLJANSTVO("strano_drzavljanstvo");
+    @XmlEnumValue("домаће")
+    DOMACE_DRZAVLJANSTVO("домаће"),
+    @XmlEnumValue("страно")
+    STRANO_DRZAVLJANSTVO("страно");
     private final String value;
 
     TTipDrzavljanstva(String v) {

@@ -123,8 +123,8 @@
     </xs:simpleType>
     <xs:simpleType name="TTip_drzavljanstva">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="domace_drzavljanstvo"/>
-            <xs:enumeration value="strano_drzavljanstvo"/>
+            <xs:enumeration value="домаће"/>
+            <xs:enumeration value="страно"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

@@ -10,9 +10,9 @@
     </prijava>
     <podnosilac xsi:type="ks:TPravno_Lice">
         <adresa xmlns="http://www.xml.tim14.rs/korisnici">
-            <mesto>Bijeljina</mesto>
+            <mesto>Бијељина</mesto>
             <postanski_broj>76300</postanski_broj>
-            <ulica>Nikole Tesle</ulica>
+            <ulica>Николе Тесле</ulica>
             <broj>10</broj>
         </adresa>
         <broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38165656426</broj_mobilnog_telefona>
@@ -21,59 +21,70 @@
     </podnosilac>
     <punomocnik>
         <ks:puno_ime>
-            <ks:ime>Mile</ks:ime>
-            <ks:prezime>Milic</ks:prezime>
+            <ks:ime>Миле</ks:ime>
+            <ks:prezime>Милић</ks:prezime>
         </ks:puno_ime>
         <ks:adresa>
-            <ks:mesto>Bijeljina</ks:mesto>
+            <ks:mesto>Бијељина</ks:mesto>
             <ks:postanski_broj>76300</ks:postanski_broj>
-            <ks:ulica>Nikole Tesle</ks:ulica>
+            <ks:ulica>Николе Тесле</ks:ulica>
             <ks:broj>11</ks:broj>
         </ks:adresa>
     </punomocnik>
     <autorsko_delo>
-        <naslov_autorskog_dela property="pred:naslovAutorskogDela" datatype="xs:string">Covek po imenu Ive</naslov_autorskog_dela>
-        <vrsta_autorskog_dela>knjizevno_delo</vrsta_autorskog_dela>
-        <forma_zapisa>stampani_tekst</forma_zapisa>
+        <naslov_autorskog_dela property="pred:naslovAutorskogDela" datatype="xs:string">Човек по имену Уве</naslov_autorskog_dela>
+        <vrsta_autorskog_dela>књижевно дело</vrsta_autorskog_dela>
+        <forma_zapisa>штампани текст</forma_zapisa>
         <podaci_o_autorima>
             <autor>
+                <pseudonim>PSEUDO</pseudonim>
                 <licni_podaci>
                     <ks:adresa>
-                        <ks:mesto>Novi Sad</ks:mesto>
+                        <ks:mesto>Нови Сад</ks:mesto>
                         <ks:postanski_broj>21000</ks:postanski_broj>
-                        <ks:ulica>Dr Ivana Ribara</ks:ulica>
+                        <ks:ulica>Др Ивана Рибара</ks:ulica>
                         <ks:broj>5</ks:broj>
                     </ks:adresa>
                     <ks:puno_ime>
-                        <ks:ime property="pred:imeAutora" datatype="xs:string">Nikola</ks:ime>
-                        <ks:prezime property="pred:prezimeAutora" datatype="xs:string">Stevanovic</ks:prezime>
+                        <ks:ime property="pred:imeAutora" datatype="xs:string">Никола</ks:ime>
+                        <ks:prezime property="pred:prezimeAutora" datatype="xs:string">Стевановић</ks:prezime>
                     </ks:puno_ime>
                     <ks:drzavljanstvo>
-                        <ks:tip_drzavljanstva>domace_drzavljanstvo</ks:tip_drzavljanstva>
+                        <ks:tip_drzavljanstva>домаће</ks:tip_drzavljanstva>
                         <ks:jmbg>3112999185855</ks:jmbg>
                         <ks:broj_pasosa></ks:broj_pasosa>
                     </ks:drzavljanstvo>
                 </licni_podaci>
                 <anonimni_autor>false</anonimni_autor>
             </autor>
+            <autor>
+                <godina_smrti>1999</godina_smrti>
+                <licni_podaci>
+                    <ks:puno_ime>
+                        <ks:ime>Јелена</ks:ime>
+                        <ks:prezime>Стевановић</ks:prezime>
+                    </ks:puno_ime>
+                </licni_podaci>
+                <anonimni_autor>false</anonimni_autor>
+            </autor>
         </podaci_o_autorima>
         <izvorno_autorsko_delo>
-            <naslov_izvornog_autorskog_dela>Covek po imenu Uve</naslov_izvornog_autorskog_dela>
+            <naslov_izvornog_autorskog_dela>Човек по имену Уве</naslov_izvornog_autorskog_dela>
             <autor_izvornog_autorskog_dela>
                 <licni_podaci>
                     <ks:puno_ime>
-                        <ks:ime>Fredrik</ks:ime>
-                        <ks:prezime>Bakman</ks:prezime>
+                        <ks:ime>Фредрик</ks:ime>
+                        <ks:prezime>Бакман</ks:prezime>
                     </ks:puno_ime>
                 </licni_podaci>
                 <anonimni_autor>false</anonimni_autor>
             </autor_izvornog_autorskog_dela>
         </izvorno_autorsko_delo>
         <stvoreno_u_radnom_odnosu>true</stvoreno_u_radnom_odnosu>
-        <nacin_koriscenja_autorskog_dela>da se koristi</nacin_koriscenja_autorskog_dela>
+        <nacin_koriscenja_autorskog_dela>да се користи</nacin_koriscenja_autorskog_dela>
         <primer_autorskog_dela>
             <putanja_do_primera>data/primer1.pdf</putanja_do_primera>
-            <tip_primera>slika</tip_primera>
+            <tip_primera>слика</tip_primera>
         </primer_autorskog_dela>
         <opis_autorskog_dela>
             <putanja_do_opisa>data/opis1.pdf</putanja_do_opisa>
