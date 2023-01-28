@@ -1,0 +1,102 @@
+<div>
+  <form
+    [formGroup]="authForm"
+    #formDirective="ngForm"
+    class="authForm"
+    (ngSubmit)="onSubmit(formDirective)"
+  >
+    <mat-grid-list
+      flex
+      layout="column"
+      cols="2"
+      rowHeight="5em"
+      style="width: 30%"
+      gutterSize="1em"
+    >
+      <mat-grid-tile colspan="2">
+        <div class="authDivider">
+          <hr />
+          <p>{{ isLoginMode ? "LOG IN" : "SIGN UP" }}</p>
+          <hr />
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error
+            *ngIf="
+              this.authForm.get('email')?.hasError('required') && !isLoginMode
+            "
+            >Email is required field.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              this.authForm.get('email')?.hasError('pattern') && !isLoginMode
+            "
+            >Please provide a valid email address.</mat-error
+          >
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+          <mat-error
+            *ngIf="
+              this.authForm.get('password')?.hasError('required') &&
+              !isLoginMode
+            "
+            >Password is required field.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              this.authForm.get('password')?.hasError('minlength') &&
+              !isLoginMode
+            "
+            >Password must contain at least 8 characters.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              this.authForm.get('password')?.hasError('pattern') && !isLoginMode
+            "
+            >Password contain at least one number, symbol, uppercase and
+            lowercase letter.</mat-error
+          >
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" *ngIf="!isLoginMode">
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" />
+          <mat-error
+            *ngIf="authForm.get('confirmPassword')?.hasError('required')"
+            >Confirm password is required field.</mat-error
+          >
+          <mat-error
+            *ngIf="
+              authForm.get('confirmPassword')?.hasError('confirmedValidator')
+            "
+            >Passwords do not match.</mat-error
+          >
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list
+      layout="column"
+      cols="2"
+      rowHeight="2.5em"
+      style="width: 30%"
+      gutterSize="1em"
+      class="authBottom"
+    >
+      <mat-grid-tile colspan="2">
+        <button type="submit" mat-button class="authButton">
+          {{ isLoginMode ? "Log in" : "Sign up" }}
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
