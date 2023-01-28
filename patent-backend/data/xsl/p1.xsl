@@ -541,7 +541,7 @@
 								</td>
 							</tr>
 							<xsl:for-each select="p1:zahtev_za_priznanje_patenta/p1:ranije_prijave/p1:ranija_prijava">
-								<tr>
+								<tr style="border-bottom: 1px solid black">
 									<td>
 										<p style="text-align: center; margin: 10px">
 											<xsl:value-of select="p1:datum_podnosenja"/>

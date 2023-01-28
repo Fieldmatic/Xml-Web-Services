@@ -351,7 +351,7 @@
                         <tr>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 16px; width: 47%;">Списак робе и услуга**</td>
                             <td style="text-align: center; border-bottom: 1px solid; border-right: 1px solid; padding-top: 9px; padding-bottom: 9px; width: 10%;"></td>
-                            <td style="text-align: center; padding-top: 16px; padding-bottom: 2px;">Ж-<xsl:value-of select="z1:zahtev_za_priznanje_ziga/@broj_prijave"/>/<xsl:value-of select="year-from-date(z1:zahtev_za_priznanje_ziga/@datum_podnosenja)"/></td>
+                            <td style="text-align: center; padding-top: 16px; padding-bottom: 2px;">Ж-<xsl:value-of select="z1:zahtev_za_priznanje_ziga/z1:prijava/z1:broj_prijave"/>/<xsl:value-of select="year-from-date(z1:zahtev_za_priznanje_ziga/z1:prijava/z1:datum_podnosenja)"/></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 16px; width: 47%;">Пуномоћје</td>
@@ -361,7 +361,7 @@
                         <tr>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 16px; width: 47%;">Генерално пуномоћје раније приложено</td>
                             <td style="text-align: center; border-bottom: 1px solid; border-right: 1px solid; padding-top: 9px; padding-bottom: 9px; width: 10%;"></td>
-                            <td style="text-align: center; padding-top: 16px; padding-bottom: 2px; font-weight:bold;"><xsl:value-of select="format-date(z1:zahtev_za_priznanje_ziga/@datum_podnosenja, '[D1].[M1].[Y1].')"/></td>
+                            <td style="text-align: center; padding-top: 16px; padding-bottom: 2px; font-weight:bold;"><xsl:value-of select="format-date(z1:zahtev_za_priznanje_ziga/z1:prijava/z1:datum_podnosenja, '[D1].[M1].[Y1].')"/></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 16px; width: 47%;">Пуномоћје ће бити накнадно достављено</td>

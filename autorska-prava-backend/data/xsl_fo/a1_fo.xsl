@@ -59,8 +59,8 @@
                                 <fo:table-cell number-columns-spanned="2" padding-left="20px">
                                     <xsl:choose>
                                         <xsl:when test="//a1:podnosilac//ks:puno_ime">
-                                            <fo:block> Име <xsl:value-of select="//a1:podnosilac//ks:puno_ime//ks:ime"/> и
-                                            презиме: <xsl:value-of select="//a1:podnosilac//ks:puno_ime//ks:prezime"/>
+                                            <fo:block> Име и
+                                            презиме: <xsl:value-of select="//a1:podnosilac//ks:puno_ime//ks:ime"/><xsl:value-of select="'&#160;'"/><xsl:value-of select="//a1:podnosilac//ks:puno_ime//ks:prezime"/>
                                             Тип држаљанства: <xsl:value-of select="//a1:podnosilac//ks:drzavljanstvo//ks:tip_drzavljanstva"/>
                                             Јмбг: <xsl:value-of select="//a1:podnosilac//ks:drzavljanstvo//ks:jmbg"/>
                                             Број пасоша: <xsl:value-of select="//a1:podnosilac//ks:drzavljanstvo//ks:broj_pasosa"/>
@@ -71,8 +71,11 @@
                                         </xsl:otherwise>
                                     </xsl:choose>
                                     <fo:block> Адреса: <xsl:value-of select="//a1:podnosilac//ks:adresa//ks:ulica"/>
+                                        <xsl:value-of select="'&#160;'"/>
                                         <xsl:value-of select="//a1:podnosilac//ks:adresa//ks:broj"/>,
+                                        <xsl:value-of select="'&#160;'"/>
                                         <xsl:value-of select="//a1:podnosilac//ks:adresa//ks:mesto"/>
+                                        <xsl:value-of select="'&#160;'"/>
                                         <xsl:value-of select="//a1:podnosilac//ks:adresa//ks:postanski_broj"/></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
@@ -123,7 +126,7 @@
                                 <fo:table-row>
                                     <fo:table-cell number-columns-spanned="2" padding="0px 0px 5px 20px">
                                         <fo:block>
-                                                    Име и презиме: <xsl:value-of select="//a1:punomocnik//ks:puno_ime//ks:ime"/>
+                                                    Име и презиме: <xsl:value-of select="//a1:punomocnik//ks:puno_ime//ks:ime"/><xsl:value-of select="'&#160;'"/>
                                                     <xsl:value-of select="//a1:punomocnik//ks:puno_ime//ks:prezime"/>
                                         </fo:block>
                                     </fo:table-cell>
@@ -133,8 +136,11 @@
                                             <fo:block>
                                                 Адреса:
                                                 <xsl:value-of select="//a1:punomocnik//ks:adresa//ks:ulica"/>
+                                                <xsl:value-of select="'&#160;'"/>
                                                 <xsl:value-of select="//a1:punomocnik//ks:adresa//ks:broj"/>,
+                                                <xsl:value-of select="'&#160;'"/>
                                                 <xsl:value-of select="//a1:punomocnik//ks:adresa//ks:mesto"/>
+                                                <xsl:value-of select="'&#160;'"/>
                                                 <xsl:value-of select="//a1:punomocnik//ks:adresa//ks:postanski_broj"/>
                                             </fo:block>
                                         </fo:table-cell>
@@ -169,7 +175,10 @@
                                 <fo:table-row>
                                     <fo:table-cell number-columns-spanned="2" padding="0px 0px 15px 20px">
                                         <fo:block>
-                                            Име и презиме аутора: <xsl:value-of select="//a1:autorsko_delo//a1:izvorno_autorsko_delo//a1:autor_izvornog_autorskog_dela//a1:licni_podaci//ks:puno_ime//ks:ime"/>  <xsl:value-of select="//a1:autorsko_delo//a1:izvorno_autorsko_delo//a1:autor_izvornog_autorskog_dela//a1:licni_podaci//ks:puno_ime//ks:prezime"/><br/>
+                                            Име и презиме аутора:
+                                            <xsl:value-of select="//a1:autorsko_delo//a1:izvorno_autorsko_delo//a1:autor_izvornog_autorskog_dela//a1:licni_podaci//ks:puno_ime//ks:ime"/>
+                                            <xsl:value-of select="'&#160;'"/>
+                                            <xsl:value-of select="//a1:autorsko_delo//a1:izvorno_autorsko_delo//a1:autor_izvornog_autorskog_dela//a1:licni_podaci//ks:puno_ime//ks:prezime"/><br/>
                                         </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -177,7 +186,7 @@
                         </fo:table-body>
                     </fo:table>
 
-                    <fo:table font-family="Calibri, sans-serif" border="1px solid black" border-collapse="collapse">
+                    <fo:table font-family="Calibri, sans-serif" border="1px solid black" border-collapse="collapse" margin-top="50px">
                         <fo:table-column column-width="70%"/>
                         <fo:table-column column-width="30%"/>
                         <fo:table-body>
@@ -212,7 +221,10 @@
                                 <fo:table-row>
                                     <fo:table-cell number-columns-spanned="2" padding="15px 0px 15px 20px">
                                         <fo:block>
-                                                Autor: <xsl:value-of select="a1:licni_podaci/ks:puno_ime/ks:ime"/> <xsl:value-of select="a1:licni_podaci//ks:puno_ime//ks:prezime"/>
+                                                Autor:
+                                            <xsl:value-of select="a1:licni_podaci/ks:puno_ime/ks:ime"/>
+                                            <xsl:value-of select="'&#160;'"/>
+                                            <xsl:value-of select="a1:licni_podaci//ks:puno_ime//ks:prezime"/>
                                         </fo:block>
                                             <xsl:choose>
                                                     <xsl:when test="a1:godina_smrti">
@@ -224,9 +236,9 @@
                                                         <xsl:value-of select="a1:licni_podaci/ks:adresa/ks:broj"/>,
                                                             <xsl:value-of select="a1:licni_podaci/ks:adresa/ks:mesto"/>
                                                             <xsl:value-of select="a1:licni_podaci/ks:adresa/ks:postanski_broj"/><fo:block>
-                                                            Тип држаљанства: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:tip_drzavljanstva"/>
-                                                            Јмбг: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:jmbg"/>
-                                                            Број пасоша: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:broj_pasosa"/>
+                                                            Тип држаљанства: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:tip_drzavljanstva"/><fo:block>
+                                                        Јмбг: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:jmbg"/></fo:block><fo:block>
+                                                            Број пасоша: <xsl:value-of select="a1:licni_podaci/ks:drzavljanstvo/ks:broj_pasosa"/></fo:block>
                                                         </fo:block>
                                                     </xsl:otherwise>
                                                 </xsl:choose>
@@ -256,7 +268,7 @@
 
                             <!-- Nacin koriscenja -->
                             <fo:table-row>
-                                <fo:table-cell number-columns-spanned="2" padding="15px 0px 15px 5px">
+                                <fo:table-cell number-columns-spanned="2" padding="15px 0px 100px 5px">
                                     <fo:block>
                                         10) Начин коришћења ауторског дела или намеравани начин коришћења ауторског дела: <xsl:value-of select="//a1:autorsko_delo//a1:nacin_koriscenja_autorskog_dela"/>
                                     </fo:block>
@@ -266,7 +278,7 @@
                         </fo:table-body>
                     </fo:table>
 
-                    <fo:table font-family="Calibri, sans-serif" border="1px solid black" border-collapse="collapse" margin-top="80px">
+                    <fo:table font-family="Calibri, sans-serif" border="1px solid black" border-collapse="collapse" margin-top="50px">
                         <fo:table-column column-width="70%"/>
                         <fo:table-column column-width="30%"/>
                         <fo:table-body>
@@ -304,13 +316,13 @@
                             <fo:table-row>
                                 <fo:table-cell column-number="2" border="1px solid black" margin-top="25px">
                                     <fo:block font-size="14" margin="5px 0px 10px 10px">Број пријаве:</fo:block>
-                                    <fo:block font-size="14" margin-left="10px" font-weight="bold">A-<xsl:value-of select="//@broj_prijave"/></fo:block>
+                                    <fo:block font-size="14" margin-left="10px" font-weight="bold">A-<xsl:value-of select="//a1:prijava//a1:broj_prijave"/></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
                                 <fo:table-cell column-number="2" border="1px solid black" margin-top="25px">
                                     <fo:block font-size="14" margin="5px 0px 10px 10px">Датум подношења:</fo:block>
-                                    <fo:block font-size="14" margin-left="10px" font-weight="bold"><xsl:value-of select="//@datum_podnosenja"/></fo:block>
+                                    <fo:block font-size="14" margin-left="10px" font-weight="bold"><xsl:value-of select="//a1:prijava//a1:datum_podnosenja"/></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
 

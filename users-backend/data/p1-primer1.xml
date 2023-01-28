@@ -10,20 +10,20 @@
         <datum_prijema property="pred:datumPrijema" datatype="xs:date">2022-12-05</datum_prijema>
     </prijava>
     <pronalazak>
-        <naziv_pronalaska_rs>pronalazak_na_srpskom</naziv_pronalaska_rs>
-        <naziv_pronalaska_eng>pronalazak_na_engleskom</naziv_pronalaska_eng>
+        <naziv_pronalaska_rs>проналазак на српском</naziv_pronalaska_rs>
+        <naziv_pronalaska_eng>проналазак на енглеском</naziv_pronalaska_eng>
     </pronalazak>
     <podaci_o_podnosiocu>
         <je_pronalazac>false</je_pronalazac>
         <podnosilac xsi:type="ks:TPravno_Lice">
             <ks:adresa xmlns="http://www.xml.tim14.rs/korisnici">
-                <mesto>Bijeljina</mesto>
+                <mesto>Бијељина</mesto>
                 <postanski_broj>76300</postanski_broj>
-                <ulica>Nikole Tesle</ulica>
+                <ulica>Николе Тесле</ulica>
                 <broj>10</broj>
             </ks:adresa>
             <ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38165656426</ks:broj_mobilnog_telefona>
-            <ks:broj_faksa>055490900</ks:broj_faksa>
+            <ks:broj_faksa>+38155394000</ks:broj_faksa>
             <ks:email xmlns="http://www.xml.tim14.rs/korisnici">milic@gmail.com</ks:email>
             <ks:poslovno_ime property="pred:poslovnoIme" datatype="xs:string">MILIC-PROM</ks:poslovno_ime>
         </podnosilac>
@@ -32,17 +32,17 @@
         <ne_zeli_da_bude_naveden>false</ne_zeli_da_bude_naveden>
         <pronalazac>
             <ks:adresa>
-                <ks:mesto>Bijeljina</ks:mesto>
+                <ks:mesto>Бијељина</ks:mesto>
                 <ks:postanski_broj>76300</ks:postanski_broj>
-                <ks:ulica>Nikole Tesle</ks:ulica>
+                <ks:ulica>Николе Тесле</ks:ulica>
                 <ks:broj>11</ks:broj>
             </ks:adresa>
-            <ks:broj_mobilnog_telefona>065908739</ks:broj_mobilnog_telefona>
-            <ks:broj_faksa>055133111</ks:broj_faksa>
+            <ks:broj_mobilnog_telefona>+38165908739</ks:broj_mobilnog_telefona>
+            <ks:broj_faksa>+38155133111</ks:broj_faksa>
             <ks:email>lemy@gmail.com</ks:email>
             <ks:puno_ime>
-                <ks:ime>Mile</ks:ime>
-                <ks:prezime>Milic</ks:prezime>
+                <ks:ime>Миле</ks:ime>
+                <ks:prezime>Милић</ks:prezime>
             </ks:puno_ime>
         </pronalazac>
     </podaci_o_pronalazacu>
@@ -51,17 +51,17 @@
         <punomocnik_za_prijem_pismena>true</punomocnik_za_prijem_pismena>
         <punomocnik xsi:type="ks:TFizicko_Lice">
             <ks:adresa>
-                <ks:mesto>Bijeljina</ks:mesto>
+                <ks:mesto>Бијељина</ks:mesto>
                 <ks:postanski_broj>76300</ks:postanski_broj>
-                <ks:ulica>Nikole Pasic</ks:ulica>
+                <ks:ulica>Николе Пашић</ks:ulica>
                 <ks:broj>11</ks:broj>
             </ks:adresa>
-            <ks:broj_mobilnog_telefona>065908739</ks:broj_mobilnog_telefona>
-            <ks:broj_faksa>055133111</ks:broj_faksa>
+            <ks:broj_mobilnog_telefona>+38165908739</ks:broj_mobilnog_telefona>
+            <ks:broj_faksa>+38155133111</ks:broj_faksa>
             <ks:email>rada@gmail.com</ks:email>
             <ks:puno_ime>
-                <ks:ime>Radmila</ks:ime>
-                <ks:prezime>Milic</ks:prezime>
+                <ks:ime>Радмила</ks:ime>
+                <ks:prezime>Милић</ks:prezime>
             </ks:puno_ime>
         </punomocnik>
     </podaci_o_punomocniku>
@@ -76,6 +76,12 @@
         <ranija_prijava>
             <broj_prijave>4</broj_prijave>
             <datum_podnosenja>2022-11-20</datum_podnosenja>
+            <oznaka_drzave>RS</oznaka_drzave>
+        </ranija_prijava>
+        <ranija_prijava>
+            <broj_prijave>3</broj_prijave>
+            <datum_podnosenja>2022-11-20</datum_podnosenja>
+            <oznaka_drzave>BH</oznaka_drzave>
         </ranija_prijava>
     </ranije_prijave>
 </zahtev_za_priznanje_patenta>
