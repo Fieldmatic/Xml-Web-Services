@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.tim14.rs/autorska_prava"
+    xmlns:ks="http://www.xml.tim14.rs/korisnici" xmlns:a1="http://www.xml.tim14.rs/autorska_prava">
+    <xs:import namespace="http://www.xml.tim14.rs/korisnici" schemaLocation="korisnici.xsd"/>
+    <xs:element name="zahtev_za_autorska_prava">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="prijava" type="a1:TPrijava"/>
+                <xs:element name="podnosilac" type="ks:TLice"/>
+                <xs:element name="punomocnik" minOccurs="0" nillable="true">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="ks:puno_ime"/>
+                            <xs:element ref="ks:adresa"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="autorsko_delo">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="naslov_autorskog_dela">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="property"/>
+                                            <xs:attribute name="datatype"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="vrsta_autorskog_dela" type="a1:TVrsta_autorskog_dela"/>
+                            <xs:element name="forma_zapisa" type="a1:TForma_zapisa"/>
+                            <xs:element name="podaci_o_autorima">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="autor" minOccurs="0" nillable="true"
+                                            type="a1:TAutor" maxOccurs="unbounded"> </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="izvorno_autorsko_delo" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="naslov_izvornog_autorskog_dela">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:minLength value="1"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="autor_izvornog_autorskog_dela"
+                                            type="a1:TAutor"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="stvoreno_u_radnom_odnosu" type="xs:boolean"
+                                minOccurs="1"/>
+                            <xs:element name="nacin_koriscenja_autorskog_dela" type="xs:string"
+                                minOccurs="0"/>
+                            <xs:element minOccurs="1" name="primer_autorskog_dela">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="putanja_do_primera" type="xs:string"/>
+                                        <xs:element name="tip_primera" type="a1:TTip_primera"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="opis_autorskog_dela">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="putanja_do_opisa" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TPrijava">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="broj_prijave">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:positiveInteger">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="1" name="datum_podnosenja">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:date">
+                            <xs:attribute name="property"/>
+                            <xs:attribute name="datatype"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TAutor">
+        <xs:sequence>
+            <xs:element name="pseudonim" minOccurs="0" nillable="false">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="godina_smrti" type="xs:positiveInteger" minOccurs="0"/>
+            <xs:element name="licni_podaci" type="ks:TFizicko_Lice" minOccurs="0"/>
+            <xs:element name="anonimni_autor" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TVrsta_autorskog_dela">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="књижевно дело"/>
+            <xs:enumeration value="рачунарски програм"/>
+            <xs:enumeration value="музичко дело"/>
+            <xs:enumeration value="драмско дело"/>
+            <xs:enumeration value="филмско дело"/>
+            <xs:enumeration value="ликовно дело"/>
+            <xs:enumeration value="примењено дело"/>
+            <xs:enumeration value="патенти"/>
+            <xs:enumeration value="научна теорија"/>
+            <xs:enumeration value="научна делатност"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TForma_zapisa">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="рукопис"/>
+            <xs:enumeration value="штампани текст"/>
+            <xs:enumeration value="музичка партитура"/>
+            <xs:enumeration value="звучни запис"/>
+            <xs:enumeration value="визуелни запис"/>
+            <xs:enumeration value="аудиовизуелни запис"/>
+            <xs:enumeration value="дигитална форма"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TTip_primera">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="слика"/>
+            <xs:enumeration value="видео запис"/>
+            <xs:enumeration value="аудио запис"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

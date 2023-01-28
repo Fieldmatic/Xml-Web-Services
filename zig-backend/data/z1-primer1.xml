@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_priznanje_ziga xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xmlns:ks="http://www.xml.tim14.rs/korisnici"
+                          xsi:schemaLocation="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga z-1.xsd"
+                          xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/">
+    <prijava>
+        <broj_prijave property="pred:brojPrijave" datatype="xs:positiveInteger">1</broj_prijave>
+        <datum_podnosenja property="pred:datumPodnosenja" datatype="xs:date">2022-12-12</datum_podnosenja>
+    </prijava>
+    <podnosilac xsi:type="ks:TFizicko_Lice">
+        <ks:adresa xmlns="http://www.xml.tim14.rs/korisnici">
+            <mesto>Subotica</mesto>
+            <postanski_broj>24000</postanski_broj>
+            <ulica>Dragiše Mišovića</ulica>
+            <broj>30</broj>
+            <drzava>Srbija</drzava>
+        </ks:adresa>
+        <ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+38166430250</ks:broj_mobilnog_telefona>
+        <ks:broj_faksa>055490900</ks:broj_faksa>
+        <ks:email xmlns="http://www.xml.tim14.rs/korisnici">prijovic.uros13@gmail.com</ks:email>
+        <ks:puno_ime>
+            <ks:ime property="pred:imePodnosioca" datatype="xs:string">Uroš</ks:ime>
+            <ks:prezime property="pred:prezimePodnosioca" datatype="xs:string">Prijović</ks:prezime>
+        </ks:puno_ime>
+    </podnosilac>
+    <punomocnik xsi:type="ks:TFizicko_Lice">
+        <ks:adresa xmlns="http://www.xml.tim14.rs/korisnici">
+            <mesto>Subotica</mesto>
+            <postanski_broj>24000</postanski_broj>
+            <ulica>Dragiše Mišovića</ulica>
+            <broj>30</broj>
+            <drzava>Srbija</drzava>
+        </ks:adresa>
+        <ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">+381646621789</ks:broj_mobilnog_telefona>
+        <ks:broj_faksa>047564380</ks:broj_faksa>
+        <ks:email xmlns="http://www.xml.tim14.rs/korisnici">prijovic.krstina@gmail.com</ks:email>
+        <ks:puno_ime>
+            <ks:ime>Krstina</ks:ime>
+            <ks:prezime>Karlaš</ks:prezime>
+        </ks:puno_ime>
+    </punomocnik>
+    <vrsta_ziga property="pred:vrstaZiga" datatype="z1:TVrsta_ziga">INDUVIDUALNI</vrsta_ziga>
+    <znak>
+        <vrsta_znaka vrsta_znaka="DRUGI">druga vrsta znaka</vrsta_znaka>
+        <izgled_znaka>putanja-do-izgleda-znaka-prvog-primera</izgled_znaka>
+        <boje_znaka>roze</boje_znaka>
+        <opis_znaka>Primer opisa znaka (šta god to bilo)</opis_znaka>
+    </znak>
+    <klase_robe_ili_usluge>10</klase_robe_ili_usluge>
+    <klase_robe_ili_usluge>12</klase_robe_ili_usluge>
+    <klase_robe_ili_usluge>23</klase_robe_ili_usluge>
+    <klase_robe_ili_usluge>45</klase_robe_ili_usluge>
+    <pravo_prvenstva zatrazeno_pravo_prvenstva="true">
+        <osnov_prava_prvenstva>Građanin sa prioritetom</osnov_prava_prvenstva>
+    </pravo_prvenstva>
+    <takse ukupna_vrednost="16000">
+        <osnovna_taksa>1000</osnovna_taksa>
+        <taksa_za_klase>10000</taksa_za_klase>
+        <taksa_za_graficko_resenje>5000</taksa_za_graficko_resenje>
+    </takse>
+    <Prilozi_uz_zahtev>
+        <primerak_znaka>putanja-primerka</primerak_znaka>
+        <spisak_robe_i_usluga>putanja-spiska-robe</spisak_robe_i_usluga>
+        <punomocje>putanja-punomocja</punomocje>
+        <generalno_punomocje>putanja-generalnog-punomocja</generalno_punomocje>
+        <dokaz_o_pravu_prvenstva>putanja-dokaza-prvenstva</dokaz_o_pravu_prvenstva>
+        <dokaz_o_uplati_takse>putnaja-dokaza-o-uplati</dokaz_o_uplati_takse>
+    </Prilozi_uz_zahtev>
+</zahtev_za_priznanje_ziga>
