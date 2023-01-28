@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.tim14.rs/korisnici" xmlns:ks="http://www.xml.tim14.rs/korisnici">
+    <xs:complexType abstract="true" name="TLice">
+        <xs:sequence>
+            <xs:element ref="ks:adresa" minOccurs="0"/>
+            <xs:element name="broj_mobilnog_telefona" nillable="true" type="ks:TBroj_telefona"
+                minOccurs="0"/>
+            <xs:element minOccurs="0" name="broj_faksa" type="ks:TBroj_telefona" nillable="true"/>
+            <xs:element name="email" type="ks:TEmail" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFizicko_Lice">
+        <xs:complexContent>
+            <xs:extension base="ks:TLice">
+                <xs:sequence>
+                    <xs:element ref="ks:puno_ime"/>
+                    <xs:element minOccurs="0" ref="ks:drzavljanstvo"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPravno_Lice">
+        <xs:complexContent>
+            <xs:extension base="ks:TLice">
+                <xs:sequence>
+                    <xs:element name="poslovno_ime">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="property"/>
+                                    <xs:attribute name="datatype"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="adresa" nillable="true">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesto">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="postanski_broj" type="xs:string"/>
+                <xs:element name="ulica" type="xs:string"/>
+                <xs:element name="broj" type="ks:TBroj_ulice"/>
+                <xs:element name="drzava" minOccurs="0" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="puno_ime">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ime">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="property"/>
+                                <xs:attribute name="datatype"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="prezime">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="property"/>
+                                <xs:attribute name="datatype"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="drzavljanstvo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="tip_drzavljanstva" type="ks:TTip_drzavljanstva"/>
+                <xs:element maxOccurs="1" name="jmbg">
+                    <xs:simpleType>
+                        <xs:restriction base="ks:TJmbg"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="broj_pasosa" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TBroj_telefona">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="9"/>
+            <xs:pattern value="[+]?[0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TBroj_ulice">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9]+"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TPostanski_broj">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TJmbg">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{13}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TTip_drzavljanstva">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="домаће"/>
+            <xs:enumeration value="страно"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

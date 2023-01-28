@@ -512,7 +512,7 @@
 									</fo:table-cell>
 								</fo:table-row>
 								<xsl:for-each select="p1:zahtev_za_priznanje_patenta/p1:ranije_prijave/p1:ranija_prijava">
-									<fo:table-row>
+									<fo:table-row border-bottom="1px solid black">
 										<fo:table-cell>
 											<fo:block margin="10px" text-align="center">
 												<xsl:value-of select="p1:datum_podnosenja"/>

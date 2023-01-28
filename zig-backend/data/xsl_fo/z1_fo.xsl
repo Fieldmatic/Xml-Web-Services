@@ -559,7 +559,7 @@
                                     <fo:block></fo:block>
                                 </fo:table-cell>
                                 <fo:table-cell>
-                                    <fo:block text-align="center" margin-top="11px">Ж-<xsl:value-of select="z1:zahtev_za_priznanje_ziga/@broj_prijave"/>/<xsl:value-of select="year-from-date(z1:zahtev_za_priznanje_ziga/@datum_podnosenja)"/></fo:block>
+                                    <fo:block text-align="center" margin-top="11px">Ж-<xsl:value-of select="z1:zahtev_za_priznanje_ziga/z1:prijava/z1:broj_prijave"/>/<xsl:value-of select="year-from-date(z1:zahtev_za_priznanje_ziga/z1:prijava/z1:datum_podnosenja)"/></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -581,7 +581,7 @@
                                     <fo:block></fo:block>
                                 </fo:table-cell>
                                 <fo:table-cell>
-                                    <fo:block font-weight="bold" text-align="center" margin-top="11px"><xsl:value-of select="format-date(z1:zahtev_za_priznanje_ziga/@datum_podnosenja, '[D1].[M1].[Y1].')"/></fo:block>
+                                    <fo:block font-weight="bold" text-align="center" margin-top="11px"><xsl:value-of select="format-date(z1:zahtev_za_priznanje_ziga/z1:prijava/z1:datum_podnosenja, '[D1].[M1].[Y1].')"/></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>

@@ -60,7 +60,7 @@
 								<p>ОБРАЗАЦ А-1</p>
 							</div>
 							<p>Београд, Кнегиње Љубице 5</p>
-							<p style="padding: 30px; padding-bottom: 50px; font-weight: bold; font-size: 12pt">ЗАХТЕВ ЗА УНОШЕЊЕ У ЕВИДЕНЦИЈУ И ДЕПОНОВАЊЕ АУТОРСКИХ ДЕЛА</p>
+							<p style="padding: 30px; padding-bottom: 50px; font-weight: bold; font-size: 12pt; text-align:center">ЗАХТЕВ ЗА УНОШЕЊЕ У ЕВИДЕНЦИЈУ И ДЕПОНОВАЊЕ АУТОРСКИХ ДЕЛА</p>
 						</div>
 
 						<div class="section">
@@ -235,7 +235,7 @@
 								<td/>
 								<td style="border:1px solid black; margin-top:25px; margin-right: 10px">
 									<p style="font-size:16; margin:5px 0px 10px 10px">Број пријаве:</p>
-									<p style="font-size:16; margin-left:10px; font-weight: bold">A-<xsl:value-of select="//@broj_prijave"/></p>
+									<p style="font-size:16; margin-left:10px; font-weight: bold">A-<xsl:value-of select="//a1:prijava//a1:broj_prijave"/></p>
 								</td>
 							</tr>
 							<tr>
@@ -243,7 +243,7 @@
 								<td/>
 								<td column-number="2" style="border:1px solid black; margin-top:25px">
 									<p style="font-size:16; margin:5px 0px 10px 10px">Датум подношења:</p>
-									<p style="font-size:16; margin-left:10px; font-weight: bold"><xsl:value-of select="//@datum_podnosenja"/></p>
+									<p style="font-size:16; margin-left:10px; font-weight: bold"><xsl:value-of select="//a1:prijava//a1:datum_podnosenja"/></p>
 								</td>
 							</tr>
 						</table-body>
