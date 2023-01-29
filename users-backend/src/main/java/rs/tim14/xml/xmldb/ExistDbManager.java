@@ -61,7 +61,7 @@ public class ExistDbManager {
 				AuthenticationUtilities.loadProperties().user,
 				AuthenticationUtilities.loadProperties().password);
 			collection.setProperty(OutputKeys.INDENT, "yes");
-			resource = (XMLResource) collection.getResource(documentId);
+			resource = (XMLResource) collection.getResource(documentId.concat(".xml"));
 		} catch (Exception e) {
 			closeConnection(collection, resource);
 		}
