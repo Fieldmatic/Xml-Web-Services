@@ -16,9 +16,9 @@ public class Util {
 
 	private static long document_id_tracker;
 
-	public static String getNextId() {
+	public static long getNextId() {
 		document_id_tracker++;
-		return String.valueOf(document_id_tracker);
+		return document_id_tracker;
 	}
 
 	public static XMLGregorianCalendar getXMLGregorianCalendarCurrentDate() throws DatatypeConfigurationException {

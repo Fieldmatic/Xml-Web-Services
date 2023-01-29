@@ -36,18 +36,10 @@
     </target>
 
     <target name="generate_classes_1" depends="init">
-        <xjc schema="${data.dir}/a-1.xsd" destdir="${gen.dir}"/>
+        <xjc schema="${data.dir}/user.xsd" destdir="${gen.dir}"/>
     </target>
 
-    <target name="generate_classes_2" depends="init">
-        <xjc schema="${data.dir}/p-1.xsd" destdir="${gen.dir}"/>
-    </target>
-
-    <target name="generate_classes_3" depends="init">
-        <xjc schema="${data.dir}/z-1.xsd" destdir="${gen.dir}"/>
-    </target>
-
-    <target name="generate_all" depends="generate_classes_1, generate_classes_2, generate_classes_3"/>
+    <target name="generate_all" depends="generate_classes_1"/>
 
     <target name="main" depends="generate_all"/>
 
