@@ -1,4 +1,6 @@
 export interface AppConfig {
-  apiEndpoint: string;
-  googleClientId: string;
+  usersEndpoint: string;
+  patentEndpoint: string;
+  autorskoPravoEndpoint: string;
+  zigEndpoint: string;
 }

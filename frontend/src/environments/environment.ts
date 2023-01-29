@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:8080/api/',
-  googleClientId:
-    '84188920859-ip1b5avhcc6qer7q99g97hgtusb8lur1.apps.googleusercontent.com',
+  usersEndpoint: 'http://localhost:7000/api/',
+  patentEndpoint: 'http://localhost:7001/api/',
+  autorskoPravoEndpoint: 'http://localhost:7002/api/',
+  zigEndpoint: 'http://localhost:7005/api/',
 };
 
 /*

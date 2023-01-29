@@ -83,6 +83,15 @@
           >
         </mat-form-field>
       </mat-grid-tile>
+      <mat-grid-tile colspan="2" *ngIf="!isLoginMode">
+        <mat-form-field appearance="fill">
+          <mat-label>Select account type</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="Klijent">Klijent</mat-option>
+            <mat-option value="Sluzbenik">Sluzbenik</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
     </mat-grid-list>
     <mat-grid-list
       layout="column"

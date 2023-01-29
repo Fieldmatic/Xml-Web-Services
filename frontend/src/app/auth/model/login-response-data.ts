@@ -1,5 +1,4 @@
 export class LoginResponseData {
-  token: string;
-  expiresIn: number;
+  email: string;
   role: string;
 }

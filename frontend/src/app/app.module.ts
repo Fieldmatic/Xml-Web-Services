@@ -16,12 +16,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import * as fromApp from './store/app.reducer';
 import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AuthModule } from 'src/app/auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
+import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [AppComponent, NavbarComponent, HomepageComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -42,11 +42,6 @@ import { ToastrModule } from 'ngx-toastr';
     {
       provide: APP_SERVICE_CONFIG,
       useValue: APP_CONFIG,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
     },
   ],
   bootstrap: [AppComponent],

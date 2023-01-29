@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { AuthComponent } from './components/auth/auth.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [AuthComponent],
@@ -24,6 +25,7 @@ import { AuthComponent } from './components/auth/auth.component';
     MatGridListModule,
     MatDividerModule,
     MatDialogModule,
+    SharedModule,
   ],
 })
 export class AuthModule {}

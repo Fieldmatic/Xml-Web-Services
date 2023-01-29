@@ -24,7 +24,7 @@ import { APP_SERVICE_CONFIG } from 'src/app/appConfig/appconfig.service';
 import * as fromApp from '../../../store/app.reducer';
 import { select, Store } from '@ngrx/store';
 import { getUserExistsSelector } from 'src/app/auth/store/auth.selectors';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './auth.component.html',
@@ -44,7 +44,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     private store: Store<fromApp.AppState>,
     private activatedRoute: ActivatedRoute,
     private render: Renderer2,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private toastrService: ToastrService
   ) {}
 
   ngOnDestroy(): void {
@@ -72,6 +73,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         confirmPassword: new FormControl('', {
           validators: [Validators.required],
         }),
+        role: new FormControl('Klijent'),
       },
       {
         validator: CustomValidators.MatchValidator(
@@ -122,6 +124,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
   }
 
+  setRoleValue(value: string) {
+    this.authForm['role'] = value;
+  }
+
   onSubmit(formDirective: FormGroupDirective) {
     if (this.isLoginMode) {
       this.store.dispatch(
@@ -139,11 +145,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         new AuthActions.SignupStart({
           email: this.authForm.getRawValue()['email'],
           password: this.authForm.getRawValue()['password'],
-          firstName: this.authForm.getRawValue()['firstName'],
-          lastName: this.authForm.getRawValue()['lastName'],
-          city: this.authForm.getRawValue()['city'],
-          phoneNumber: this.authForm.getRawValue()['phoneNumber'],
-          profilePicture: this.authForm.getRawValue()['profilePicture'],
+          role: this.authForm.getRawValue()['role'],
         })
       );
     }

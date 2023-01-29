@@ -45,11 +45,7 @@ export class SignupStart implements Action {
     public payload: {
       email: string;
       password: string;
-      firstName: string;
-      lastName: string;
-      city: string;
-      phoneNumber: string;
-      profilePicture: string;
+      role: string;
     }
   ) {}
 }

@@ -36,7 +36,7 @@ export class AuthService {
 
   UserExists(email: string) {
     return this.http.get<Observable<boolean>>(
-      this.config.apiEndpoint + `auth/user-exists/${email}`
+      this.config.usersEndpoint + `auth/user-exists/${email}`
     );
   }
 }
