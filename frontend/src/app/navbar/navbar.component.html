@@ -1,0 +1,20 @@
+<mat-toolbar class="toolbar" color="primary">
+  <div class="toolbar-content">
+    <div class="toolbar-logo">
+      <h1 mat-button>MUP</h1>
+    </div>
+    <div class="authentication">
+      <a
+        mat-button
+        routerLink="/auth/login"
+        *ngIf="!isAuthenticated"
+        id="loginBtn"
+        >Log in</a
+      >
+      <a mat-button *ngIf="isAuthenticated" (click)="onLogout()">Log out</a>
+      <a mat-raised-button *ngIf="!isAuthenticated" routerLink="/auth/signup"
+        >Sign up</a
+      >
+    </div>
+  </div>
+</mat-toolbar>
