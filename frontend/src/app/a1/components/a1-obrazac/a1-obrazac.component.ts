@@ -129,12 +129,12 @@ export class A1ObrazacComponent implements OnInit {
     zahtev += podnosilac;
     zahtev += punomocnik;
     zahtev += autorskoDelo;
-    zahtev += '</zahtev_za_autorska_prava>';
 
-    this.a1Service.sacuvajA1Obrazac(zahtev).subscribe((result) => {
-      console.log('top');
-      console.log(result);
-    });
+    this.a1Service.sacuvajObrazacIFajlove(
+      zahtev,
+      this.primerDelaFile,
+      this.opisDelaFile
+    );
   }
 
   sacuvajOpisDela(event) {
@@ -208,39 +208,7 @@ export class A1ObrazacComponent implements OnInit {
       '<nacin_koriscenja_autorskog_dela>' +
       deloForm['nacinKoriscenja'] +
       '</nacin_koriscenja_autorskog_dela>';
-    this.a1Service
-      .ucitajFajl(this.primerDelaFile, false)
-      .subscribe((imePrimeraFajla) => {
-        autorskoDelo += this.kreirajPrimerAutorskogDela(imePrimeraFajla);
-        if (this.opisDelaFile) {
-          this.a1Service
-            .ucitajFajl(this.opisDelaFile, true)
-            .subscribe((imeOpisaFajla) => {
-              autorskoDelo += this.kreirajOpisAutorskogDela(imeOpisaFajla);
-            });
-        } else {
-          autorskoDelo += this.kreirajOpisAutorskogDela('');
-        }
-        autorskoDelo += '</autorsko_delo>';
-      });
     return autorskoDelo;
-  }
-
-  kreirajPrimerAutorskogDela(putanjaDoPrimera: string): string {
-    let primer = '<primer_autorskog_dela>';
-    primer +=
-      '<putanja_do_primera>' + putanjaDoPrimera + '</putanja_do_primera>';
-    primer += '<tip_primera>слика</tip_primera>';
-    primer += '</primer_autorskog_dela>';
-    return primer;
-  }
-
-  kreirajOpisAutorskogDela(opisDela: string): string {
-    let opis =
-      ' <opis_autorskog_dela><putanja_do_opisa>' +
-      opisDela +
-      '</putanja_do_opisa></opis_autorskog_dela>';
-    return opis;
   }
 
   kreirajFizickoLice(fizickoLiceForm: FormGroup): string {

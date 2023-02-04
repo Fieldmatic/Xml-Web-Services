@@ -15,7 +15,31 @@ export class A1Service {
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig
   ) {}
 
+  sacuvajObrazacIFajlove(
+    zahtev: string,
+    primerDelaFile: File,
+    opisDelaFile: File
+  ) {
+    this.ucitajFajl(primerDelaFile, false).subscribe((imePrimeraFajla) => {
+      zahtev += this.kreirajPrimerAutorskogDela(imePrimeraFajla);
+      if (opisDelaFile) {
+        this.ucitajFajl(opisDelaFile, true).subscribe((imeOpisaFajla) => {
+          zahtev += this.kreirajOpisAutorskogDela(imeOpisaFajla);
+        });
+      } else {
+        zahtev += this.kreirajOpisAutorskogDela('');
+      }
+      zahtev += '</autorsko_delo>';
+      zahtev += '</zahtev_za_autorska_prava>';
+      return this.sacuvajA1Obrazac(zahtev).subscribe((rezultat) => {
+        console.log('top');
+        console.log(rezultat);
+      });
+    });
+  }
+
   sacuvajA1Obrazac(request: string) {
+    console.log(request);
     return this.http.post(
       this.config.autorskoPravoEndpoint + 'autorska-prava',
       request,
@@ -41,5 +65,22 @@ export class A1Service {
         responseType: 'text',
       }
     );
+  }
+
+  kreirajPrimerAutorskogDela(putanjaDoPrimera: string): string {
+    let primer = '<primer_autorskog_dela>';
+    primer +=
+      '<putanja_do_primera>' + putanjaDoPrimera + '</putanja_do_primera>';
+    primer += '<tip_primera>слика</tip_primera>';
+    primer += '</primer_autorskog_dela>';
+    return primer;
+  }
+
+  kreirajOpisAutorskogDela(opisDela: string): string {
+    let opis =
+      ' <opis_autorskog_dela><putanja_do_opisa>' +
+      opisDela +
+      '</putanja_do_opisa></opis_autorskog_dela>';
+    return opis;
   }
 }
