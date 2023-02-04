@@ -15,10 +15,11 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ReactiveFormsModule } from '@angular/forms';
 import * as fromApp from './store/app.reducer';
 import { SharedModule } from './shared/shared.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'src/app/auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ZigModule } from './zig/zig.module';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent],
@@ -35,6 +36,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AuthModule,
+    ZigModule,
     AppRoutingModule,
     DirectivesModule,
   ],
