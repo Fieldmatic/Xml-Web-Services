@@ -1,0 +1,193 @@
+<div class="a1Form">
+  <form class="p-4 m-3 border autorForm" [formGroup]="autorForm">
+    <h2 mat-dialog-title>Dodavanje autora</h2>
+    <div
+      mat-dialog-content
+      style="min-height: 35vh"
+      class="d-flex flex-column justify-content-between"
+    >
+      <div class="form-check">
+        <input
+          formControlName="imeAutora"
+          class="form-check-input"
+          type="checkbox"
+          id="preminuliAutor"
+          formControlName="preminuliAutor"
+        />
+        <label class="form-check-label" for="preminuliAutor">
+          Autor je preminuo
+        </label>
+      </div>
+
+      <!-- puno ime i pseudonim-->
+      <div class="d-flex">
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="ime" class="form-label">Ime</label>
+          <input
+            formControlName="ime"
+            type="text"
+            class="form-control"
+            id="ime"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="prezime" class="form-label">Prezime</label>
+          <input
+            formControlName="prezime"
+            type="text"
+            class="form-control"
+            id="prezime"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="pseudonim" class="form-label"
+            >Pseudonim (ako ga ima)</label
+          >
+          <input
+            formControlName="pseudonim"
+            type="text"
+            class="form-control"
+            id="pseudonim"
+          />
+        </div>
+      </div>
+
+      <!-- godina smrti -->
+      <div class="d-flex" *ngIf="autorForm.get('preminuliAutor').value">
+        <div class="mb-3 me-5" style="width: 30%">
+          <label
+            for="godinaSmrti"
+            class="form-label"
+            formControlName="godinaSmrti"
+            >Godina smrti</label
+          >
+          <input
+            formControlName="godinaSmrti"
+            type="text"
+            class="form-control"
+            id="godinaSmrti"
+          />
+        </div>
+      </div>
+
+      <!-- drzavljanstvo -->
+      <div
+        formGroupName="drzavljanstvo"
+        *ngIf="!autorForm.get('preminuliAutor').value"
+      >
+        <h3>Drzavljanstvo autora</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="tipDrzavljanstva" class="form-label"
+              >Tip drzavljanstva</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="tipDrzavljanstva"
+              formControlName="tip"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="jmbg" class="form-label">Jmbg</label>
+            <input
+              type="text"
+              class="form-control"
+              id="jmbg"
+              formControlName="jmbg"
+            />
+          </div>
+          <div class="mb-3" style="width: 30%">
+            <label for="brojPasosa" class="form-label">Broj pasosa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojPasosa"
+              formControlName="brojPasosa"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- adresa autora -->
+      <div
+        formGroupName="adresa"
+        class="d-flex flex-column"
+        *ngIf="!autorForm.get('preminuliAutor').value"
+      >
+        <h3>Adresa autora</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div mat-dialog-actions class="d-flex justify-content-between mt-auto">
+        <button
+          mat-button
+          class="border border-1 border-dark"
+          (click)="odustani()"
+        >
+          Odustani
+        </button>
+        <button
+          mat-button
+          cdkFocusInitial
+          class="bg-black text-white"
+          (click)="dodajAutora()"
+        >
+          Dodaj autora
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
