@@ -20,6 +20,7 @@ import { AuthModule } from 'src/app/auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ZigModule } from './zig/zig.module';
+import { ZigEffects } from './zig/store/zig.effects';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent],
@@ -30,7 +31,7 @@ import { ZigModule } from './zig/zig.module';
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ZigEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     BrowserAnimationsModule,
