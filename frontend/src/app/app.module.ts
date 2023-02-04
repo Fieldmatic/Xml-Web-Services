@@ -1,3 +1,4 @@
+import { A1Module } from './a1/a1.module';
 import { DirectivesModule } from './directives/directives.module';
 import { AuthEffects } from './auth/store/auth.effects';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './appConfig/appconfig.service';
@@ -37,6 +38,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     AuthModule,
     AppRoutingModule,
     DirectivesModule,
+    A1Module,
   ],
   providers: [
     {
