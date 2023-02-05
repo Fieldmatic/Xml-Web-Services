@@ -1,0 +1,60 @@
+<div class="patent">
+  <form class="p-4 m-3 border prijavaForm" [formGroup]="prijavaForm">
+    <h2 mat-dialog-title>Dodavanje ranijih prijava</h2>
+    <div
+      mat-dialog-content
+      style="min-height: 25vh"
+      class="d-flex flex-column"
+    >
+      <!-- puno ime i pseudonim-->
+      <div class="d-flex">
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="brojPrijave" class="form-label">Broj prijave</label>
+          <input
+            formControlName="brojPrijave"
+            type="text"
+            class="form-control"
+            id="brojPrijave"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="datumPodnosenja" class="form-label">Datum podnosenja</label>
+          <input
+            formControlName="datumPodnosenja"
+            type="date"
+            class="form-control"
+            id="datumPodnosenja"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="oznakaDrzave" class="form-label"
+            >Oznaka drzave</label
+          >
+          <input
+            formControlName="oznakaDrzave"
+            type="text"
+            class="form-control"
+            id="oznakaDrzave"
+          />
+        </div>
+      </div>
+      <div mat-dialog-actions class="d-flex justify-content-between mt-3">
+        <button
+          mat-button
+          class="border border-1 border-dark"
+          (click)="odustani()"
+        >
+          Odustani
+        </button>
+        <button
+          mat-button
+          cdkFocusInitial
+          class="bg-black text-white"
+          (click)="dodajPrijavu()"
+        >
+          Dodaj prijavu
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

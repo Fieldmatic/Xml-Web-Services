@@ -20,7 +20,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'src/app/auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HomepageComponent } from './homepage/homepage.component';
-
+import { PatentModule } from './patent/patent-module';
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent],
   imports: [
@@ -39,6 +39,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     AppRoutingModule,
     DirectivesModule,
     A1Module,
+    PatentModule
   ],
   providers: [
     {

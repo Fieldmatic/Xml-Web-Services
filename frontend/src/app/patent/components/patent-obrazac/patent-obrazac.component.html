@@ -1,0 +1,682 @@
+<div class="patent">
+  <form
+    class="p-4"
+    [formGroup]="patent"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <section formGroupName="nazivPronalaska">
+      <div class="d-flex flex-column">
+        <h3 class="w-25 fw-bold">Naziv pronalaska</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5 w-35">
+            <label for="nazivPronalaskaRS" class="form-label">Naziv pronalaska na srpskom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nazivPronalaskaRS"
+              formControlName="nazivPronalaskaRS"
+            />
+          </div>
+          <div class="mb-3 w-35">
+            <label for="nazivPronalaskaENG" class="form-label">Naziv pronalaska na engleskom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nazivPronalaskaENG"
+              formControlName="nazivPronalaskaENG"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section formGroupName="podnosilac">
+      <div class="d-flex flex-row">
+        <h3 class="w-25 fw-bold">Podnosilac</h3>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="fizickoLice"
+            id="fizickoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="fizickoLice">
+            Fizicko lice
+          </label>
+        </div>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="pravnoLice"
+            id="pravnoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="pravnoLice"> Pravno lice </label>
+        </div>
+        <div class="form-check" style="width: 30%">
+          <input
+              class="form-check-input"
+              type="checkbox"
+              id="jePronalazac"
+              formControlName="jePronalazac"
+            />
+          <label class="form-check-label" for="jePronalazac">
+              Je pronalazac
+          </label>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="mb-3 me-5 w-25">
+          <label for="email" class="form-label">Email adresa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-3 w-25">
+          <label for="brTelefona" class="form-label">Broj telefona</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brTelefona"
+            formControlName="brojTelefona"
+          />
+        </div>
+      </div>
+
+      <!-- puno ime -->
+      <div
+        class="d-flex"
+        *ngIf="
+          patent.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+        "
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="ime" class="form-label">Ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ime"
+            formControlName="ime"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="prezime" class="form-label">Prezime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="prezime"
+            formControlName="prezime"
+          />
+        </div>
+      </div>
+
+      <!-- poslovno ime -->
+      <div
+        class="d-flex"
+        *ngIf="
+          patent.get('podnosilac').get('tipPodnosioca').value === 'pravnoLice'
+        "
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="poslovnoIme" class="form-label">Poslovno ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="poslovnoIme"
+            formControlName="poslovnoIme"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="brojFaksa" class="form-label">Broj faksa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brojFaksa"
+            formControlName="brojFaksa"
+          />
+        </div>
+      </div>
+
+      <!-- drzavljanstvo -->
+      <div
+        formGroupName="drzavljanstvo"
+        *ngIf="
+          patent.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+        "
+      >
+        <h3>Drzavljanstvo podnosioca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="tipDrzavljanstva" class="form-label"
+              >Tip drzavljanstva</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="tipDrzavljanstva"
+              formControlName="tip"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="jmbg" class="form-label">Jmbg</label>
+            <input
+              type="text"
+              class="form-control"
+              id="jmbg"
+              formControlName="jmbg"
+            />
+          </div>
+          <div class="mb-3" style="width: 30%">
+            <label for="brojPasosa" class="form-label">Broj pasosa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojPasosa"
+              formControlName="brojPasosa"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- adresa podnosioca -->
+      <div formGroupName="adresaPodnosioca" class="d-flex flex-column">
+        <h3>Adresa podnosioca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section formGroupName="pronalazac" *ngIf="
+    !patent.get('podnosilac').get('jePronalazac').value
+  ">
+      <div class="d-flex flex-row">
+        <h3 class="w-25 fw-bold">Pronalazac</h3>
+        <div class="form-check" style="width: 30%">
+          <input
+              class="form-check-input"
+              type="checkbox"
+              id="neZeliDaBudeNaveden"
+              formControlName="neZeliDaBudeNaveden"
+            />
+          <label class="form-check-label" for="neZeliDaBudeNaveden">
+              Ne zeli da bude naveden
+          </label>
+        </div>
+      </div>
+      <div class="d-flex" *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value">
+        <div class="mb-3 me-5 w-25">
+          <label for="email" class="form-label">Email adresa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-3 w-25">
+          <label for="brTelefona" class="form-label">Broj telefona</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brTelefona"
+            formControlName="brojTelefona"
+          />
+        </div>
+        <div class="ms-5" style="width: 30%">
+          <label for="brojFaksa" class="form-label">Broj faksa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brojFaksa"
+            formControlName="brojFaksa"
+          />
+        </div>
+      </div>
+
+      <!-- puno ime -->
+      <div
+        class="d-flex"
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="ime" class="form-label">Ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ime"
+            formControlName="ime"
+          />
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="prezime" class="form-label">Prezime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="prezime"
+            formControlName="prezime"
+          />
+        </div>
+      </div>
+
+      <!-- adresa pronalazaca -->
+      <div formGroupName="adresaPronalazaca" class="d-flex flex-column">
+        <h3>Adresa pronalazaca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- punomocnik -->
+    <section formGroupName="punomocnik" class="mt-4 mb-2">
+      <div class="d-flex mb-2">
+        <h3 class="w-50 fw-bold">Punomocnik</h3>
+        <div class="form-check" style="width: 50%">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="punomocnikZaPrijemPismena"
+            formControlName="punomocnikZaPrijemPismena"
+          />
+          <label class="form-check-label" for="punomocnikZaPrijemPismena">
+            Punomocnik za prijem pismena
+          </label>
+        </div>
+        <div class="form-check" style="width: 35%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPunomocnika"
+            value="punomocnik_za_zastupanje"
+            id="punomocnik_za_zastupanje"
+            formControlName="tipPunomocnika"
+          />
+          <label class="form-check-label" for="punomocnik_za_zastupanje">
+            Punomocnik za zastupanje
+          </label>
+        </div>
+        <div class="form-check" style="width: 35%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPunomocnika"
+            value="zajednicki_predstavnik"
+            id="zajednicki_predstavnik"
+            formControlName="tipPunomocnika"
+          />
+          <label class="form-check-label" for="zajednicki_predstavnik"> Zajednicki predstavnik </label>
+        </div>
+      </div>
+
+      <!-- puno ime punomocnika -->
+      <div
+        class="d-flex flex-column"
+      >
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ime" class="form-label">Ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ime"
+              formControlName="ime"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="prezime"
+              formControlName="prezime"
+            />
+          </div>
+        </div>
+        <div class="d-flex mt-2">
+          <div class="mb-3 me-5 w-25">
+            <label for="email" class="form-label">Email adresa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+          </div>
+          <div class="mb-3 w-25">
+            <label for="brojTelefona" class="form-label">Broj telefona</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojTelefona"
+              formControlName="brojTelefona"
+            />
+          </div>
+          <div class="ms-5" style="width: 30%">
+            <label for="brojFaksa" class="form-label">Broj faksa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojFaksa"
+              formControlName="brojFaksa"
+            />
+          </div>
+        </div>
+
+        <!-- adresa punomocnika -->
+        <div formGroupName="adresaPunomocnika">
+          <h3>Adresa punomocnika</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="ulica" class="form-label">Ulica</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ulica"
+                formControlName="ulica"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="broj" class="form-label">Broj</label>
+              <input
+                type="text"
+                class="form-control"
+                id="broj"
+                formControlName="broj"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="grad" class="form-label">Grad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="grad"
+                formControlName="mesto"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="d-flex">
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="drzava" class="form-label">Drzava</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="drzava"
+                  formControlName="drzava"
+                />
+              </div>
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="postanskiBroj" class="form-label"
+                  >Postanski broj</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="postanskiBroj"
+                  formControlName="postanskiBroj"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section formGroupName="podacioDostavljanju" class="mt-4">
+      <div class="d-flex-column">
+        <h3 class="w-50 fw-bold">Podaci o dostavljanju</h3>
+        <div class="d-flex mb-3">
+          <div class="form-check" style="width: 30%">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="nacinDostavljanja"
+              value="elektronskim_putem"
+              id="elektronskim_putem"
+              formControlName="nacinDostavljanja"
+            />
+            <label class="form-check-label" for="elektronskim_putem">
+              Elektronskim putem
+            </label>
+          </div>
+          <div class="form-check" style="width: 30%">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="nacinDostavljanja"
+              value="u_papirnoj_formi"
+              id="u_papirnoj_formi"
+              formControlName="nacinDostavljanja"
+            />
+            <label class="form-check-label" for="u_papirnoj_formi">U papirnoj formi</label>
+          </div>
+        </div>
+      <div formGroupName="adresa">
+        <h3>Adresa</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <section formGroupName="osnovnaPrijava" class="mt-4">
+      <div class="d-flex-column">
+        <div class="d-flex mb-3">
+          <div class="form-check" style="width: 30%">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="dopunskaPrijava"
+                formControlName="dopunskaPrijava"
+              />
+            <label class="form-check-label" for="dopunskaPrijava">
+                Dopunska prijava
+            </label>
+           </div>
+        </div>
+        <div class="d-flex mb-3" *ngIf = "patent.get('osnovnaPrijava').get('dopunskaPrijava').value">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="brojPrijave" class="form-label">Broj osnovne prijave</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojPrijave"
+              formControlName="brojPrijave"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="datumPodnosenja" class="form-label"
+              >Datum podnosenja</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="datumPodnosenja"
+              formControlName="datumPodnosenja"
+            />
+          </div>
+        </div>
+    </div>
+    </section>
+    <section class="mb-5">
+      <div class="d-flex-column">
+        <h3 class="w-50 fw-bold">Ranije prijave</h3>
+        <button
+              type="button"
+              style="left: 40%; width: 20%"
+              mat-button
+              (click)="dodajRanijuPrijavu()"
+            >
+              Dodaj prijavu
+            </button>
+            <div *ngIf="ranijePrijave.length" class="mt-5">
+              <ul>
+                <li *ngFor="let prijava of ranijePrijave">
+                  <p>Prijava broj: {{ prijava.brojPrijave }}, datum podnosenja: {{ prijava.datumPodnosenja }}, oznaka drzave: {{prijava.oznakaDrzave}}</p>
+                </li>
+              </ul>
+            </div>
+      </div>
+    </section>
+    <button type="submit" mat-button style="width: 30%; left: 35%">
+      Submit
+    </button>
+  </form>
+</div>

@@ -6,6 +6,7 @@ import org.xmldb.api.modules.XMLResource;
 import rs.tim14.xml.model.korisnici.TFizickoLice;
 import rs.tim14.xml.model.korisnici.TLice;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
+import rs.tim14.xml.model.zahtev_za_priznanje_patenta.TPrijava;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
 import rs.tim14.xml.rdf.FusekiWriter;
 import rs.tim14.xml.rdf.MetadataExtractor;
@@ -34,17 +35,15 @@ public class ZahtevZaPriznanjePatentaService {
         String id = Util.getNextId();
         zahtev.getPrijava().getBrojPrijave().setValue(BigInteger.valueOf(Long.parseLong(id)));
         id = id.concat(".xml");
-
-        zahtev.getPrijava().getDatumPodnosenja().setValue(Util.getXMLGregorianCalendarCurrentDate());
+        TPrijava.DatumPodnosenja datumPodnosenja = new TPrijava.DatumPodnosenja();
+        datumPodnosenja.setValue(Util.getXMLGregorianCalendarCurrentDate());
+        zahtev.getPrijava().setDatumPodnosenja(datumPodnosenja);
 
         zahtev.getPrijava().getBrojPrijave().setProperty("pred:brojPrijave");
         zahtev.getPrijava().getBrojPrijave().setDatatype("xs:date");
 
         zahtev.getPrijava().getDatumPodnosenja().setProperty("pred:datumPodnosenja");
         zahtev.getPrijava().getDatumPodnosenja().setDatatype("xs:date");
-
-        zahtev.getPrijava().getDatumPrijema().setProperty("pred:datumPrijema");
-        zahtev.getPrijava().getDatumPrijema().setDatatype("xs:date");
 
         zahtev.getReferences().put(QName.valueOf("xmlns:pred"), "http://www.ftn.uns.ac.rs/p1/predicate/");
         zahtev.getReferences().put(QName.valueOf("xmlns:xsi"), "http://www.w3.org/2001/XMLSchema-instance");

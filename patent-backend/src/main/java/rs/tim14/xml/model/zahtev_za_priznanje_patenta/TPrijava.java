@@ -25,7 +25,7 @@ public class TPrijava {
 
     @XmlElement(name = "broj_prijave", required = true)
     protected TPrijava.BrojPrijave brojPrijave;
-    @XmlElement(name = "datum_podnosenja", required = true)
+    @XmlElement(name = "datum_podnosenja", required = false)
     protected TPrijava.DatumPodnosenja datumPodnosenja;
     @XmlElement(name = "datum_prijema")
     protected TPrijava.DatumPrijema datumPrijema;
