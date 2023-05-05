@@ -1,0 +1,24 @@
+form {
+  background-color: #F0F0F0;
+}
+
+input {
+  margin-top: 0;
+}
+
+label {
+  margin-bottom: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type=checkbox] {
+  z-index: 10;
+}
+
+input.checked {
+  background-color: rgba(0, 0, 0, 0.822);
+  color: white;
+}

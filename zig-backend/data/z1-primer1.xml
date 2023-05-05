@@ -43,7 +43,6 @@
     <vrsta_ziga property="pred:vrstaZiga" datatype="z1:TVrsta_ziga">INDUVIDUALNI</vrsta_ziga>
     <znak>
         <vrsta_znaka vrsta_znaka="DRUGI">druga vrsta znaka</vrsta_znaka>
-        <izgled_znaka>putanja-do-izgleda-znaka-prvog-primera</izgled_znaka>
         <boje_znaka>roze</boje_znaka>
         <opis_znaka>Primer opisa znaka (šta god to bilo)</opis_znaka>
     </znak>
@@ -63,7 +62,6 @@
         <primerak_znaka>putanja-primerka</primerak_znaka>
         <spisak_robe_i_usluga>putanja-spiska-robe</spisak_robe_i_usluga>
         <punomocje>putanja-punomocja</punomocje>
-        <generalno_punomocje>putanja-generalnog-punomocja</generalno_punomocje>
         <dokaz_o_pravu_prvenstva>putanja-dokaza-prvenstva</dokaz_o_pravu_prvenstva>
         <dokaz_o_uplati_takse>putnaja-dokaza-o-uplati</dokaz_o_uplati_takse>
     </Prilozi_uz_zahtev>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<z1:zahtev_za_priznanje_ziga xmlns:z1="http://www.xml.tim14.rs/zahtev_za_priznanje_ziga" xmlns:ks="http://www.xml.tim14.rs/korisnici">
+    <z1:prijava>
+        <z1:broj_prijave property="pred:brojPrijave" datatype="xs:date">1</z1:broj_prijave>
+        <z1:datum_podnosenja property="pred:datumPodnosenja" datatype="xs:date">2023-02-12+01:00</z1:datum_podnosenja>
+    </z1:prijava>
+    <z1:podnosilac xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ks:TFizicko_Lice">
+        <ks:adresa>
+            <ks:mesto>Subotica</ks:mesto>
+            <ks:postanski_broj>24000</ks:postanski_broj>
+            <ks:ulica>Dragiše Mišovića</ks:ulica>
+            <ks:broj>30</ks:broj>
+            <ks:drzava>Srbija</ks:drzava>
+        </ks:adresa>
+        <ks:broj_mobilnog_telefona>+38166430250</ks:broj_mobilnog_telefona>
+        <ks:broj_faksa>055490900</ks:broj_faksa>
+        <ks:email>prijovic.uros13@gmail.com</ks:email>
+        <ks:puno_ime>
+            <ks:ime property="pred:imePodnosioca" datatype="xs:string">Uroš</ks:ime>
+            <ks:prezime property="pred:prezimePodnosioca" datatype="xs:string">Prijović</ks:prezime>
+        </ks:puno_ime>
+    </z1:podnosilac>
+    <z1:punomocnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ks:TFizicko_Lice">
+        <ks:adresa>
+            <ks:mesto>Subotica</ks:mesto>
+            <ks:postanski_broj>24000</ks:postanski_broj>
+            <ks:ulica>Dragiše Mišovića</ks:ulica>
+            <ks:broj>30</ks:broj>
+            <ks:drzava>Srbija</ks:drzava>
+        </ks:adresa>
+        <ks:broj_mobilnog_telefona>+381646621789</ks:broj_mobilnog_telefona>
+        <ks:broj_faksa>047564380</ks:broj_faksa>
+        <ks:email>prijovic.krstina@gmail.com</ks:email>
+        <ks:puno_ime>
+            <ks:ime>Krstina</ks:ime>
+            <ks:prezime>Karlaš</ks:prezime>
+        </ks:puno_ime>
+    </z1:punomocnik>
+    <z1:vrsta_ziga property="pred:vrstaZiga" datatype="z1:TVrsta_ziga">INDUVIDUALNI</z1:vrsta_ziga>
+    <z1:znak>
+        <z1:vrsta_znaka vrsta_znaka="DRUGI">druga vrsta znaka</z1:vrsta_znaka>
+        <z1:boje_znaka>roze</z1:boje_znaka>
+        <z1:opis_znaka>Primer opisa znaka (šta god to bilo)</z1:opis_znaka>
+    </z1:znak>
+    <z1:klase_robe_ili_usluge>10</z1:klase_robe_ili_usluge>
+    <z1:klase_robe_ili_usluge>12</z1:klase_robe_ili_usluge>
+    <z1:klase_robe_ili_usluge>23</z1:klase_robe_ili_usluge>
+    <z1:klase_robe_ili_usluge>45</z1:klase_robe_ili_usluge>
+    <z1:pravo_prvenstva zatrazeno_pravo_prvenstva="true">
+        <z1:osnov_prava_prvenstva>Građanin sa prioritetom</z1:osnov_prava_prvenstva>
+    </z1:pravo_prvenstva>
+    <z1:takse ukupna_vrednost="16000.0">
+        <z1:osnovna_taksa>1000.0</z1:osnovna_taksa>
+        <z1:taksa_za_klase>10000.0</z1:taksa_za_klase>
+        <z1:taksa_za_graficko_resenje>5000.0</z1:taksa_za_graficko_resenje>
+    </z1:takse>
+    <z1:Prilozi_uz_zahtev>
+        <z1:primerak_znaka>putanja-primerka</z1:primerak_znaka>
+        <z1:spisak_robe_i_usluga>putanja-spiska-robe</z1:spisak_robe_i_usluga>
+        <z1:punomocje>putanja-punomocja</z1:punomocje>
+        <z1:dokaz_o_pravu_prvenstva>putanja-dokaza-prvenstva</z1:dokaz_o_pravu_prvenstva>
+        <z1:dokaz_o_uplati_takse>putnaja-dokaza-o-uplati</z1:dokaz_o_uplati_takse>
+        <z1:generalno_punomocje_predano>false</z1:generalno_punomocje_predano>
+        <z1:punomocje_ce_biti_pradno>false</z1:punomocje_ce_biti_pradno>
+    </z1:Prilozi_uz_zahtev>
+</z1:zahtev_za_priznanje_ziga>

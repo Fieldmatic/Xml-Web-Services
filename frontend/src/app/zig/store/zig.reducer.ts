@@ -1,7 +1,8 @@
 import * as ZigActions from './zig.actions';
+import { PrijavaResponse } from '../model/prijavaResponse.model';
 
 export interface State {
-  requests: any[];
+  requests: PrijavaResponse[];
   request: any;
 }
 

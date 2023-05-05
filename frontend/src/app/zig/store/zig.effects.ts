@@ -6,6 +6,8 @@ import { ZigHttpService } from '../services/zig-http.service';
 import * as ZigActions from './zig.actions';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import * as xml2js from 'xml2js';
+import { PrijavaResponse } from '../model/prijavaResponse.model';
 
 // TODO: add data mapping
 @Injectable()
@@ -16,7 +18,8 @@ export class ZigEffects {
       switchMap(() => {
         return this.zigHttpService.getAllRequests().pipe(
           map((result) => {
-            return new ZigActions.SetAllRequests(result);
+            const requests = this.parsePrijavaResponses(result);
+            return new ZigActions.SetAllRequests(requests);
           }),
           catchError((err) => {
             return of(new ZigActions.RequestFailed(err));
@@ -78,10 +81,14 @@ export class ZigEffects {
   getRequestPdf = createEffect(() => {
     return this.actions$.pipe(
       ofType(ZigActions.GET_REQUEST_PDF),
-      switchMap(() => {
-        return this.zigHttpService.getRequestPdf().pipe(
-          map((result) => {
-            return new ZigActions.DownloadDocument(result);
+      switchMap((action: ZigActions.GetRequestPdf) => {
+        return this.zigHttpService.getRequestPdf(action.payload).pipe(
+          map((response) => {
+            return new ZigActions.DownloadDocument({
+              blob: new Blob([response], { type: 'application/pdf' }),
+              id: action.payload,
+              extension: 'pdf',
+            });
           }),
           catchError((err) => {
             return of(new ZigActions.RequestFailed(err));
@@ -94,10 +101,14 @@ export class ZigEffects {
   getRequestXHtml = createEffect(() => {
     return this.actions$.pipe(
       ofType(ZigActions.GET_REQUEST_XHTML),
-      switchMap(() => {
-        return this.zigHttpService.getRequestXHtml().pipe(
-          map((result) => {
-            return new ZigActions.DownloadDocument(result);
+      switchMap((action: ZigActions.GetRequestXHtml) => {
+        return this.zigHttpService.getRequestXHtml(action.payload).pipe(
+          map((response) => {
+            return new ZigActions.DownloadDocument({
+              blob: new Blob([response], { type: 'application/xhtml+xml' }),
+              id: action.payload,
+              extension: 'html',
+            });
           }),
           catchError((err) => {
             return of(new ZigActions.RequestFailed(err));
@@ -243,8 +254,12 @@ export class ZigEffects {
       this.actions$.pipe(
         ofType(ZigActions.DOWNLOAD_DOCUMENT),
         tap((action: ZigActions.DownloadDocument) => {
-          const url = window.URL.createObjectURL(action.payload);
-          window.open(url);
+          const url = window.URL.createObjectURL(action.payload.blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = action.payload.id + '.' + action.payload.extension;
+          a.click();
+          URL.revokeObjectURL(url);
         })
       ),
     { dispatch: false }
@@ -256,4 +271,26 @@ export class ZigEffects {
     private zigHttpService: ZigHttpService,
     private router: Router
   ) {}
+
+  private parsePrijavaResponses(xml: string): PrijavaResponse[] {
+    const parser = xml2js.parseString;
+    let requests: PrijavaResponse[] = [];
+    parser(xml, function (err, res) {
+      if (res['prijave']['lista_prijava'][0].hasOwnProperty('prijava')) {
+        res['prijave']['lista_prijava'][0]['prijava'].map((prijava) => {
+          const request = new PrijavaResponse(
+            prijava['brojZahteva'][0],
+            new Date(
+              Date.parse(prijava['datumPodnosenja'][0]['_'].split('+')[0])
+            ),
+            prijava['podnosilac'][0],
+            prijava['status'][0],
+            prijava['status'][0] !== 'U obradi' ? prijava['sluzbenik'][0] : null
+          );
+          requests.push(request);
+        });
+      }
+    });
+    return requests;
+  }
 }

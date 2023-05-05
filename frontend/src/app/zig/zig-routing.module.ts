@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ZigContainerComponent } from './components/zig-container/zig-container.component';
 import { ZigAllRequestsComponent } from './components/zig-container/zig-all-requests/zig-all-requests.component';
 import { ZigRequestComponent } from './components/zig-container/zig-request/zig-request.component';
+import { ZigAllRequestsResolverService } from './services/zig-all-requests.resolver.service';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       {
         path: 'zahtevi',
         pathMatch: 'full',
+        resolve: [ZigAllRequestsResolverService],
         component: ZigAllRequestsComponent,
       },
       {

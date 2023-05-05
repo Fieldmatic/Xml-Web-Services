@@ -21,6 +21,11 @@ public class TPravnoLice
     @XmlElement(name = "poslovno_ime", required = true)
     protected TPravnoLice.PoslovnoIme poslovnoIme;
 
+    @Override
+    public String getIme() {
+        return getPoslovnoIme().getValue();
+    }
+
     public TPravnoLice.PoslovnoIme getPoslovnoIme() {
         return poslovnoIme;
     }

@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { ZahtevZaPriznanjeZiga } from '../model/zahtev-za-priznanje-ziga.model';
+import { PrijavaResponse } from '../model/prijavaResponse.model';
 
 export const GET_ALL_REQUESTS = '[Zig] Get all requests';
 export const SET_REQUESTS = '[Zig] Set requests';
@@ -27,8 +29,7 @@ export class GetAllRequests implements Action {
 export class SetAllRequests implements Action {
   readonly type = SET_REQUESTS;
 
-  // TODO: define request structure
-  constructor(public payload: any[]) {}
+  constructor(public payload: PrijavaResponse[]) {}
 }
 
 export class GetRequest implements Action {
@@ -84,8 +85,7 @@ export class GetRequestMetadataJson implements Action {
 export class CreateRequest implements Action {
   readonly type = CREATE_REQUEST;
 
-  // TODO: define request structure
-  constructor(public payload: any) {}
+  constructor(public payload: ZahtevZaPriznanjeZiga) {}
 }
 
 export class CreateRequestSuccess implements Action {
@@ -127,7 +127,7 @@ export class RequestFailed implements Action {
 export class DownloadDocument implements Action {
   readonly type = DOWNLOAD_DOCUMENT;
 
-  constructor(public payload: Blob) {}
+  constructor(public payload: { blob: Blob; extension: string; id: string }) {}
 }
 
 export type ZigActions =

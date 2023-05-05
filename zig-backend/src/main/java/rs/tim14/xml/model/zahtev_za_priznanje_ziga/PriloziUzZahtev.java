@@ -11,11 +11,11 @@ import javax.xml.bind.annotation.XmlType;
         "primerakZnaka",
         "spisakRobeIUsluga",
         "punomocje",
-        "generalnoPunomocje",
-        "naknadnoPunomocje",
         "aktiOKolektivnomZigIliZiguGarancije",
         "dokazOPravuPrvenstva",
-        "dokazOUplatiTakse"
+        "dokazOUplatiTakse",
+        "generalnoPunomocjePredano",
+        "punomocjeCeBitiPredano",
 })
 public class PriloziUzZahtev {
 
@@ -24,16 +24,16 @@ public class PriloziUzZahtev {
     @XmlElement(name = "spisak_robe_i_usluga")
     protected String spisakRobeIUsluga;
     protected String punomocje;
-    @XmlElement(name = "generalno_punomocje")
-    protected String generalnoPunomocje;
-    @XmlElement(name = "naknadno_punomocje")
-    protected String naknadnoPunomocje;
     @XmlElement(name = "akti_o_kolektivnom_zig_ili_zigu_garancije")
     protected String aktiOKolektivnomZigIliZiguGarancije;
     @XmlElement(name = "dokaz_o_pravu_prvenstva")
     protected String dokazOPravuPrvenstva;
     @XmlElement(name = "dokaz_o_uplati_takse")
     protected String dokazOUplatiTakse;
+    @XmlElement(name = "generalno_punomocje_predano")
+    protected Boolean generalnoPunomocjePredano;
+    @XmlElement(name = "punomocje_ce_biti_pradno")
+    protected Boolean punomocjeCeBitiPredano;
 
     public String getPrimerakZnaka() {
         return primerakZnaka;
@@ -53,18 +53,6 @@ public class PriloziUzZahtev {
     public void setPunomocje(String value) {
         this.punomocje = value;
     }
-    public String getGeneralnoPunomocje() {
-        return generalnoPunomocje;
-    }
-    public void setGeneralnoPunomocje(String value) {
-        this.generalnoPunomocje = value;
-    }
-    public String getNaknadnoPunomocje() {
-        return naknadnoPunomocje;
-    }
-    public void setNaknadnoPunomocje(String value) {
-        this.naknadnoPunomocje = value;
-    }
     public String getAktiOKolektivnomZigIliZiguGarancije() {
         return aktiOKolektivnomZigIliZiguGarancije;
     }
@@ -83,6 +71,10 @@ public class PriloziUzZahtev {
     public void setDokazOUplatiTakse(String value) {
         this.dokazOUplatiTakse = value;
     }
+    public Boolean getGeneralnoPunomocjePredano() {return generalnoPunomocjePredano;}
+    public void setGeneralnoPunomocjePredano(Boolean value) {this.generalnoPunomocjePredano = value;}
+    public Boolean getPunomocjeCeBitiPredano() {return punomocjeCeBitiPredano;}
+    public void setPunomocjeCeBitiPredano(Boolean value) {this.punomocjeCeBitiPredano = value;}
 
     @Override
     public String toString() {
@@ -90,8 +82,8 @@ public class PriloziUzZahtev {
         sb.append("\n\t\tPrimerak znaka: '").append(primerakZnaka).append('\'');
         sb.append("\n\t\tSpisak robe i usluga: '").append(spisakRobeIUsluga).append('\'');
         sb.append("\n\t\tPunomocje: '").append(punomocje).append('\'');
-        sb.append("\n\t\tGeneralno punomocje: '").append(generalnoPunomocje).append('\'');
-        if (naknadnoPunomocje != null) sb.append("\n\t\tNaknadno punomocje: '").append(naknadnoPunomocje).append('\'');
+        sb.append("\n\t\tGeneralno punomocje: '").append(generalnoPunomocjePredano?"predano":"nije predano").append('\'');
+        sb.append("\n\t\tNaknadno punomocje: '").append(punomocjeCeBitiPredano?"bice doneto":"nece biti doneto").append('\'');
         if (aktiOKolektivnomZigIliZiguGarancije != null)
             sb.append("\n\t\tAkti o kolektivnom zigu ili zigu garancije: '").append(aktiOKolektivnomZigIliZiguGarancije).append('\'');
         sb.append("\n\t\tDokaz o pravu prvenstva: '").append(dokazOPravuPrvenstva).append('\'');

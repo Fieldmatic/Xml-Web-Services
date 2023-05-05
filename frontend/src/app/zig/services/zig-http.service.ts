@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 import { APP_SERVICE_CONFIG } from '../../appConfig/appconfig.service';
 import { AppConfig } from '../../appConfig/appconfig.interface';
@@ -15,7 +15,10 @@ export class ZigHttpService {
   ) {}
 
   getAllRequests() {
-    return of(null);
+    return this.http.get(this.config.zigEndpoint + 'all', {
+      headers: new HttpHeaders().append('Accept', 'application/xml'),
+      responseType: 'text',
+    });
   }
 
   getRequest() {
@@ -30,12 +33,18 @@ export class ZigHttpService {
     return of(null);
   }
 
-  getRequestPdf() {
-    return of(null);
+  getRequestPdf(id: string) {
+    return this.http.get<any>(this.config.zigEndpoint + 'pdf', {
+      params: new HttpParams().append('id', id),
+      responseType: 'arraybuffer' as 'json',
+    });
   }
 
-  getRequestXHtml() {
-    return of(null);
+  getRequestXHtml(id: string) {
+    return this.http.get<any>(this.config.zigEndpoint + 'html', {
+      params: new HttpParams().append('id', id),
+      responseType: 'arraybuffer' as 'json',
+    });
   }
 
   getRequestMetadataRdf() {

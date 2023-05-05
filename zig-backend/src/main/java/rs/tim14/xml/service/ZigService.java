@@ -1,22 +1,34 @@
 package rs.tim14.xml.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.modules.XMLResource;
+import rs.tim14.xml.dto.AllResponse;
+import rs.tim14.xml.dto.PrijavaResponse;
+import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.model.korisnici.TFizickoLice;
 import rs.tim14.xml.model.korisnici.TLice;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TPrijava;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.rdf.FusekiWriter;
 import rs.tim14.xml.rdf.MetadataExtractor;
 import rs.tim14.xml.repository.Repo;
 import rs.tim14.xml.util.Util;
 import rs.tim14.xml.xmldb.ExistDbManager;
+import rs.tim14.xml.xslfo.XSLFOTransformer;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ZigService {
@@ -26,10 +38,11 @@ public class ZigService {
     private final FusekiWriter fusekiWriter;
 
     public ZahtevZaPriznanjeZiga create(ZahtevZaPriznanjeZiga zahtev) throws Exception {
+        XMLGregorianCalendar currentDate = Util.getXMLGregorianCalendarCurrentDate();
         String id = Util.getNextId();
         zahtev.getPrijava().getBrojPrijave().setValue(BigInteger.valueOf(Long.parseLong(id)));
-        id = id.concat(".xml");
-        zahtev.getPrijava().getDatumPodnosenja().setValue(Util.getXMLGregorianCalendarCurrentDate());
+        id = id.concat("-").concat(Integer.toString(currentDate.getYear())).concat(".xml");
+        zahtev.getPrijava().getDatumPodnosenja().setValue(currentDate);
 
         zahtev.getPrijava().getBrojPrijave().setProperty("pred:brojPrijave");
         zahtev.getPrijava().getBrojPrijave().setDatatype("xs:date");
@@ -62,5 +75,51 @@ public class ZigService {
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());
         fusekiWriter.saveRdf(new ByteArrayInputStream(out), "/zahtevi_za_priznanje_ziga");
         return zahtev;
+    }
+
+    public ZahtevZaPriznanjeZiga get(String id) throws Exception {
+        return repo.get(id);
+    }
+
+    public byte[] getHTML(String id) throws Exception {
+        String xmlPath = repo.download(id);
+        String resultPath = "./data/result/" + id + ".html";
+        HTMLTransformer htmlTransformer = new HTMLTransformer();
+        htmlTransformer.generateHTML(xmlPath, "./data/xsl/z1.xsl", resultPath);
+        return FileUtils.readFileToByteArray(new File(resultPath));
+    }
+
+    public byte[] getPDF(String id) throws Exception {
+        String xmlPath = repo.download(id);
+        String resultPath = "./data/result/" + id + ".pdf";
+        XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+        xslfoTransformer.generatePDF(xmlPath, "./data/xsl_fo/z1_fo.xsl", resultPath);
+        return FileUtils.readFileToByteArray(new File(resultPath));
+    }
+
+    public AllResponse getAllRequests() throws Exception {
+        AllResponse response = new AllResponse();
+        response.setPrijave(new ArrayList<>());
+        List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = repo.getAll();
+        for (ZahtevZaPriznanjeZiga zahtev : zahteviZaPriznanjeZiga) {
+            TPrijava prijava = zahtev.getPrijava();
+            PrijavaResponse prijavaResponse = PrijavaResponse.builder()
+                    .brojZahteva(prijava.getBrojPrijave().getValue() + "/" + prijava.getDatumPodnosenja().getValue().getYear())
+                    .datumPodnosenja(prijava.getDatumPodnosenja())
+                    .sluzbenik(prijava.getSluzbenik())
+                    .podnosilac(zahtev.getPodnosilac().getIme())
+                    .status(prijava.getSluzbenik() == null ? "U obradi" : (prijava.isPrihvacena() ? "Prihvacen" : "Odbijen"))
+                    .build();
+            response.getPrijave().add(prijavaResponse);
+        }
+        return response;
+    }
+
+    public AllResponse getRequestsByUser(String email) {
+        return null;
+    }
+
+    public AllResponse getAllByStatus(boolean processed) {
+        return null;
     }
 }

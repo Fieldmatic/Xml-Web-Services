@@ -25,6 +25,10 @@ public class TFizickoLice
     @XmlElement(name = "puno_ime", required = true)
     protected PunoIme punoIme;
     protected Drzavljanstvo drzavljanstvo;
+    @Override
+    public String getIme() {
+        return getPunoIme().getIme().getValue() + " " + getPunoIme().getPrezime().getValue();
+    }
     public PunoIme getPunoIme() {
         return punoIme;
     }
