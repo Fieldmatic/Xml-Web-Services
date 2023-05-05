@@ -17,10 +17,38 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 @Service
 public class JaxbParser {
+
+	private static JAXBContext context;
+
+	static {
+		try {
+			context = JAXBContext.newInstance("rs.tim14.xml.model.autorska_prava");
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public OutputStream marshall(ZahtevZaAutorskaPrava autorskaPrava) throws JAXBException {
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		OutputStream os = new ByteArrayOutputStream();
+		marshaller.marshal(autorskaPrava, os);
+		return os;
+	}
+
+	public ZahtevZaAutorskaPrava unmarshall(String filepath) throws JAXBException {
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return (ZahtevZaAutorskaPrava) unmarshaller.unmarshal(new File(filepath));
+	}
+	public static ZahtevZaAutorskaPrava unmarshallFromDOM(Node data) throws JAXBException {
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return (ZahtevZaAutorskaPrava) unmarshaller.unmarshal(data);
+	}
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {
 		JAXBContext context = JAXBContext.newInstance(jaxbContextPath);

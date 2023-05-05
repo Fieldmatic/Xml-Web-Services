@@ -1,7 +1,9 @@
-package rs.tim14.xml.xmldb;
+package rs.tim14.xml.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.transform.OutputKeys;
 
@@ -14,19 +16,31 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
+import rs.tim14.xml.jaxb.JaxbParser;
+import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
 @Service
 public class ExistDbManager {
 
-	private void openConnection() throws Exception {
+	private static AuthenticationUtilities.ConnectionProperties conn;
+
+	public static void init() throws IOException, ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+		conn = AuthenticationUtilities.loadProperties();
+		Class<?> cl = Class.forName(conn.driver);
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+		DatabaseManager.registerDatabase(database);
+	}
+
+	private static void openConnection() throws Exception {
 		Class<?> cl = Class.forName(AuthenticationUtilities.loadProperties().driver);
 		Database database = (Database) cl.getDeclaredConstructor().newInstance();
 		database.setProperty("create-database", "true");
 		DatabaseManager.registerDatabase(database);
 	}
 
-	private void closeConnection(Collection collection, XMLResource resource) throws XMLDBException {
+	private static void closeConnection(Collection collection, XMLResource resource) throws XMLDBException {
 		if (collection != null) {
 			collection.close();
 		}
@@ -35,7 +49,7 @@ public class ExistDbManager {
 		}
 	}
 
-	public void store(String collectionId, String documentId, String xmlString) throws Exception {
+	public static void store(String collectionId, String documentId, String xmlString) throws Exception {
 		openConnection();
 		Collection col = null;
 		XMLResource res = null;
@@ -52,7 +66,7 @@ public class ExistDbManager {
 		}
 	}
 
-	public XMLResource load(String collectionUri, String documentId) throws Exception  {
+	public static XMLResource load(String collectionUri, String documentId) throws Exception  {
 		openConnection();
 		Collection collection = null;
 		XMLResource resource =  null;
@@ -114,4 +128,40 @@ public class ExistDbManager {
 			return col;
 		}
 	}
+
+	public static List<ZahtevZaAutorskaPrava> getAll(String collectionId) {
+		Collection col = null;
+		XMLResource res = null;
+		try {
+			List<ZahtevZaAutorskaPrava> zahtevZaDeloList = new ArrayList<>();
+			col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+			col.setProperty(OutputKeys.INDENT, "yes");
+			for(String s: col.listResources()){
+				res = (XMLResource)col.getResource(s);
+				zahtevZaDeloList.add(JaxbParser.unmarshallFromDOM(res.getContentAsDOM()));
+			}
+
+			return zahtevZaDeloList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if(res != null) {
+				try {
+					((EXistResource)res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+
+			if(col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
 	}
+}
