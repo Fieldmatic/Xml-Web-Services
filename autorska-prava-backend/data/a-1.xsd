@@ -6,6 +6,9 @@
     <xs:element name="zahtev_za_autorska_prava">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="idZahteva" type="xs:string"/>
+                <xs:element name="emailKlijenta" type="xs:string"/>
+                <xs:element name="statusZahteva" type="a1:TStatus_zahteva"/>
                 <xs:element name="prijava" type="a1:TPrijava"/>
                 <xs:element name="podnosilac" type="ks:TLice"/>
                 <xs:element name="punomocnik" minOccurs="0" nillable="true">
@@ -147,6 +150,13 @@
             <xs:enumeration value="слика"/>
             <xs:enumeration value="видео запис"/>
             <xs:enumeration value="аудио запис"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TStatus_zahteva">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PODNET"/>
+            <xs:enumeration value="ODBIJEN"/>
+            <xs:enumeration value="PRIHVACEN"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
