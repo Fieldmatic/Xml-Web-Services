@@ -1,5 +1,4 @@
-import { A1Service } from './../../services/a1.service';
-import { DodajAutoraDijalogComponent } from './../dodaj-autora-dijalog/dodaj-autora-dijalog.component';
+import { A1Service } from '../../../services/a1.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -10,6 +9,7 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { auto } from '@popperjs/core';
+import { DodajAutoraDijalogComponent } from './dodaj-autora-dijalog/dodaj-autora-dijalog.component';
 
 export class Autor {
   preminuliAutor: boolean;
@@ -30,6 +30,8 @@ export class Autor {
     postanskiBroj: string;
   };
 }
+
+declare var require: any;
 
 @Component({
   selector: 'app-a1-obrazac',
@@ -109,6 +111,11 @@ export class A1ObrazacComponent implements OnInit {
     //drzavu za adresu
     //na adresama ks: dodati
     //fali ti drzavljanstvo kod podnosioca fizicko lice
+
+    const klijent = JSON.parse(localStorage.getItem('userData'));
+    //let userId = userData.id;
+    let emailKlijenta = 'ivana@gmail.com';
+
     let zahtev =
       '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
 
@@ -125,6 +132,7 @@ export class A1ObrazacComponent implements OnInit {
       this.a1Form.get('autorskoDelo').value
     );
 
+    zahtev += '<emailKlijenta>' + emailKlijenta + '</emailKlijenta>';
     zahtev += prijava;
     zahtev += podnosilac;
     zahtev += punomocnik;
@@ -135,6 +143,19 @@ export class A1ObrazacComponent implements OnInit {
       this.primerDelaFile,
       this.opisDelaFile
     );
+
+    // this.a1Service.getAllZahtevi().subscribe((result) => {
+    //   console.log(result);
+    //   console.log('op');
+    //   var convert = require('xml-js');
+    //   var result1 = convert.xml2json(result, {
+    //     compact: true,
+    //     spaces: 4,
+    //     trim: true,
+    //   });
+    //   var res = JSON.parse(result1);
+    //   console.log(res.zahtevi.zahtev);
+    // });
   }
 
   sacuvajOpisDela(event) {

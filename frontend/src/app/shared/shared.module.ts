@@ -13,6 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [ConfirmationDialogComponent],
@@ -45,6 +50,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatTableModule,
+    MatMenuModule,
   ],
 })
 export class SharedModule {}
