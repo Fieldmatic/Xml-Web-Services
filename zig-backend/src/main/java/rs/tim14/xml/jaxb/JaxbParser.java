@@ -2,6 +2,7 @@ package rs.tim14.xml.jaxb;
 
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.MyValidationEventHandler;
 import rs.tim14.xml.util.NSPrefixMapper;
 
@@ -10,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +20,12 @@ import java.io.OutputStream;
 
 @Service
 public class JaxbParser {
+
+	public ZahtevZaPriznanjeZiga unmarshall(StreamSource ss) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(ss);
+	}
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {
 		JAXBContext context = JAXBContext.newInstance(jaxbContextPath);

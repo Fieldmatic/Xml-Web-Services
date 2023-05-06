@@ -11,12 +11,13 @@ package rs.tim14.xml.model.zahtev_za_priznanje_ziga;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigInteger;
-import java.util.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPrijava", propOrder = {
     "brojPrijave",
-    "datumPodnosenja"
+    "datumPodnosenja",
+    "sluzbenik",
+    "prihvacena"
 })
 public class TPrijava {
 
@@ -24,6 +25,10 @@ public class TPrijava {
     protected TPrijava.BrojPrijave brojPrijave;
     @XmlElement(name = "datum_podnosenja", required = true)
     protected TPrijava.DatumPodnosenja datumPodnosenja;
+    @XmlElement(name = "sluzbenik")
+    protected String sluzbenik;
+    @XmlElement(name = "prihvacena")
+    protected boolean prihvacena;
     public TPrijava.BrojPrijave getBrojPrijave() {
         return brojPrijave;
     }
@@ -36,6 +41,10 @@ public class TPrijava {
     public void setDatumPodnosenja(TPrijava.DatumPodnosenja value) {
         this.datumPodnosenja = value;
     }
+    public String getSluzbenik() {return sluzbenik;}
+    public void setSluzbenik(String sluzbenik) {this.sluzbenik = sluzbenik;}
+    public boolean isPrihvacena() {return prihvacena;}
+    public void setPrihvacena(boolean prihvacena) {this.prihvacena = prihvacena;}
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {

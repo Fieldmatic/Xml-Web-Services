@@ -16,11 +16,14 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ReactiveFormsModule } from '@angular/forms';
 import * as fromApp from './store/app.reducer';
 import { SharedModule } from './shared/shared.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from 'src/app/auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PatentModule } from './patent/patent-module';
+import { ZigModule } from './zig/zig.module';
+import { ZigEffects } from './zig/store/zig.effects';
+
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent],
   imports: [
@@ -30,12 +33,13 @@ import { PatentModule } from './patent/patent-module';
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ZigEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AuthModule,
+    ZigModule,
     AppRoutingModule,
     DirectivesModule,
     A1Module,

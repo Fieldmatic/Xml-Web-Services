@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Pretraga</mat-label>
+      <input matInput [formControl]="searchControl">
+    </mat-form-field>
+  </div>
+  <form class="col" [formGroup]="metadataSearch" (ngSubmit)="searchMetadata()">
+    <div class="row">
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Pretraga metapodataka</mat-label>
+          <input matInput [formControl]="searchControl">
+        </mat-form-field>
+      </div>
+      <div class="col-3 mb-auto">
+        <button type="submit" mat-button class="authButton">Pretraži metapodatke</button>
+      </div>
+      <div class="col text-end mb-auto float-end">
+        <a routerLink="/zig/novi" mat-button class="authButton" style="width: fit-content">➕ Kreiraj zahtev</a>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Broj zahteva</th>
+      <td mat-cell *matCellDef="let row"><a
+        [routerLink]="'/zig/' + row.brojZahteva.replaceAll(' ', '').replaceAll('/', '-')"> {{row.brojZahteva}} </a></td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Podnosilac zahteva</th>
+      <td mat-cell *matCellDef="let row"> {{row.podnosilac | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Datum podnošenja</th>
+      <td mat-cell *matCellDef="let row"> {{row.datumPodnosenja | date:'dd.MM.yyyy.'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let row"> {{row.status | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="download">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>download</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="downloadXHTML(row.brojZahteva.replace('/', '-'))">
+            <span>Preuzmi dokument u XHTML formatu</span>
+          </button>
+          <button mat-menu-item (click)="downloadPDF(row.brojZahteva.replace('/', '-'))">
+            <span>Preuzmi dokument u PDF formatu</span>
+          </button>
+          <button mat-menu-item>
+            <span>Preuzmi metapodatke u RDF formatu</span>
+          </button>
+          <button mat-menu-item>
+            <span>Preuzmi metapodatke u JSON formatu</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Nema reultata za unete kriterijume.
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+</div>
