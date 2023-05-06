@@ -8,19 +8,18 @@
 
 package rs.tim14.xml.model.autorska_prava;
 
-import java.math.BigInteger;
 import java.util.*;
-import javax.xml.bind.JAXBElement;
+
 import javax.xml.bind.annotation.*;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 
-import rs.tim14.xml.model.korisnici.Adresa;
-import rs.tim14.xml.model.korisnici.PunoIme;
 import rs.tim14.xml.model.korisnici.TLice;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "idZahteva",
+    "emailKlijenta",
+    "statusZahteva",
     "prijava",
     "podnosilac",
     "punomocnik",
@@ -29,6 +28,14 @@ import rs.tim14.xml.model.korisnici.TLice;
 @XmlRootElement(name = "zahtev_za_autorska_prava")
 public class ZahtevZaAutorskaPrava {
 
+    @XmlElement(name = "idZahteva")
+    protected String idZahteva;
+
+    @XmlElement(name = "emailKlijenta")
+    protected String emailKlijenta;
+
+    @XmlElement(name = "statusZahteva")
+    protected TStatusZahteva statusZahteva;
     @XmlElement(required = true)
     protected TPrijava prijava;
 
@@ -44,6 +51,13 @@ public class ZahtevZaAutorskaPrava {
 
     public Map<QName, String> getReferences() {
         return references;
+    }
+
+    public String getIdZahteva() {
+        return idZahteva;
+    }
+    public void setIdZahteva(String idZahteva) {
+        this.idZahteva = idZahteva;
     }
 
     public TPrijava getPrijava() {
@@ -88,5 +102,21 @@ public class ZahtevZaAutorskaPrava {
         sb.append("\n\tPunomocnik: ").append(punomocnik);
         sb.append("\n\tAutorsko delo: ").append(autorskoDelo);
         return sb.toString();
+    }
+
+    public String getEmailKlijenta() {
+        return emailKlijenta;
+    }
+
+    public void setEmailKlijenta(final String emailKlijenta) {
+        this.emailKlijenta = emailKlijenta;
+    }
+
+    public TStatusZahteva getStatusZahteva() {
+        return statusZahteva;
+    }
+
+    public void setStatusZahteva(final TStatusZahteva statusZahteva) {
+        this.statusZahteva = statusZahteva;
     }
 }

@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 import { AppConfig } from 'src/app/appConfig/appconfig.interface';
 import { APP_SERVICE_CONFIG } from 'src/app/appConfig/appconfig.service';
 import { map, Observable } from 'rxjs';
+import {A1} from "../model/A1";
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +68,17 @@ export class A1Service {
     );
   }
 
+  getAllZahtevi() {
+    console.log('alo');
+    return this.http.get(
+      this.config.autorskoPravoEndpoint + 'autorska-prava/getAll',
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        responseType: 'text',
+      }
+    );
+  }
+
   kreirajPrimerAutorskogDela(putanjaDoPrimera: string): string {
     let primer = '<primer_autorskog_dela>';
     primer +=
@@ -82,5 +94,23 @@ export class A1Service {
       opisDela +
       '</putanja_do_opisa></opis_autorskog_dela>';
     return opis;
+  }
+
+  kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
+    let a1Zahtev = new A1();
+    a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
+
+    let podnosilac = xmlZahtev['ns3:podnosilac']
+    let tipPodnosioca: string = podnosilac['_attributes']['xsi:type']
+    if (tipPodnosioca === "ns2:TFizicko_Lice") {
+      a1Zahtev.nazivPodnosioca = podnosilac["ns2:puno_ime"]["ns2:ime"]['_text'] + ' ' + podnosilac["ns2:puno_ime"]["ns2:prezime"]['_text']
+    } else {
+      a1Zahtev.nazivPodnosioca = podnosilac["ns2:poslovnoIme"]["_text"]
+    }
+    let datum = xmlZahtev['ns3:prijava']['ns3:datum_podnosenja']['_text'].replace('+', 'T')
+    a1Zahtev.datumPodnosenja = new Date(datum)
+
+    a1Zahtev.status = xmlZahtev['ns3:statusZahteva']['_text']
+    return a1Zahtev;
   }
 }

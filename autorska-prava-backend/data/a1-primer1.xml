@@ -4,6 +4,9 @@
     xmlns:ks="http://www.xml.tim14.rs/korisnici"
     xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/"
     xsi:schemaLocation="http://www.xml.tim14.rs/autorska_prava ../data/a-1.xsd">
+    <idZahteva>112</idZahteva>
+    <emailKlijenta>ivana@gmail.com</emailKlijenta>
+    <statusZahteva>PODNET</statusZahteva>
     <prijava>
         <broj_prijave property="pred:brojPrijave" datatype="xs:positiveInteger">1</broj_prijave>
         <datum_podnosenja property="pred:datumPodnosenja" datatype="xs:date">2022-12-12</datum_podnosenja>
@@ -57,6 +60,9 @@
                 </licni_podaci>
                 <anonimni_autor>false</anonimni_autor>
             </autor>
+<!--            <autor>-->
+<!--                <anonimni_autor>true</anonimni_autor>-->
+<!--            </autor>-->
             <autor>
                 <godina_smrti>1999</godina_smrti>
                 <licni_podaci>

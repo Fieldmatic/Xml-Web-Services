@@ -4,19 +4,19 @@
       <h1 mat-button>MUP</h1>
     </div>
     <div class="authentication">
-      <a mat-raised-button routerLink="/a1">A1</a>
       <a mat-raised-button routerLink="/patent">Patent</a>
+      <a mat-raised-button routerLink="/a1/zahtevi">A1</a>
       <a
         mat-button
         routerLink="/auth/login"
         *ngIf="!isAuthenticated"
         id="loginBtn"
-      >Log in</a
+        >Log in</a
       >
       <a mat-button *ngIf="isAuthenticated" routerLink="/zig/zahtevi">Žig</a>
       <a mat-button *ngIf="isAuthenticated" (click)="onLogout()">Log out</a>
       <a mat-raised-button *ngIf="!isAuthenticated" routerLink="/auth/signup"
-      >Sign up</a
+        >Sign up</a
       >
     </div>
   </div>

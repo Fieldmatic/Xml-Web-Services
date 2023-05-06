@@ -183,7 +183,7 @@ export class AuthEffects {
       map(() => {
         const userData = JSON.parse(localStorage.getItem('userData'));
         if (!userData) {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/a1/novi']);
           return { type: 'DUMMY' };
         }
         const loadedUser = new LoggedInUser(userData.email, userData.role);
