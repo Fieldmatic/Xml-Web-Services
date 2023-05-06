@@ -1,10 +1,5 @@
 package rs.tim14.xml.xmldb;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.transform.OutputKeys;
-
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.DatabaseManager;
@@ -13,8 +8,10 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-
 import rs.tim14.xml.util.AuthenticationUtilities;
+
+import javax.xml.transform.OutputKeys;
+import java.io.IOException;
 
 @Service
 public class ExistDbManager {
@@ -53,19 +50,25 @@ public class ExistDbManager {
 	}
 
 	public XMLResource load(String collectionUri, String documentId) throws Exception  {
+		Collection collection = getCollection(collectionUri);
+		return (XMLResource) collection.getResource(documentId);
+	}
+
+	public Collection getCollection(String collectionUri) throws Exception {
 		openConnection();
 		Collection collection = null;
-		XMLResource resource =  null;
 		try {
 			collection = DatabaseManager.getCollection(AuthenticationUtilities.loadProperties().uri + collectionUri,
-				AuthenticationUtilities.loadProperties().user,
-				AuthenticationUtilities.loadProperties().password);
+					AuthenticationUtilities.loadProperties().user,
+					AuthenticationUtilities.loadProperties().password);
 			collection.setProperty(OutputKeys.INDENT, "yes");
-			resource = (XMLResource) collection.getResource(documentId);
 		} catch (Exception e) {
-			closeConnection(collection, resource);
+			if (collection != null) {
+				collection.close();
+			}
+			closeConnection(collection, null);
 		}
-		return resource;
+		return collection;
 	}
 
 	private static Collection getOrCreateCollection(String collectionUri) throws XMLDBException, IOException {

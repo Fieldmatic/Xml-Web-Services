@@ -1,25 +1,20 @@
 package rs.tim14.xml.itext;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
 public class HTMLTransformer {
 	
-	private static DocumentBuilderFactory documentFactory;
+	private static final DocumentBuilderFactory documentFactory;
 	
-	private static TransformerFactory transformerFactory;
+	private static final TransformerFactory transformerFactory;
 
 	static {
 		System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
@@ -33,7 +28,7 @@ public class HTMLTransformer {
 
     public org.w3c.dom.Document buildDocument(String filePath) {
 
-    	org.w3c.dom.Document document = null;
+    	org.w3c.dom.Document document;
 		try {
 			
 			DocumentBuilder builder = documentFactory.newDocumentBuilder();
@@ -53,7 +48,6 @@ public class HTMLTransformer {
 	}
     
     public void generateHTML(String xmlPath, String xslPath, String resultPath) throws FileNotFoundException {
-    	
 		try {
 			StreamSource transformSource = new StreamSource(new File(xslPath));
 			Transformer transformer = transformerFactory.newTransformer(transformSource);
@@ -63,11 +57,9 @@ public class HTMLTransformer {
 			DOMSource source = new DOMSource(buildDocument(xmlPath));
 			StreamResult result = new StreamResult(new FileOutputStream(resultPath));
 			transformer.transform(source, result);
-			
 		} catch (TransformerFactoryConfigurationError | TransformerException e) {
 			e.printStackTrace();
 		}
-
 	}
     
 }

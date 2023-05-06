@@ -9,12 +9,7 @@
 package rs.tim14.xml.model.korisnici;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TLice", propOrder = {
@@ -37,6 +32,7 @@ public abstract class TLice {
     protected JAXBElement<String> brojFaksa;
     @XmlElementRef(name = "email", namespace = "http://www.xml.tim14.rs/korisnici", type = JAXBElement.class, required = false)
     protected JAXBElement<String> email;
+    public String getIme() {return null;}
     public Adresa getAdresa() {
         return adresa;
     }

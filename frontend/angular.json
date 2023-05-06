@@ -23,7 +23,8 @@
               "lru-cache",
               "web-worker",
               "rbush",
-              "sockjs-client"
+              "sockjs-client",
+              "xml2js"
             ],
             "outputPath": "dist/frontend",
             "index": "src/index.html",

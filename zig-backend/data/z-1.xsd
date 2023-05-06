@@ -41,7 +41,6 @@
                                     <xs:attribute name="vrsta_znaka" type="z1:TVrsta_znaka"/>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="izgled_znaka" type="xs:string"/>
                             <xs:sequence>
                                 <xs:element maxOccurs="unbounded" name="boje_znaka" type="xs:string"
                                 />
@@ -81,14 +80,13 @@
                             <xs:element name="primerak_znaka" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="spisak_robe_i_usluga" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="punomocje" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="generalno_punomocje" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="naknadno_punomocje" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije"
                                 type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog"
                                 minOccurs="0"/>
-                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"
-                            />
+                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="generalno_punomocje_predano" type="xs:boolean"/>
+                            <xs:element name="punomocje_ce_biti_pradno" type="xs:boolean"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
