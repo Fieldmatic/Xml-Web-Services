@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import rs.tim14.xml.jaxb.JaxbParser;
@@ -29,7 +30,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AutorskaPravaService {
-    private final Repo repo;
     private final MetadataExtractor metadataExtractor;
     private final FusekiWriter fusekiWriter;
 
@@ -73,9 +73,8 @@ public class AutorskaPravaService {
             ((TPravnoLice) podnosilac).getPoslovnoIme().setDatatype("xs:string");
         }
 
-        OutputStream os = jaxbParser.marshall(zahtev, "./data/a-1.xsd");
+        OutputStream os = jaxbParser.marshall(zahtev, "./autorska-prava-backend/data/a-1.xsd");
         autorskaPravaRepository.save(id, os);
-        //repo.save("/db/zahtevi_za_autorska_prava", id, zahtev, );
 
         XMLResource resource = autorskaPravaRepository.load(id);
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());
@@ -85,5 +84,9 @@ public class AutorskaPravaService {
 
     public List<ZahtevZaAutorskaPrava> getAll() {
         return autorskaPravaRepository.getAll();
+    }
+
+    public ZahtevZaAutorskaPrava getById(String id) throws XMLDBException {
+        return autorskaPravaRepository.getById(id);
     }
 }

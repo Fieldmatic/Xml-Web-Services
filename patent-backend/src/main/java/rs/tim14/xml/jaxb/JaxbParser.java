@@ -1,7 +1,9 @@
 package rs.tim14.xml.jaxb;
 
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
 import rs.tim14.xml.util.MyValidationEventHandler;
 import rs.tim14.xml.util.NSPrefixMapper;
 
@@ -18,6 +20,20 @@ import java.io.OutputStream;
 
 @Service
 public class JaxbParser {
+	private static JAXBContext context;
+
+	static {
+		try {
+			context = JAXBContext.newInstance("rs.tim14.xml.model.zahtev_za_priznanje_patenta");
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static ZahtevZaPriznanjePatenta unmarshallFromDOM(Node data) throws JAXBException {
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return (ZahtevZaPriznanjePatenta) unmarshaller.unmarshal(data);
+	}
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {
 		JAXBContext context = JAXBContext.newInstance(jaxbContextPath);

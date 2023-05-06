@@ -37,8 +37,8 @@ export class A1AllRequestsComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+   // this.dataSource.paginator = this.paginator;
+   // this.dataSource.sort = this.sort;
   }
 
   ucitajSveA1Zahteve() {

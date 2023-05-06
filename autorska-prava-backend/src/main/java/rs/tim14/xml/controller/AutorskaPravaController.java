@@ -40,7 +40,7 @@ public class AutorskaPravaController {
         return new ResponseEntity<>(fileName,HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_XML_VALUE,consumes = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<ZahteviZaAutorskaPravaDTO> getAll(){
         try {
             List<ZahtevZaAutorskaPrava> autorskaPrava = autorskaPravaService.getAll();
@@ -50,5 +50,15 @@ public class AutorskaPravaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahtevZaAutorskaPrava> getById(@PathVariable String id){
+        try {
+            ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaService.getById(id);
+            return new ResponseEntity<>(zahtevZaAutorskaPrava, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

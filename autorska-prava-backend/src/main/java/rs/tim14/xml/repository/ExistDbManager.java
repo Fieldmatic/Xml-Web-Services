@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.transform.OutputKeys;
 
 import org.exist.xmldb.EXistResource;
@@ -17,8 +18,11 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
 import rs.tim14.xml.jaxb.JaxbParser;
+import rs.tim14.xml.model.autorska_prava.AutorskoDelo;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
+
+import static rs.tim14.xml.repository.AutorskaPravaRepository.COLLECTION_ID;
 
 @Service
 public class ExistDbManager {
@@ -163,5 +167,40 @@ public class ExistDbManager {
 				}
 			}
 		}
+	}
+
+	public static ZahtevZaAutorskaPrava getById(String id) throws XMLDBException {
+
+		Collection col = null;
+		XMLResource res = null;
+		try {
+			col = DatabaseManager.getCollection(conn.uri + COLLECTION_ID);
+			col.setProperty(OutputKeys.INDENT, "yes");
+			res = (XMLResource) col.getResource(id.concat(".xml"));
+
+			if(res == null) {
+				System.out.println("[WARNING] Document '" + id + "' can not be found!");
+			} else {
+				return JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
+			}
+		} catch (JAXBException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if(res != null) {
+				try {
+					((EXistResource)res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+			if(col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 }

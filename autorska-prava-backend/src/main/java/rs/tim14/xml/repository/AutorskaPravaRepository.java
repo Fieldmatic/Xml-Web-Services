@@ -49,4 +49,8 @@ public class AutorskaPravaRepository {
 	public void save(String documentId, OutputStream os) throws Exception {
 		ExistDbManager.store(COLLECTION_ID, documentId, os.toString());
 	}
+
+	public ZahtevZaAutorskaPrava getById(String id) throws XMLDBException {
+		return ExistDbManager.getById(id);
+	}
 }
