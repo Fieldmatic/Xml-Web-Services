@@ -21,7 +21,7 @@ public class UserService {
         User existingUser = this.repo.getUserByEmail(user.getEmail());
         if (!Objects.isNull(existingUser))
             throw new UserAlreadyExistsException();
-        repo.save("/db/users", user.getEmail().concat(".xml"), user, "./data/user.xsd");
+        repo.save("/db/users", user.getEmail().concat(".xml"), user, "./users-backend/data/user.xsd");
         return user;
     }
 

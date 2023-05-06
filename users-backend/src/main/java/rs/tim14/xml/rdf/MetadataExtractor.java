@@ -16,7 +16,7 @@ public class MetadataExtractor {
 
     private TransformerFactory transformerFactory;
 
-    private static final String XSLT_FILE = "data/xsl/grddl.xsl";
+    private static final String XSLT_FILE = "users-backend/data/xsl/grddl.xsl";
 
     public MetadataExtractor() {
 

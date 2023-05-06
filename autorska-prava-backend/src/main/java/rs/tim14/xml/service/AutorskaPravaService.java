@@ -61,7 +61,7 @@ public class AutorskaPravaService {
         }
 
 
-        repo.save("/db/zahtevi_za_autorska_prava", id, zahtev, "./data/a-1.xsd");
+        repo.save("/db/zahtevi_za_autorska_prava", id, zahtev, "./autorska-prava-backend/data/a-1.xsd");
 
         XMLResource resource = existDbManager.load("/db/zahtevi_za_autorska_prava", id);
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());

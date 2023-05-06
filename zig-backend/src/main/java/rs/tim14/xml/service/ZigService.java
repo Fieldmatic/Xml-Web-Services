@@ -56,7 +56,7 @@ public class ZigService {
         }
 
 
-        repo.save("/db/zahtevi_za_priznanje_ziga", id, zahtev, "./data/z-1.xsd");
+        repo.save("/db/zahtevi_za_priznanje_ziga", id, zahtev, "./zig-backend/data/z-1.xsd");
 
         XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id);
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());

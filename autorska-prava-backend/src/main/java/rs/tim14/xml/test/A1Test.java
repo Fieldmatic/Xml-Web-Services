@@ -12,7 +12,7 @@ public class A1Test {
 	public void test() {
 		try {
 			JaxbParser jaxbParser = new JaxbParser();
-			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./data/a-1.xsd");
+			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./autorska-prava-backend/data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./autorska-prava-backend/data/a-1.xsd");
 			System.out.println(zahtev_a1);
 			System.out.println();
 			//jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");

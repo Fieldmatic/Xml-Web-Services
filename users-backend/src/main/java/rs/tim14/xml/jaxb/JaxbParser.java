@@ -29,7 +29,7 @@ public class JaxbParser {
     public <T> T unmarshall(String serializedObj) throws Exception {
         JAXBContext context = JAXBContext.newInstance(User.class);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        File schemaFile = new File("./data/user.xsd");
+        File schemaFile = new File("./users-backend/data/user.xsd");
         Schema schema = schemaFactory.newSchema(schemaFile);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         unmarshaller.setSchema(schema);

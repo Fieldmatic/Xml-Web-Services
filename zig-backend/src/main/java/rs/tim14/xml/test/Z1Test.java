@@ -27,7 +27,7 @@ public class Z1Test {
 	public void test() {
 		try {
 			JaxbParser jaxbParser = new JaxbParser();
-			ZahtevZaPriznanjeZiga zahtev_z1 = jaxbParser.unmarshall("./data/z1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_ziga", "./data/z-1.xsd");
+			ZahtevZaPriznanjeZiga zahtev_z1 = jaxbParser.unmarshall("./zig-backend/data/z1-primer1.xml", "rs.tim14.xml.model.zahtev_za_priznanje_ziga", "./data/z-1.xsd");
 			System.out.println(zahtev_z1);
 			System.out.println();
 			//jaxbParser.marshall(kreirajZ1Obrazac(), "rs.tim14.xml.model.zahtev_za_priznanje_ziga");

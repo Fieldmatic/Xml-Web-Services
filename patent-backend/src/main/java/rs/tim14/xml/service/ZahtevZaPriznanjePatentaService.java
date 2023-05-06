@@ -61,7 +61,7 @@ public class ZahtevZaPriznanjePatentaService {
         }
 
 
-        repo.save("/db/zahtevi_za_priznanje_patenta", id, zahtev, "./data/p-1.xsd");
+        repo.save("/db/zahtevi_za_priznanje_patenta", id, zahtev, "./patent-backend/data/p-1.xsd");
 
         XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_patenta", id);
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());

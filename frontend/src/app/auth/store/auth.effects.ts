@@ -47,7 +47,7 @@ const handleAuthentication = (loginResponse, toastrService: ToastrService) => {
         result['loginResponse']['role'][0]
       );
       localStorage.setItem('userData', JSON.stringify(user));
-      notifySuccess('You successfully logged in', toastrService);
+      notifySuccess('Uspesno ste se ulogovali!', toastrService);
       return user;
     }
   );
@@ -98,7 +98,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.LOGIN_SUCCESS),
         tap(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/patent']);
         })
       ),
     { dispatch: false }
@@ -143,7 +143,7 @@ export class AuthEffects {
           })
           .pipe(
             map(() => {
-              notifySuccess('You successfully registered!', this.toastrService);
+              notifySuccess('Uspesno ste se registrovali!', this.toastrService);
               return new AuthActions.SignupSuccess();
             }),
             catchError((errorResp) => {
