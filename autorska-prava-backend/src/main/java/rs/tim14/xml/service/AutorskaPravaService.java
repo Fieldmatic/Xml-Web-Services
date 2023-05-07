@@ -18,6 +18,7 @@ import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.model.korisnici.TFizickoLice;
 import rs.tim14.xml.model.korisnici.TLice;
 import rs.tim14.xml.model.korisnici.TPravnoLice;
+import rs.tim14.xml.rdf.FusekiReader;
 import rs.tim14.xml.rdf.FusekiWriter;
 import rs.tim14.xml.rdf.MetadataExtractor;
 import rs.tim14.xml.repository.AutorskaPravaRepository;
@@ -112,19 +113,19 @@ public class AutorskaPravaService {
         return FileUtils.readFileToByteArray(new File(resultPath));
     }
 
-    public ByteArrayInputStream getRDF(String id) {
+    public String getRDF(String id) {
         try {
-            String rdf = autorskaPravaRepository.getRDF(id);
-            return new ByteArrayInputStream(rdf.getBytes());
+            String sparqlCondition = "<http://www.ftn.uns.ac.rs/rdf/a1/" + id + "> ?d ?s .";
+            return FusekiReader.readMetadata(sparqlCondition, "N-TRIPLE");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ByteArrayInputStream getJSON(String id) {
+    public String getJSON(String id) {
         try {
-            String json = autorskaPravaRepository.getJSON(id);
-            return new ByteArrayInputStream(json.getBytes());
+            String sparqlCondition = "<http://www.ftn.uns.ac.rs/rdf/a1/" + id + "> ?d ?s .";
+            return FusekiReader.readMetadata(sparqlCondition, "RDF/JSON");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

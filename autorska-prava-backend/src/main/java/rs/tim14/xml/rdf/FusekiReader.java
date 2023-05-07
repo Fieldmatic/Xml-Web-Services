@@ -1,6 +1,7 @@
 package rs.tim14.xml.rdf;
 
 import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
@@ -20,7 +21,7 @@ public class FusekiReader {
 	}
 
 	public static void run(AuthenticationUtilities.ConnectionProperties conn) throws IOException {
-		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + GRAPH_URI, "?s ?p ?o");
+		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + "/" + GRAPH_URI, "?s ?p ?o");
 
 		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
 		ResultSet results = query.execSelect();
@@ -47,10 +48,16 @@ public class FusekiReader {
 		
 	}
 
-	public static String getRdfString(String id) throws Exception {
-		ResultSet results = getRDFById(id);
-
-		return ResultSetFormatter.asXMLString(results);
+	public static String readMetadata(String sparqlQueryCondition, String type) throws Exception {
+		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+		System.out.println("[INFO] Selecting the triples from the named graph \"" + GRAPH_URI + "\".");
+		String sparqlQuery = SparqlUtil.constructData(conn.dataEndpoint + "/" + GRAPH_URI, sparqlQueryCondition);
+		System.out.println(sparqlQuery);
+		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
+		Model model = query.execConstruct();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		model.write(out, type);
+		return out.toString();
 	}
 
 	public static String getJsonString(String id) throws Exception {

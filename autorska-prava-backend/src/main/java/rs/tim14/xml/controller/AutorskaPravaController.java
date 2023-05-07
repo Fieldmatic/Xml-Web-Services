@@ -65,30 +65,34 @@ public class AutorskaPravaController {
     }
 
     @GetMapping(value = "/html/{id}", produces = MediaType.APPLICATION_XHTML_XML_VALUE)
-    public byte[] getHTML(@PathVariable String id) throws Exception {
-        return autorskaPravaService.getHTML(id);
+    public ResponseEntity<byte[]> getHTML(@PathVariable String id) throws Exception {
+        byte[] html = autorskaPravaService.getHTML(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".html"));
+        return new ResponseEntity<>(html, headers, HttpStatus.OK);
     }
 
     @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public byte[] getPDF(@PathVariable String id) throws Exception {
-        return autorskaPravaService.getPDF(id);
+    public ResponseEntity<byte[]> getPDF(@PathVariable String id) throws Exception {
+        byte[] pdf = autorskaPravaService.getPDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".pdf"));
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/rdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> generateRDF(@PathVariable String id) {
-        ByteArrayInputStream byteFile = autorskaPravaService.getRDF(id);
+    @GetMapping(path = "/rdf/{id}", produces = "application/rdf+xml")
+    public ResponseEntity<String> generateRDF(@PathVariable String id) {
+        String result = autorskaPravaService.getRDF(id);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=metadata_" + id + ".rdf");
-
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+        headers.setContentDispositionFormData("attachment", id.concat(".rdf"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/json/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> generateJSON(@PathVariable String id) {
-        ByteArrayInputStream byteFile = autorskaPravaService.getJSON(id);
+    @GetMapping(path = "/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> generateJSON(@PathVariable String id) {
+        String result = autorskaPravaService.getJSON(id);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=metadata_" + id + ".json");
-
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+        headers.setContentDispositionFormData("attachment", id.concat(".json"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
 }
