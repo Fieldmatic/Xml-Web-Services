@@ -7,33 +7,33 @@ import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 import javax.xml.bind.JAXBException;
 
-public class A1Test {
-
-	public void test() {
-		try {
-			JaxbParser jaxbParser = new JaxbParser();
-			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./autorska-prava-backend/data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./autorska-prava-backend/data/a-1.xsd");
-			System.out.println(zahtev_a1);
-			System.out.println();
-			//jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
-
-			final String inputFilePath = "data/a1-primer1.xml";
-			final String outputFilePath = "data/result/a1";
-			HTMLTransformer htmlTransformer = new HTMLTransformer();
-			final String xslFilePath = "data/xsl/a1.xsl";
-
-			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
-
-			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
-			final String xslfoFilePath = "data/xsl_fo/a1_fo.xsl";
-
-			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+//public class A1Test {
+//
+//	public void test() {
+	//	try {
+//			JaxbParser jaxbParser = new JaxbParser();
+//			ZahtevZaAutorskaPrava zahtev_a1 = jaxbParser.unmarshall("./autorska-prava-backend/data/a1-primer1.xml", "rs.tim14.xml.model.autorska_prava", "./autorska-prava-backend/data/a-1.xsd");
+//			System.out.println(zahtev_a1);
+//			System.out.println();
+//			//jaxbParser.marshall(kreirajA1(), "rs.tim14.xml.model.autorska_prava");
+//
+//			final String inputFilePath = "data/a1-primer1.xml";
+//			final String outputFilePath = "data/result/a1";
+//			HTMLTransformer htmlTransformer = new HTMLTransformer();
+//			final String xslFilePath = "data/xsl/a1.xsl";
+//
+//			htmlTransformer.generateHTML(inputFilePath, xslFilePath, outputFilePath + ".html");
+//
+//			XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+//			final String xslfoFilePath = "data/xsl_fo/a1_fo.xsl";
+//
+//			xslfoTransformer.generatePDF(inputFilePath, xslfoFilePath, outputFilePath + ".pdf");
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+	//}
 
 //	public static ZahtevZaAutorskaPrava kreirajA1() throws DatatypeConfigurationException {
 //		ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = new ZahtevZaAutorskaPrava();
@@ -101,4 +101,4 @@ public class A1Test {
 //		A1Test test = new A1Test();
 //		test.test();
 //	}
-}
+//}

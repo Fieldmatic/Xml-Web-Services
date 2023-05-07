@@ -46,6 +46,18 @@ public class ZahtevZaAutorskaPrava {
     protected Punomocnik punomocnik;
     @XmlElement(name = "autorsko_delo", required = true)
     protected AutorskoDelo autorskoDelo;
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    @XmlAttribute(name = "about")
+    @XmlSchemaType(name = "anySimpleType")
+    protected String about;
     @XmlAnyAttribute
     private Map<QName, String> references = new HashMap<QName, String>();
 

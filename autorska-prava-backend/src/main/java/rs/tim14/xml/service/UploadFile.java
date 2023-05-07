@@ -17,7 +17,7 @@ public class UploadFile {
 	public String execute(MultipartFile file, Boolean descriptionFile) {
 		try {
 			String fileName = getFileName(file, descriptionFile);
-			saveFile("src/main/resources/a1/" + fileName, file.getBytes());
+			saveFile("./autorska-prava-backend/src/main/resources/a1/" + fileName, file.getBytes());
 			return fileName;
 		} catch (IOException | NullPointerException exception) {
 			System.out.println(exception.getMessage());

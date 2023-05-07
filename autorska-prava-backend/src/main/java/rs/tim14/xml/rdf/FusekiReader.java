@@ -4,20 +4,23 @@ import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.RDFNode;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
 public class FusekiReader {
 
-	private static final String PATENT_GRAPH_URI = "/metadata";
+	private static final String GRAPH_URI = "zahtevi_za_autorska_prava";
+	private static final String SUBJECT_TRIPLET_PART = "<http://www.ftn.uns.ac.rs/rdf/a1/";
 
-	
+
+
 	public static void main(String[] args) throws Exception {
 		run(AuthenticationUtilities.loadProperties());
 	}
 
 	public static void run(AuthenticationUtilities.ConnectionProperties conn) throws IOException {
-		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + PATENT_GRAPH_URI, "?s ?p ?o");
+		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + GRAPH_URI, "?s ?p ?o");
 
 		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
 		ResultSet results = query.execSelect();
@@ -42,6 +45,50 @@ public class FusekiReader {
 		
 		query.close() ;
 		
+	}
+
+	public static String getRdfString(String id) throws Exception {
+		ResultSet results = getRDFById(id);
+
+		return ResultSetFormatter.asXMLString(results);
+	}
+
+	public static String getJsonString(String id) throws Exception {
+		ResultSet results = getRDFById(id);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ResultSetFormatter.outputAsJSON(outputStream, results);
+
+		return outputStream.toString();
+	}
+
+	private static ResultSet getRDFById(String id) throws IOException {
+		String whereQueryById = createWhereQueryByIdPart(id);
+		ResultSetRewindable results = select(whereQueryById);
+		ResultSetFormatter.out(System.out, results);
+		results.reset();
+
+		return results;
+	}
+
+	private static String createWhereQueryByIdPart(String id) {
+		String whereStr = "?s ?p ?o "; //.concat(createPredicateIdTripletQueryPart());
+		String filterStr = "FILTER ( ?s = ".concat(SUBJECT_TRIPLET_PART).concat(id).concat("> )");
+		whereStr = whereStr.concat(filterStr);
+
+		return whereStr;
+	}
+
+	private static ResultSetRewindable select(String whereQueryPart) throws IOException {
+		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + "/" + GRAPH_URI, whereQueryPart);
+		System.out.println(sparqlQuery);
+		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
+		ResultSet r = query.execSelect();
+		ResultSetRewindable results = ResultSetFactory.copyResults(r);
+		query.close();
+
+		return results;
 	}
 
 }

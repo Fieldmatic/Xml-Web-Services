@@ -1,8 +1,7 @@
 package rs.tim14.xml.repository;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +25,9 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 import lombok.RequiredArgsConstructor;
+import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
+import rs.tim14.xml.rdf.FusekiRepository;
 
 @Repository
 public class AutorskaPravaRepository {
@@ -52,5 +53,23 @@ public class AutorskaPravaRepository {
 
 	public ZahtevZaAutorskaPrava getById(String id) throws XMLDBException {
 		return ExistDbManager.getById(id);
+	}
+
+	public String getPath(String id) throws Exception {
+		String path = Paths.get("autorska-prava-backend/data", "xml", id + ".xml").toAbsolutePath().toString();
+		ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = getById(id);
+		OutputStream os = JaxbParser.marshall(zahtevZaAutorskaPrava, "./autorska-prava-backend/data/a-1.xsd");
+		try(OutputStream outputStream = new FileOutputStream(path)) {
+			((ByteArrayOutputStream)os).writeTo(outputStream);
+		}
+		return path;
+	}
+
+	public String getRDF(String id) throws Exception {
+		return FusekiRepository.getRdfString(id);
+	}
+
+	public String getJSON(String id) throws Exception {
+		return FusekiRepository.getJsonString(id);
 	}
 }
