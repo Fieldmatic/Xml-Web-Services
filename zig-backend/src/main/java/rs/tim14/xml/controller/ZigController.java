@@ -1,7 +1,10 @@
 package rs.tim14.xml.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.tim14.xml.dto.AllResponse;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
@@ -52,5 +55,21 @@ public class ZigController {
     @PostMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ZahtevZaPriznanjeZiga create(@RequestBody ZahtevZaPriznanjeZiga zahtev) throws Exception {
         return zigService.create(zahtev);
+    }
+
+    @GetMapping(path = "/rdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<String> generateRDF(@PathVariable String id) {
+        String result = zigService.getRDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".rdf"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/json/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<String> generateJSON(@PathVariable String id) {
+        String result = zigService.getJSON(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".json"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
 }

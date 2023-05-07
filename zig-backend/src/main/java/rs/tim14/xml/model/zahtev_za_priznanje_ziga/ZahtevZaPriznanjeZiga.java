@@ -10,14 +10,12 @@ package rs.tim14.xml.model.zahtev_za_priznanje_ziga;
 
 import rs.tim14.xml.model.korisnici.TLice;
 
-import java.math.BigInteger;
+import javax.xml.bind.annotation.*;
+import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.bind.annotation.*;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -57,6 +55,10 @@ public class ZahtevZaPriznanjeZiga {
     @XmlElement(name = "Prilozi_uz_zahtev", required = true)
     protected PriloziUzZahtev priloziUzZahtev;
 
+    @XmlAttribute(name = "about")
+    @XmlSchemaType(name = "anySimpleType")
+    protected String about;
+
     @XmlAnyAttribute
     private Map<QName, String> references = new HashMap<QName, String>();
 
@@ -65,9 +67,18 @@ public class ZahtevZaPriznanjeZiga {
     }
 
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     public TPrijava getPrijava() {
         return prijava;
     }
+
     public void setPrijava(TPrijava value) {
         this.prijava = value;
     }

@@ -44,6 +44,10 @@ public class ZahtevZaPriznanjePatenta {
     @XmlElement(name = "ranije_prijave", required = true)
     protected RanijePrijave ranijePrijave;
 
+    @XmlAttribute(name = "about")
+    @XmlSchemaType(name = "anySimpleType")
+    protected String about;
+
     @XmlAnyAttribute
     private Map<QName, String> references = new HashMap<QName, String>();
 
@@ -51,13 +55,22 @@ public class ZahtevZaPriznanjePatenta {
         return references;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public TPrijava getPrijava() {
         return prijava;
     }
+
     public void setPrijava(TPrijava value) {
         this.prijava = value;
     }
+
     public Pronalazak getPronalazak() {
         return pronalazak;
     }

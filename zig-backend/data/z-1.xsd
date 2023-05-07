@@ -91,6 +91,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="about"/>
         </xs:complexType>
     </xs:element>
 
@@ -116,6 +117,7 @@
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="prihvacena" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:simpleType name="TVrsta_ziga">

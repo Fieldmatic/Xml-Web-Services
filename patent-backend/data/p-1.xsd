@@ -61,6 +61,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="about"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="TPrijava">

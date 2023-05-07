@@ -12,10 +12,7 @@ import java.util.Iterator;
 public class FusekiReader {
 
 	private static final String GRAPH_URI = "zahtevi_za_autorska_prava";
-	private static final String SUBJECT_TRIPLET_PART = "<http://www.ftn.uns.ac.rs/rdf/a1/";
-
-
-
+	
 	public static void main(String[] args) throws Exception {
 		run(AuthenticationUtilities.loadProperties());
 	}
@@ -58,44 +55,6 @@ public class FusekiReader {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		model.write(out, type);
 		return out.toString();
-	}
-
-	public static String getJsonString(String id) throws Exception {
-		ResultSet results = getRDFById(id);
-
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		ResultSetFormatter.outputAsJSON(outputStream, results);
-
-		return outputStream.toString();
-	}
-
-	private static ResultSet getRDFById(String id) throws IOException {
-		String whereQueryById = createWhereQueryByIdPart(id);
-		ResultSetRewindable results = select(whereQueryById);
-		ResultSetFormatter.out(System.out, results);
-		results.reset();
-
-		return results;
-	}
-
-	private static String createWhereQueryByIdPart(String id) {
-		String whereStr = "?s ?p ?o "; //.concat(createPredicateIdTripletQueryPart());
-		String filterStr = "FILTER ( ?s = ".concat(SUBJECT_TRIPLET_PART).concat(id).concat("> )");
-		whereStr = whereStr.concat(filterStr);
-
-		return whereStr;
-	}
-
-	private static ResultSetRewindable select(String whereQueryPart) throws IOException {
-		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + "/" + GRAPH_URI, whereQueryPart);
-		System.out.println(sparqlQuery);
-		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
-		ResultSet r = query.execSelect();
-		ResultSetRewindable results = ResultSetFactory.copyResults(r);
-		query.close();
-
-		return results;
 	}
 
 }
