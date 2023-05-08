@@ -31,10 +31,13 @@ public class PodaciOAutorima {
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < autor.size(); i++) {
-			sb.append("\n\t\t\tAutor " + (i+1) + ":").append(autor.get(i));
+		if (autor != null) {
+			for (int i = 0; i < autor.size(); i++) {
+				sb.append("\n\t\t\tAutor " + (i + 1) + ":").append(autor.get(i));
+			}
+			return sb.toString();
 		}
-		return sb.toString();
+		return null;
 	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)

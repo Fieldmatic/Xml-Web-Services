@@ -29,6 +29,9 @@ import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 import javax.xml.namespace.QName;
 import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -80,13 +83,18 @@ public class AutorskaPravaService {
             ((TPravnoLice) podnosilac).getPoslovnoIme().setDatatype("xs:string");
         }
 
-        OutputStream os = jaxbParser.marshall(zahtev, "./autorska-prava-backend/data/a-1.xsd");
+        OutputStream os = jaxbParser.marshall(zahtev, "./data/a-1.xsd");
         autorskaPravaRepository.save(id, os);
 
         XMLResource resource = autorskaPravaRepository.load(id);
         byte[] out =  metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());
         fusekiWriter.saveRdf(new ByteArrayInputStream(out), "/zahtevi_za_autorska_prava");
         return zahtev;
+    }
+
+    public List<ZahtevZaAutorskaPrava> dobaviPoTekstu(String tekst)
+        throws XMLDBException, IOException{
+        return autorskaPravaRepository.dobaviPoTekstu(tekst);
     }
 
     public List<ZahtevZaAutorskaPrava> getAll() {

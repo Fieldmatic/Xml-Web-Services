@@ -1,33 +1,34 @@
 package rs.tim14.xml.controller;
 
-import java.io.*;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import rs.tim14.xml.dto.requests.MetadataRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaAutorskaPravaDTO;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
+import rs.tim14.xml.repository.AutorskaPravaRepository;
 import rs.tim14.xml.service.AutorskaPravaService;
+import rs.tim14.xml.service.MetadataService;
 import rs.tim14.xml.service.UploadFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/autorska-prava")
 @RequiredArgsConstructor
 public class AutorskaPravaController {
     private final AutorskaPravaService autorskaPravaService;
+
+    private final AutorskaPravaRepository autorskaPravaRepository;
     private final UploadFile uploadFile;
 
+    private final MetadataService metadataService;
     @PostMapping
     public ResponseEntity<ZahtevZaAutorskaPrava> create(@RequestBody ZahtevZaAutorskaPrava zahtev) throws Exception {
         return new ResponseEntity<>(autorskaPravaService.create(zahtev), HttpStatus.CREATED);
@@ -51,7 +52,6 @@ public class AutorskaPravaController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
@@ -59,6 +59,17 @@ public class AutorskaPravaController {
         try {
             ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaService.getById(id);
             return new ResponseEntity<>(zahtevZaAutorskaPrava, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @GetMapping(value = "/pretragaPoTekstu/{tekst}", produces = MediaType.APPLICATION_XML_VALUE,consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> dobaviPoTekstu(@PathVariable("tekst") String tekst) {
+        try {
+            List<ZahtevZaAutorskaPrava> obrasci = autorskaPravaService.dobaviPoTekstu(tekst);
+            ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(obrasci);
+            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -95,4 +106,12 @@ public class AutorskaPravaController {
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
+    
+    @PostMapping(path="/pretragaPoMetapodacima")
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody MetadataRequest pretragaRequest) throws Exception {
+        List<ZahtevZaAutorskaPrava> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
+        ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(zahtevi);
+        return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+    }
+
 }
