@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="triplet", propOrder={"predikat", "objekat", "operator"})
-public class MetadataTriplet {
+public class NaprednaPretragaTriplet {
 
     @XmlElement(name="predikat", required = true)
     private String predikat;

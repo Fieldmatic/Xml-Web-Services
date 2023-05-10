@@ -10,16 +10,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name="metadata")
-@XmlType(name="metadata", propOrder = {"metadataTripleti"})
 @XmlAccessorType(XmlAccessType.PROPERTY)
-public class MetadataRequest {
+public class NaprednaPretragaRequest {
 
-    private List<MetadataTriplet> metadataTripleti;
+    private List<NaprednaPretragaTriplet> naprednaPretragaTripleti;
 
-    @XmlElementWrapper(name="metadataTripleti")
     @XmlElement(name="triplet")
-    public List<MetadataTriplet> getMetadataTripleti() {
-        return metadataTripleti;
+    public List<NaprednaPretragaTriplet> getMetadataTripleti() {
+        return naprednaPretragaTripleti;
+    }
+
+    public void setMetadataTripleti(final List<NaprednaPretragaTriplet> naprednaPretragaTripleti) {
+        this.naprednaPretragaTripleti = naprednaPretragaTripleti;
     }
 
 }

@@ -9,16 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.xpath.XPathException;
 
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.RDFNode;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.ResourceIterator;
@@ -75,7 +68,7 @@ public class AutorskaPravaRepository {
 		return path;
 	}
 	
-	public List<ZahtevZaAutorskaPrava> dobaviPoTekstu(String tekst) throws IOException, XMLDBException {
+	public List<ZahtevZaAutorskaPrava> dobaviPoTekstu(List<String> filteri) throws IOException, XMLDBException {
 		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 		Collection col = null;
 
@@ -86,7 +79,7 @@ public class AutorskaPravaRepository {
 			XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
 			xPathQueryService.setProperty("indent", "yes");
 
-			String xPathExp = "/*[contains(., '" + tekst + "')]";
+			String xPathExp = getXPathExp(filteri);
 			ResourceSet result = xPathQueryService.query(xPathExp);
 			ResourceIterator i = result.getIterator();
 			XMLResource res = null;
@@ -94,7 +87,7 @@ public class AutorskaPravaRepository {
 			while (i.hasMoreResources()) {
 				res = (XMLResource) i.nextResource();
 				obrazacAutorskoDelo = JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
-				obrasci.add(obrazacAutorskoDelo);
+				if (!obrasci.contains(obrazacAutorskoDelo)) obrasci.add(obrazacAutorskoDelo);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -108,5 +101,17 @@ public class AutorskaPravaRepository {
 			}
 		}
 		return obrasci;
+	}
+
+	private static String getXPathExp(final List<String> filteri) {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append("/*[");
+		queryBuilder.append("contains(., '").append(filteri.get(0)).append("')");
+		for (int i = 1; i < filteri.size(); i++) {
+			queryBuilder.append(" or contains(., '").append(filteri.get(i)).append("')");
+		}
+		queryBuilder.append("]");
+
+		return queryBuilder.toString();
 	}
 }

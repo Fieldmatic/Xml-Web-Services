@@ -11,7 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import rs.tim14.xml.dto.requests.MetadataRequest;
+import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
+import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaAutorskaPravaDTO;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.repository.AutorskaPravaRepository;
@@ -63,17 +64,6 @@ public class AutorskaPravaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @GetMapping(value = "/pretragaPoTekstu/{tekst}", produces = MediaType.APPLICATION_XML_VALUE,consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaAutorskaPravaDTO> dobaviPoTekstu(@PathVariable("tekst") String tekst) {
-        try {
-            List<ZahtevZaAutorskaPrava> obrasci = autorskaPravaService.dobaviPoTekstu(tekst);
-            ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(obrasci);
-            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping(value = "/html/{id}", produces = MediaType.APPLICATION_XHTML_XML_VALUE)
     public ResponseEntity<byte[]> getHTML(@PathVariable String id) throws Exception {
@@ -106,9 +96,20 @@ public class AutorskaPravaController {
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/pretragaPoTekstu", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest) {
+        try {
+            List<ZahtevZaAutorskaPrava> obrasci = autorskaPravaService.dobaviPoTekstu(pretragaRequest.getFilteri());
+            ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(obrasci);
+            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
     
-    @PostMapping(path="/pretragaPoMetapodacima")
-    public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody MetadataRequest pretragaRequest) throws Exception {
+    @PostMapping(path="/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
         List<ZahtevZaAutorskaPrava> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
         ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(zahtevi);
         return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);

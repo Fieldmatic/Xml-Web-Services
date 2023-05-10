@@ -3,10 +3,7 @@ package rs.tim14.xml.service;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.http.HttpResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -22,9 +19,7 @@ import rs.tim14.xml.rdf.FusekiReader;
 import rs.tim14.xml.rdf.FusekiWriter;
 import rs.tim14.xml.rdf.MetadataExtractor;
 import rs.tim14.xml.repository.AutorskaPravaRepository;
-import rs.tim14.xml.repository.Repo;
 import rs.tim14.xml.util.Util;
-import rs.tim14.xml.repository.ExistDbManager;
 import rs.tim14.xml.xslfo.XSLFOTransformer;
 
 import javax.xml.namespace.QName;
@@ -92,9 +87,9 @@ public class AutorskaPravaService {
         return zahtev;
     }
 
-    public List<ZahtevZaAutorskaPrava> dobaviPoTekstu(String tekst)
+    public List<ZahtevZaAutorskaPrava> dobaviPoTekstu(List<String> filteri)
         throws XMLDBException, IOException{
-        return autorskaPravaRepository.dobaviPoTekstu(tekst);
+        return autorskaPravaRepository.dobaviPoTekstu(filteri);
     }
 
     public List<ZahtevZaAutorskaPrava> getAll() {
