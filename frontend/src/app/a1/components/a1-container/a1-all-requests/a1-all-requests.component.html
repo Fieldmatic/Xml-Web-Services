@@ -49,16 +49,16 @@
             <mat-icon>download</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="preuzmiHtml(row.id)">
               <span>Preuzmi dokument u XHTML formatu</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="preuzmiPdf(row.id)">
               <span>Preuzmi dokument u PDF formatu</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="preuzmiRdfMetapodatke(row.id)">
               <span>Preuzmi metapodatke u RDF formatu</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="preuzmiJsonMetapodatke(row.id)">
               <span>Preuzmi metapodatke u JSON formatu</span>
             </button>
           </mat-menu>

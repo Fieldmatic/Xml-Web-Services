@@ -151,4 +151,26 @@ export class A1Service {
       }
     );
   }
+
+  preuzmiPdf(id: string) {
+    return this.http.get(this.config.autorskoPravoEndpoint + "autorska-prava/pdf/" + id, {responseType: 'blob'});
+  }
+
+  preuzmiHtml(id: string) {
+    return this.http.get(this.config.autorskoPravoEndpoint + "autorska-prava/html/" + id, {responseType: 'blob'});
+  }
+
+  preuzmiRdfMetapodatke(id: string) {
+    return this.http.get(this.config.autorskoPravoEndpoint + "autorska-prava/rdf/" + id, {
+      headers: new HttpHeaders().append('Content-Type', 'application/rdf+xml'),
+      responseType: 'blob' as 'json'
+    });
+  }
+
+  preuzmiJsonMetapodatke(id: string) {
+    return this.http.get(this.config.autorskoPravoEndpoint + "autorska-prava/json/" + id, {
+      headers: new HttpHeaders().append('Content-Type', 'application/json'),
+      responseType: 'blob' as 'json'
+    });
+  }
 }

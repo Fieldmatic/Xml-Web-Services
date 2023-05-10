@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {A1Service} from 'src/app/a1/services/a1.service';
+import {saveAs} from 'file-saver';
 
 
 declare var require: any;
@@ -57,5 +58,29 @@ export class A1AllRequestsComponent {
 
   napraviListuOdPristiglihZahteva(zahtevi: any) {
     return Array.isArray(zahtevi) ? zahtevi : [zahtevi];
+  }
+
+  preuzmiPdf(id: string) {
+    this.a1Service.preuzmiPdf(id).subscribe(data => {
+      saveAs(data, 'zahtev_za_autorska_prava_' + id + '.pdf');
+    });
+  }
+
+  preuzmiHtml(id: string) {
+    this.a1Service.preuzmiHtml(id).subscribe(data => {
+      saveAs(data, 'zahtev_za_autorska_prava_' + id + '.html');
+    });
+  }
+
+  preuzmiRdfMetapodatke(id: string) {
+    this.a1Service.preuzmiRdfMetapodatke(id).subscribe((response: any) => {
+      saveAs(response, 'autorska_prava_' + id + '.rdf')
+    });
+  }
+
+  preuzmiJsonMetapodatke(id: string) {
+    this.a1Service.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
+      saveAs(response, 'autorska_prava_' + id + '.rdf');
+    });
   }
 }
