@@ -1,10 +1,11 @@
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { AppConfig } from 'src/app/appConfig/appconfig.interface';
-import { APP_SERVICE_CONFIG } from 'src/app/appConfig/appconfig.service';
-import { map, Observable } from 'rxjs';
+import {Router} from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Inject, Injectable} from '@angular/core';
+import {AppConfig} from 'src/app/appConfig/appconfig.interface';
+import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {A1} from "../model/A1";
+import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
+
 
 @Injectable({
   providedIn: 'root',
@@ -33,14 +34,12 @@ export class A1Service {
       zahtev += '</autorsko_delo>';
       zahtev += '</zahtev_za_autorska_prava>';
       return this.sacuvajA1Obrazac(zahtev).subscribe((rezultat) => {
-        console.log('top');
         console.log(rezultat);
       });
     });
   }
 
   sacuvajA1Obrazac(request: string) {
-    console.log(request);
     return this.http.post(
       this.config.autorskoPravoEndpoint + 'autorska-prava',
       request,
@@ -69,12 +68,35 @@ export class A1Service {
   }
 
   getAllZahtevi() {
-    console.log('alo');
     return this.http.get(
       this.config.autorskoPravoEndpoint + 'autorska-prava/getAll',
       {
         headers: new HttpHeaders().set('Content-Type', 'application/xml'),
         responseType: 'text',
+      }
+    );
+  }
+
+  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
+    let zahtev = "<metadata>"
+    for (const triplet of triplets) {
+      zahtev += "<triplet>" +
+        "<predikat>" + triplet.predikat + "</predikat>"
+        + "<objekat>" + triplet.objekat + "</objekat>"
+        + "<operator>" + triplet.operator + "</operator>"
+        + "</triplet>"
+    }
+    zahtev += "</metadata>";
+    return this.http.post(
+      this.config.autorskoPravoEndpoint + 'autorska-prava/pretragaPoMetapodacima',
+      zahtev,
+      {
+        observe: 'body',
+        responseType: 'text',
+        headers: {
+          'Content-Type': 'application/xml',
+          Accept: 'application/xml',
+        },
       }
     );
   }
@@ -112,5 +134,21 @@ export class A1Service {
 
     a1Zahtev.status = xmlZahtev['ns3:statusZahteva']['_text']
     return a1Zahtev;
+  }
+
+  pretraziZahtevePoTekstu(filteri: string[]) {
+    let zahtev = "<pretraga>"
+    for (const filter of filteri) {
+      zahtev += "<filteri>" + filter + "</filteri>"
+    }
+    zahtev += "</pretraga>";
+    return this.http.post(
+      this.config.autorskoPravoEndpoint + 'autorska-prava/pretragaPoTekstu',
+      zahtev,
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        responseType: 'text',
+      }
+    );
   }
 }
