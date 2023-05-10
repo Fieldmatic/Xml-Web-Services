@@ -49,7 +49,7 @@ public class JaxbParser {
 		return (T) unmarshaller.unmarshal(new File(xmlPath));
 	}
 
-	public <T> OutputStream marshall(T objectToMarshall, String schemaPath) throws JAXBException, SAXException {
+	public static <T> OutputStream marshall(T objectToMarshall, String schemaPath) throws JAXBException, SAXException {
 		JAXBContext context = JAXBContext.newInstance(objectToMarshall.getClass().getPackage().getName());
 		Marshaller marshaller = context.createMarshaller();
 

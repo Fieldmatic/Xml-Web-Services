@@ -1,6 +1,7 @@
 package rs.tim14.xml.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +34,46 @@ public class PatentController {
     }
 
     @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaPriznanjePatentaDTO> getAll(){
+    public ResponseEntity<ZahteviZaPriznanjePatentaDTO> getAll() {
         try {
             List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = zahtevZaPriznanjePatentaService.getAll();
             ZahteviZaPriznanjePatentaDTO zahteviZaPriznanjePatentaDTO = new ZahteviZaPriznanjePatentaDTO(zahteviZaPriznanjePatenta);
-            return new ResponseEntity<>(zahteviZaPriznanjePatentaDTO,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(zahteviZaPriznanjePatentaDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping(value = "/html/{id}", produces = MediaType.APPLICATION_XHTML_XML_VALUE)
+    public ResponseEntity<byte[]> getHTML(@PathVariable String id) throws Exception {
+        byte[] html = zahtevZaPriznanjePatentaService.getHTML(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".html"));
+        return new ResponseEntity<>(html, headers, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> getPDF(@PathVariable String id) throws Exception {
+        byte[] pdf = zahtevZaPriznanjePatentaService.getPDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".pdf"));
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/rdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<String> generateRDF(@PathVariable String id) {
+        String result = zahtevZaPriznanjePatentaService.getRDF(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".rdf"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/json/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<String> generateJSON(@PathVariable String id) {
+        String result = zahtevZaPriznanjePatentaService.getJSON(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", id.concat(".json"));
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
 }

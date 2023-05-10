@@ -64,5 +64,7 @@
         <punomocje>putanja-punomocja</punomocje>
         <dokaz_o_pravu_prvenstva>putanja-dokaza-prvenstva</dokaz_o_pravu_prvenstva>
         <dokaz_o_uplati_takse>putnaja-dokaza-o-uplati</dokaz_o_uplati_takse>
+        <generalno_punomocje_predano>true</generalno_punomocje_predano>
+        <punomocje_ce_biti_pradno>true</punomocje_ce_biti_pradno>
     </Prilozi_uz_zahtev>
 </zahtev_za_priznanje_ziga>

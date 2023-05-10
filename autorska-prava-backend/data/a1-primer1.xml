@@ -2,7 +2,7 @@
 <zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ks="http://www.xml.tim14.rs/korisnici"
-    xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/"
+    xmlns:pred="http://www.ftn.uns.ac.rs/a1/predicate/"
     xsi:schemaLocation="http://www.xml.tim14.rs/autorska_prava ../data/a-1.xsd">
     <idZahteva>112</idZahteva>
     <emailKlijenta>ivana@gmail.com</emailKlijenta>

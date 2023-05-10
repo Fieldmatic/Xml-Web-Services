@@ -21,14 +21,15 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class Repo {
+public class ZigRepository {
     private final ExistDbManager existDbManager;
 
     private final JaxbParser jaxbParser;
+    public static final String COLLECTION_ID = "/db/zahtevi_za_priznanje_ziga";
 
-    public <T> void save(String collectionId, String documentId, T objectToSave, String schemaPath) throws Exception {
-       OutputStream os = jaxbParser.marshall(objectToSave, schemaPath);
-       existDbManager.store(collectionId, documentId, os.toString());
+
+    public void save(String documentId, OutputStream os) throws Exception {
+        ExistDbManager.store(COLLECTION_ID, documentId, os.toString());
     }
 
     public ZahtevZaPriznanjeZiga get(String id) throws Exception {
@@ -53,8 +54,18 @@ public class Repo {
         String path = Paths.get("data", "xml", id + ".xml").toAbsolutePath().toString();
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = get(id);
         OutputStream os = jaxbParser.marshall(zahtevZaPriznanjeZiga, "./data/z-1.xsd");
-        try(OutputStream outputStream = new FileOutputStream(path)) {
-            ((ByteArrayOutputStream)os).writeTo(outputStream);
+        try (OutputStream outputStream = new FileOutputStream(path)) {
+            ((ByteArrayOutputStream) os).writeTo(outputStream);
+        }
+        return path;
+    }
+
+    public String getPath(String id) throws Exception {
+        String path = Paths.get("autorska-prava-backend/data", "xml", id + ".xml").toAbsolutePath().toString();
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = get(id);
+        OutputStream os = JaxbParser.marshall(zahtevZaPriznanjeZiga, "./zig-backend/data/z-1.xsd");
+        try (OutputStream outputStream = new FileOutputStream(path)) {
+            ((ByteArrayOutputStream) os).writeTo(outputStream);
         }
         return path;
     }

@@ -16,14 +16,14 @@ import java.io.IOException;
 @Service
 public class ExistDbManager {
 
-	private void openConnection() throws Exception {
+	private static void openConnection() throws Exception {
 		Class<?> cl = Class.forName(AuthenticationUtilities.loadProperties().driver);
 		Database database = (Database) cl.getDeclaredConstructor().newInstance();
 		database.setProperty("create-database", "true");
 		DatabaseManager.registerDatabase(database);
 	}
 
-	private void closeConnection(Collection collection, XMLResource resource) throws XMLDBException {
+	private static void closeConnection(Collection collection, XMLResource resource) throws XMLDBException {
 		if (collection != null) {
 			collection.close();
 		}
@@ -32,7 +32,7 @@ public class ExistDbManager {
 		}
 	}
 
-	public void store(String collectionId, String documentId, String xmlString) throws Exception {
+	public static void store(String collectionId, String documentId, String xmlString) throws Exception {
 		openConnection();
 		Collection col = null;
 		XMLResource res = null;

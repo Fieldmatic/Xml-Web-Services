@@ -20,7 +20,7 @@ public class XSLFOTransformer {
 	private final TransformerFactory transformerFactory;
 
 	public XSLFOTransformer() throws SAXException, IOException {
-		fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
+		fopFactory = FopFactory.newInstance(new File("./zig-backend/src/fop.xconf"));
 		transformerFactory = new TransformerFactoryImpl();
 	}
 
