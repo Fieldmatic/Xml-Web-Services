@@ -1,17 +1,6 @@
 package rs.tim14.xml.repository;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-
-import javax.xml.bind.JAXBException;
-
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.ResourceIterator;
@@ -19,10 +8,18 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
-
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
+
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AutorskaPravaRepository {
@@ -39,11 +36,11 @@ public class AutorskaPravaRepository {
 	}
 
 	public XMLResource load(String documentId) throws Exception {
-		return ExistDbManager.load(COLLECTION_ID, documentId);
+		return ExistDbManager.load(COLLECTION_ID, documentId.concat(".xml"));
 	}
 
 	public void save(String documentId, OutputStream os) throws Exception {
-		ExistDbManager.store(COLLECTION_ID, documentId, os.toString());
+		ExistDbManager.store(COLLECTION_ID, documentId.concat(".xml"), os.toString());
 	}
 
 	public ZahtevZaAutorskaPrava getById(String id) throws XMLDBException {

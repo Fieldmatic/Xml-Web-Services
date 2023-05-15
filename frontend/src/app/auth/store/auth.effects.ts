@@ -44,7 +44,9 @@ const handleAuthentication = (loginResponse, toastrService: ToastrService) => {
     (error, result) => {
       const user = new LoggedInUser(
         result['loginResponse']['email'][0],
-        result['loginResponse']['role'][0]
+        result['loginResponse']['role'][0],
+        result['loginResponse']['ime'][0],
+        result['loginResponse']['prezime'][0],
       );
       localStorage.setItem('userData', JSON.stringify(user));
       notifySuccess('Uspesno ste se ulogovali!', toastrService);
@@ -128,6 +130,12 @@ export class AuthEffects {
           '<password>' +
           signUpAction.payload.password +
           '</password>' +
+          '<ime>' +
+          signUpAction.payload.name +
+          '</ime>' +
+          '<prezime>' +
+          signUpAction.payload.surname +
+          '</prezime>' +
           '<role>' +
           signUpAction.payload.role +
           '</role>' +
@@ -186,7 +194,7 @@ export class AuthEffects {
           this.router.navigate(['/a1/novi']);
           return { type: 'DUMMY' };
         }
-        const loadedUser = new LoggedInUser(userData.email, userData.role);
+        const loadedUser = new LoggedInUser(userData.email, userData.role, userData.name, userData.surname);
         return new AuthActions.LoginSuccess(loadedUser);
       })
     )

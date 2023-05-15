@@ -39,9 +39,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "email",
-    "password",
-    "role"
+        "email",
+        "password",
+        "ime",
+        "prezime",
+        "role",
 })
 @XmlRootElement(name = "user")
 public class User {
@@ -49,25 +51,44 @@ public class User {
     protected String email;
     @XmlElement(required = true)
     protected String password;
+
+    @XmlElement(required = true)
+    protected String ime;
+    @XmlElement(required = true)
+    protected String prezime;
     @XmlElement(required = true)
     protected Role role;
 
 
     /**
      * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
+    public String getIme() {
+        return ime;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
+    public String getPrezime() {
+        return prezime;
+    }
+
+    public void setPrezime(String prezime) {
+        this.prezime = prezime;
+    }
+
     public String getEmail() {
         return email;
     }
 
     /**
      * Sets the value of the email property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }

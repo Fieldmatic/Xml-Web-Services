@@ -29,7 +29,7 @@ public class UserService {
         User existingUser = this.repo.getUserByEmail(loginRequest.getEmail());
         if (Objects.isNull(existingUser)) throw new UserNotFoundException();
         else if (existingUser.getPassword().equals(loginRequest.getPassword())) {
-            return new LoginResponse(existingUser.getEmail(), existingUser.getRole().value());
+            return new LoginResponse(existingUser.getEmail(), existingUser.getRole().value(), existingUser.getIme(), existingUser.getPrezime());
         } else {
             throw new InvalidCredentialsException();
         }

@@ -7,6 +7,8 @@
             <xs:sequence>
                 <xs:element name="email" type="xs:string"/>
                 <xs:element name="password" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
                 <xs:element name="role" type="Role"/>
             </xs:sequence>
         </xs:complexType>

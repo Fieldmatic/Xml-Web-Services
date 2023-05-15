@@ -15,14 +15,15 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "prijava",
-    "pronalazak",
-    "podaciOPodnosiocu",
-    "podaciOPronalazacu",
-    "podaciOPunomocniku",
-    "podaciODostavljanju",
-    "osnovnaPrijava",
-    "ranijePrijave"
+        "prijava",
+        "pronalazak",
+        "statusZahteva",
+        "podaciOPodnosiocu",
+        "podaciOPronalazacu",
+        "podaciOPunomocniku",
+        "podaciODostavljanju",
+        "osnovnaPrijava",
+        "ranijePrijave"
 })
 @XmlRootElement(name = "zahtev_za_priznanje_patenta")
 public class ZahtevZaPriznanjePatenta {
@@ -31,6 +32,9 @@ public class ZahtevZaPriznanjePatenta {
     protected TPrijava prijava;
     @XmlElement(required = true)
     protected Pronalazak pronalazak;
+
+    @XmlElement(name = "statusZahteva")
+    protected TStatusZahteva statusZahteva;
     @XmlElement(name = "podaci_o_podnosiocu", required = true)
     protected PodaciOPodnosiocu podaciOPodnosiocu;
     @XmlElement(name = "podaci_o_pronalazacu", required = true)
@@ -43,6 +47,7 @@ public class ZahtevZaPriznanjePatenta {
     protected TPrijava osnovnaPrijava;
     @XmlElement(name = "ranije_prijave", required = true)
     protected RanijePrijave ranijePrijave;
+
 
     @XmlAttribute(name = "about")
     @XmlSchemaType(name = "anySimpleType")
@@ -104,14 +109,25 @@ public class ZahtevZaPriznanjePatenta {
     public TPrijava getOsnovnaPrijava() {
         return osnovnaPrijava;
     }
+
     public void setOsnovnaPrijava(TPrijava value) {
         this.osnovnaPrijava = value;
     }
+
     public RanijePrijave getRanijePrijave() {
         return ranijePrijave;
     }
+
     public void setRanijePrijave(RanijePrijave value) {
         this.ranijePrijave = value;
+    }
+
+    public TStatusZahteva getStatusZahteva() {
+        return statusZahteva;
+    }
+
+    public void setStatusZahteva(TStatusZahteva statusZahteva) {
+        this.statusZahteva = statusZahteva;
     }
 
     @Override

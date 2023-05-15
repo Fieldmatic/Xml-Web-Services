@@ -10,6 +10,7 @@
                 <xs:element name="prijava" type="z1:TPrijava"/>
                 <xs:element name="podnosilac" type="ks:TLice"/>
                 <xs:element name="punomocnik" type="ks:TLice"/>
+                <xs:element name="statusZahteva" type="z1:TStatus_zahteva"/>
                 <xs:element minOccurs="0" name="zajednicki_predstavnik" type="ks:TLice"/>
                 <xs:element name="vrsta_ziga">
                     <xs:complexType>
@@ -153,5 +154,12 @@
 
     <xs:simpleType name="TPrilog">
         <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="TStatus_zahteva">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PODNET"/>
+            <xs:enumeration value="ODBIJEN"/>
+            <xs:enumeration value="PRIHVACEN"/>
+        </xs:restriction>
     </xs:simpleType>
 </xs:schema>

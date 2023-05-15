@@ -73,4 +73,9 @@ public class ObjectFactory {
         return new JAXBElement<TPrijava>(_ZahtevZaPriznanjePatentaOsnovnaPrijava_QNAME, TPrijava.class, ZahtevZaPriznanjePatenta.class, value);
     }
 
+    public ResenjeZahteva createResenjeZahteva() {
+        return new ResenjeZahteva();
+    }
+
+
 }

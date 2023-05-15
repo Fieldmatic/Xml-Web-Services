@@ -1,14 +1,18 @@
 package rs.tim14.xml.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.tim14.xml.dto.AllResponse;
+import rs.tim14.xml.dto.request.IzvestajRequest;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.service.ZigService;
+
+import java.io.ByteArrayInputStream;
 
 @RestController
 @RequestMapping("/zig")
@@ -71,5 +75,13 @@ public class ZigController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws Exception {
+        ByteArrayInputStream result = zigService.getReport(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", ("izvestaj.pdf"));
+        return new ResponseEntity<>(new InputStreamResource(result), headers, HttpStatus.OK);
     }
 }

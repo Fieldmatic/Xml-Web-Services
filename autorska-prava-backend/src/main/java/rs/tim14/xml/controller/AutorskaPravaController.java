@@ -1,24 +1,27 @@
 package rs.tim14.xml.controller;
 
-import java.util.List;
-
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import rs.tim14.xml.dto.requests.IzvestajRequest;
 import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaAutorskaPravaDTO;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
-import rs.tim14.xml.repository.AutorskaPravaRepository;
 import rs.tim14.xml.service.AutorskaPravaService;
 import rs.tim14.xml.service.MetadataService;
 import rs.tim14.xml.service.UploadFile;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/autorska-prava")
@@ -26,7 +29,6 @@ import rs.tim14.xml.service.UploadFile;
 public class AutorskaPravaController {
     private final AutorskaPravaService autorskaPravaService;
 
-    private final AutorskaPravaRepository autorskaPravaRepository;
     private final UploadFile uploadFile;
 
     private final MetadataService metadataService;
@@ -107,12 +109,20 @@ public class AutorskaPravaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @PostMapping(path="/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
+
+    @PostMapping(path = "/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
         List<ZahtevZaAutorskaPrava> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
         ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(zahtevi);
         return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws IOException, DatatypeConfigurationException, DocumentException {
+        ByteArrayInputStream result = autorskaPravaService.getReport(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", ("izvestaj.pdf"));
+        return new ResponseEntity<>(new InputStreamResource(result), headers, HttpStatus.OK);
     }
 
 }

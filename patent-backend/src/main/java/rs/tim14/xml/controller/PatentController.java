@@ -1,15 +1,22 @@
 package rs.tim14.xml.controller;
 
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.tim14.xml.dto.ZahteviZaPriznanjePatentaDTO;
+import rs.tim14.xml.dto.request.IzvestajRequest;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
+import rs.tim14.xml.repository.PatentRepository;
 import rs.tim14.xml.service.ZahtevZaPriznanjePatentaService;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatentController {
     private final ZahtevZaPriznanjePatentaService zahtevZaPriznanjePatentaService;
+    private final PatentRepository patentRepository;
 
     @PostMapping
     public ResponseEntity<ZahtevZaPriznanjePatenta> create(@RequestBody ZahtevZaPriznanjePatenta zahtev) throws Exception {
@@ -76,4 +84,14 @@ public class PatentController {
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
     }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws IOException, DatatypeConfigurationException, DocumentException {
+        ByteArrayInputStream result = zahtevZaPriznanjePatentaService.getReport(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", ("izvestaj.pdf"));
+        return new ResponseEntity<>(new InputStreamResource(result), headers, HttpStatus.OK);
+    }
+
+
 }

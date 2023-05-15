@@ -1,12 +1,15 @@
 package rs.tim14.xml.service;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
-
+import rs.tim14.xml.dto.requests.IzvestajRequest;
 import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.PodaciOAutorima;
@@ -22,13 +25,14 @@ import rs.tim14.xml.repository.AutorskaPravaRepository;
 import rs.tim14.xml.util.Util;
 import rs.tim14.xml.xslfo.XSLFOTransformer;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import java.io.*;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +51,6 @@ public class AutorskaPravaService {
         zahtev.getPrijava().getBrojPrijave().setValue(BigInteger.valueOf(Long.parseLong(id)));
         zahtev.setAbout("http://www.ftn.uns.ac.rs/rdf/a1/" + id);
 
-        id = id.concat(".xml");
         zahtev.getPrijava().getDatumPodnosenja().setValue(Util.getXMLGregorianCalendarCurrentDate());
 
         zahtev.getPrijava().getBrojPrijave().setProperty("pred:brojPrijave");
@@ -78,7 +81,7 @@ public class AutorskaPravaService {
             ((TPravnoLice) podnosilac).getPoslovnoIme().setDatatype("xs:string");
         }
 
-        OutputStream os = jaxbParser.marshall(zahtev, "./data/a-1.xsd");
+        OutputStream os = jaxbParser.marshall(zahtev, "./autorska-prava-backend/data/a-1.xsd");
         autorskaPravaRepository.save(id, os);
 
         XMLResource resource = autorskaPravaRepository.load(id);
@@ -132,5 +135,91 @@ public class AutorskaPravaService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setObradjen(String id, boolean odbijen) throws Exception {
+        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaRepository.getById(id);
+        if (odbijen) {
+            zahtevZaAutorskaPrava.setStatusZahteva(TStatusZahteva.ODBIJEN);
+        } else {
+            zahtevZaAutorskaPrava.setStatusZahteva(TStatusZahteva.PRIHVACEN);
+        }
+        OutputStream os = jaxbParser.marshall(zahtevZaAutorskaPrava, "./autorska-prava-backend/data/a-1.xsd");
+        autorskaPravaRepository.save(id, os);
+    }
+
+    public ByteArrayInputStream getReport(IzvestajRequest izvestajRequest) throws IOException, DocumentException, DatatypeConfigurationException {
+        int brojZahteva = 0;
+        int prihvaceniZahtevi = 0;
+        int odbijeniZahtevi = 0;
+        DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+
+        XMLGregorianCalendar start = datatypeFactory.newXMLGregorianCalendar(izvestajRequest.getStart());
+        XMLGregorianCalendar end = datatypeFactory.newXMLGregorianCalendar(izvestajRequest.getEnd());
+        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaRepository.getAll();
+        for (ZahtevZaAutorskaPrava zahtev : zahtevi) {
+            TStatusZahteva statusZahteva = zahtev.getStatusZahteva();
+            XMLGregorianCalendar date = zahtev.getPrijava().getDatumPodnosenja().getValue();
+            int isAfter = start.compare(date);
+            int isBefore = end.compare(date);
+            switch (statusZahteva) {
+                case ODBIJEN:
+                    if ((isAfter < 0 && isBefore > 0) || isAfter == 0 || isBefore == 0) {
+                        odbijeniZahtevi++;
+                        brojZahteva++;
+                    }
+                    break;
+                case PODNET:
+                    if ((isAfter < 0 && isBefore > 0) || isAfter == 0 || isBefore == 0) {
+                        brojZahteva++;
+                    }
+                    break;
+                case PRIHVACEN:
+                    if ((isAfter < 0 && isBefore > 0) || isAfter == 0 || isBefore == 0) {
+                        prihvaceniZahtevi++;
+                        brojZahteva++;
+                    }
+                    break;
+
+            }
+        }
+
+        String fileName = createDocument(brojZahteva, prihvaceniZahtevi, odbijeniZahtevi, izvestajRequest);
+        File file = new File("./autorska-prava-backend/data/izvestaj/" + fileName);
+        return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+    }
+
+    private String createDocument(int brojZahteva, int prihvaceniZahtevi, int odbijeniZahtevi, IzvestajRequest izvestajRequest) throws FileNotFoundException, DocumentException {
+        String fileName = "izvestaj.pdf";
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("./autorska-prava-backend/data/izvestaj/" + fileName));
+        document.open();
+
+        document.add(new Paragraph("                                                         Izvestaj o zahtevima za autorska prava"));
+        document.add(new Paragraph("\n               Pocetni datum: " + izvestajRequest.getStart()));
+        document.add(new Paragraph("\n               Krajnji datum: " + izvestajRequest.getEnd()));
+        document.add(new Paragraph("\n\n"));
+
+        PdfPTable table = new PdfPTable(3);
+        addTableHeader(table);
+        table.addCell(String.valueOf(brojZahteva));
+        table.addCell(String.valueOf(prihvaceniZahtevi));
+        table.addCell(String.valueOf(odbijeniZahtevi));
+        document.add(table);
+        document.close();
+
+        return fileName;
+    }
+
+    private void addTableHeader(PdfPTable table) {
+        Stream.of("Broj podnetih zahteva", "Broj prihvacenih zahteva", "Broj odbijenih zahteva")
+                .forEach(columnTitle -> {
+                    PdfPCell header = new PdfPCell();
+                    header.setBackgroundColor(BaseColor.WHITE);
+                    header.setBorderWidth(1);
+                    header.setPhrase(new Phrase(columnTitle));
+                    table.addCell(header);
+                });
     }
 }

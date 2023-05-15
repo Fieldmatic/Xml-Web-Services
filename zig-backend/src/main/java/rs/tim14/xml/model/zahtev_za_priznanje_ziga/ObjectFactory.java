@@ -26,7 +26,7 @@ import javax.xml.namespace.QName;
  * type definitions, element declarations and model 
  * groups.  Factory methods for each of these are 
  * provided in this class.
- * 
+ *
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -35,14 +35,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rs.tim14.xml.zahtev_za_priznanje_ziga
-     * 
+     *
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link ZahtevZaPriznanjeZiga }
-     * 
+     *
      */
     public ZahtevZaPriznanjeZiga createZahtevZaPriznanjeZiga() {
         return new ZahtevZaPriznanjeZiga();
@@ -50,7 +50,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Znak }
-     * 
+     *
      */
     public Znak createZahtevZaPriznanjeZigaZnak() {
         return new Znak();
@@ -58,7 +58,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PravoPrvenstva }
-     * 
+     *
      */
     public PravoPrvenstva createZahtevZaPriznanjeZigaPravoPrvenstva() {
         return new PravoPrvenstva();
@@ -66,7 +66,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Takse }
-     * 
+     *
      */
     public Takse createZahtevZaPriznanjeZigaTakse() {
         return new Takse();
@@ -74,7 +74,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PriloziUzZahtev }
-     * 
+     *
      */
     public PriloziUzZahtev createZahtevZaPriznanjeZigaPriloziUzZahtev() {
         return new PriloziUzZahtev();
@@ -82,7 +82,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link VrstaZnaka }
-     * 
+     *
      */
     public VrstaZnaka createZahtevZaPriznanjeZigaZnakVrstaZnaka() {
         return new VrstaZnaka();
@@ -90,11 +90,15 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
      */
     @XmlElementDecl(namespace = "http://www.xml.tim14.rs/zahtev_za_priznanje_ziga", name = "druga_vrsta_znaka", scope = VrstaZnaka.class)
     public JAXBElement<String> createZahtevZaPriznanjeZigaZnakVrstaZnakaDrugaVrstaZnaka(String value) {
         return new JAXBElement<String>(_ZahtevZaPriznanjeZigaZnakVrstaZnakaDrugaVrstaZnaka_QNAME, String.class, VrstaZnaka.class, value);
     }
+
+    public ResenjeZahteva createResenjeZahteva() {
+        return new ResenjeZahteva();
+    }
+
 
 }

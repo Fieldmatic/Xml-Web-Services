@@ -16,6 +16,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="statusZahteva" type="p1:TStatus_zahteva"/>
                 <xs:element name="podaci_o_podnosiocu">
                     <xs:complexType>
                         <xs:sequence>
@@ -115,6 +116,13 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="u_papirnoj_formi"/>
             <xs:enumeration value="elektronskim_putem"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TStatus_zahteva">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PODNET"/>
+            <xs:enumeration value="ODBIJEN"/>
+            <xs:enumeration value="PRIHVACEN"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
