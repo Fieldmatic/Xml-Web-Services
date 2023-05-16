@@ -79,7 +79,7 @@ public class ResenjeRepository {
 
             System.out.println("[INFO] Retrieving the collection: " + COLLECTION_ID);
             col = getOrCreateCollection(COLLECTION_ID, conn);
-            String documentName = "resenjeAutorskoPravo_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
+            String documentName = "resenjePatent_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
             res = (XMLResource) col.createResource(documentName, XMLResource.RESOURCE_TYPE);
             res.setContent(JaxbParser.marshall(resenjeZahteva));
             System.out.println("[INFO] Storing the document: " + res.getId());

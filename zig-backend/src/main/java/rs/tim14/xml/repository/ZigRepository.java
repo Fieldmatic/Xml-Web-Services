@@ -33,7 +33,7 @@ public class ZigRepository {
     }
 
     public ZahtevZaPriznanjeZiga getById(String id) throws Exception {
-        XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id + ".xml");
+        XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id);
         return jaxbParser.unmarshall(new StreamSource(new StringReader(resource.getContent().toString())));
     }
 
