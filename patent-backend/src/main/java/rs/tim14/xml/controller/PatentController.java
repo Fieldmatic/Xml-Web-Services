@@ -7,7 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.tim14.xml.dto.ZahteviZaPriznanjePatentaDTO;
+import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
+import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
+import rs.tim14.xml.service.MetadataService;
 import rs.tim14.xml.service.ZahtevZaPriznanjePatentaService;
 
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatentController {
     private final ZahtevZaPriznanjePatentaService zahtevZaPriznanjePatentaService;
+
+    private final MetadataService metadataService;
 
     @PostMapping
     public ResponseEntity<ZahtevZaPriznanjePatenta> create(@RequestBody ZahtevZaPriznanjePatenta zahtev) throws Exception {
@@ -75,5 +80,23 @@ public class PatentController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/pretragaPoTekstu", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaPriznanjePatentaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest) {
+        try {
+            List<ZahtevZaPriznanjePatenta> obrasci = zahtevZaPriznanjePatentaService.dobaviPoTekstu(pretragaRequest.getFilteri());
+            ZahteviZaPriznanjePatentaDTO patentiDTO = new ZahteviZaPriznanjePatentaDTO(obrasci);
+            return new ResponseEntity<>(patentiDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path="/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaPriznanjePatentaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
+        List<ZahtevZaPriznanjePatenta> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
+        ZahteviZaPriznanjePatentaDTO patentiDTO = new ZahteviZaPriznanjePatentaDTO(zahtevi);
+        return new ResponseEntity<>(patentiDTO, HttpStatus.OK);
     }
 }

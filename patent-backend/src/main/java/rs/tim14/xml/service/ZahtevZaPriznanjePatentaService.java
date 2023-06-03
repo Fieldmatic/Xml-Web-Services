@@ -23,6 +23,7 @@ import rs.tim14.xml.xslfo.XSLFOTransformer;
 import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.List;
@@ -115,5 +116,10 @@ public class ZahtevZaPriznanjePatentaService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<ZahtevZaPriznanjePatenta> dobaviPoTekstu(final List<String> filteri)
+        throws XMLDBException, IOException {
+        return patentRepository.dobaviPoTekstu(filteri);
     }
 }

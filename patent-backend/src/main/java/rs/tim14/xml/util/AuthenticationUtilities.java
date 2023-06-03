@@ -63,4 +63,45 @@ public class AuthenticationUtilities {
 	public static InputStream openStream(String fileName) throws IOException {
 		return AuthenticationUtilities.class.getClassLoader().getResourceAsStream(fileName);
 	}
+
+	static public class ConnectionPropertiesFuseki {
+
+		public String endpoint;
+		public String dataset;
+
+		public String queryEndpoint;
+		public String updateEndpoint;
+		public String dataEndpoint;
+
+		public ConnectionPropertiesFuseki(Properties props) {
+			super();
+
+			dataset = props.getProperty("conn.dataset").trim();
+			endpoint = props.getProperty("conn.endpoint").trim();
+
+			queryEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.query").trim());
+			updateEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.update").trim());
+			dataEndpoint = String.join("/", endpoint, dataset, props.getProperty("conn.data").trim());
+
+			System.out.println("[INFO] Parsing connection properties:");
+			System.out.println("[INFO] Query endpoint: " + queryEndpoint);
+			System.out.println("[INFO] Update endpoint: " + updateEndpoint);
+			System.out.println("[INFO] Graph store endpoint: " + dataEndpoint);
+		}
+	}
+
+	/**
+	 * Read the configuration properties for the example.
+	 *
+	 * @return the configuration object
+	 */
+	public static AuthenticationUtilities.ConnectionPropertiesFuseki setUpPropertiesFuseki() {
+		Properties props = new Properties();
+		props.setProperty("conn.endpoint", "http://localhost:3030");
+		props.setProperty("conn.dataset", "XmlDataSet");
+		props.setProperty("conn.query", "query");
+		props.setProperty("conn.update", "update");
+		props.setProperty("conn.data", "data");
+		return new AuthenticationUtilities.ConnectionPropertiesFuseki(props);
+	}
 }
