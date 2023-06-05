@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,9 +14,12 @@ import rs.tim14.xml.dto.AllResponse;
 import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaPriznanjeZigaDTO;
+import rs.tim14.xml.dto.request.IzvestajRequest;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.service.MetadataService;
 import rs.tim14.xml.service.ZigService;
+
+import java.io.ByteArrayInputStream;
 
 @RestController
 @RequestMapping("/zig")
@@ -99,5 +103,13 @@ public class ZigController {
         List<ZahtevZaPriznanjeZiga> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
         ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
         return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+    }
+    
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws Exception {
+        ByteArrayInputStream result = zigService.getReport(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", ("izvestaj.pdf"));
+        return new ResponseEntity<>(new InputStreamResource(result), headers, HttpStatus.OK);
     }
 }

@@ -73,6 +73,16 @@ export class AuthComponent implements OnInit, OnDestroy {
         confirmPassword: new FormControl('', {
           validators: [Validators.required],
         }),
+        name: new FormControl('', {
+          validators: [
+            Validators.required
+          ],
+        }),
+        surname: new FormControl('', {
+          validators: [
+            Validators.required
+          ],
+        }),
         role: new FormControl('Klijent'),
       },
       {
@@ -146,6 +156,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           email: this.authForm.getRawValue()['email'],
           password: this.authForm.getRawValue()['password'],
           role: this.authForm.getRawValue()['role'],
+          name: this.authForm.getRawValue()['name'],
+          surname: this.authForm.getRawValue()['surname']
         })
       );
     }

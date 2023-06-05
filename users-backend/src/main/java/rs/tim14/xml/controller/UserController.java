@@ -23,8 +23,8 @@ public class UserController {
         return new ResponseEntity<>(this.userService.register(user), HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/login",produces = {"application/xml"})
-    public ResponseEntity<LoginResponse> register(@RequestBody LoginRequest loginRequest) throws Exception {
+    @PostMapping(path = "/login", produces = {"application/xml"})
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
         return new ResponseEntity<>(this.userService.login(loginRequest), HttpStatus.ACCEPTED);
     }
 

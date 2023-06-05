@@ -19,16 +19,17 @@ import java.util.Map;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "prijava",
-    "podnosilac",
-    "punomocnik",
-    "zajednickiPredstavnik",
-    "vrstaZiga",
-    "znak",
-    "klaseRobeIliUsluge",
-    "pravoPrvenstva",
-    "takse",
-    "priloziUzZahtev"
+        "prijava",
+        "podnosilac",
+        "punomocnik",
+        "statusZahteva",
+        "zajednickiPredstavnik",
+        "vrstaZiga",
+        "znak",
+        "klaseRobeIliUsluge",
+        "pravoPrvenstva",
+        "takse",
+        "priloziUzZahtev"
 })
 @XmlRootElement(name = "zahtev_za_priznanje_ziga")
 public class ZahtevZaPriznanjeZiga {
@@ -40,6 +41,8 @@ public class ZahtevZaPriznanjeZiga {
     protected TLice podnosilac;
     @XmlElement(required = true)
     protected TLice punomocnik;
+    @XmlElement(name = "statusZahteva")
+    protected TStatusZahteva statusZahteva;
     @XmlElement(name = "zajednicki_predstavnik")
     protected TLice zajednickiPredstavnik;
     @XmlElement(name = "vrsta_ziga", required = true)
@@ -129,14 +132,25 @@ public class ZahtevZaPriznanjeZiga {
     public Takse getTakse() {
         return takse;
     }
+
     public void setTakse(Takse value) {
         this.takse = value;
     }
+
     public PriloziUzZahtev getPriloziUzZahtev() {
         return priloziUzZahtev;
     }
+
     public void setPriloziUzZahtev(PriloziUzZahtev value) {
         this.priloziUzZahtev = value;
+    }
+
+    public TStatusZahteva getStatusZahteva() {
+        return statusZahteva;
+    }
+
+    public void setStatusZahteva(TStatusZahteva statusZahteva) {
+        this.statusZahteva = statusZahteva;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)

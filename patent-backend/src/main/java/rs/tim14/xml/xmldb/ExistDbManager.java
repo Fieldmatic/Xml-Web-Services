@@ -1,13 +1,5 @@
 package rs.tim14.xml.xmldb;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.OutputKeys;
-
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.DatabaseManager;
@@ -16,10 +8,15 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.zahtev_za_priznanje_patenta.ZahtevZaPriznanjePatenta;
 import rs.tim14.xml.util.AuthenticationUtilities;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.OutputKeys;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static rs.tim14.xml.repository.PatentRepository.COLLECTION_ID;
 
@@ -77,7 +74,7 @@ public class ExistDbManager {
 				AuthenticationUtilities.loadProperties().user,
 				AuthenticationUtilities.loadProperties().password);
 			collection.setProperty(OutputKeys.INDENT, "yes");
-			resource = (XMLResource) collection.getResource(documentId);
+			resource = (XMLResource) collection.getResource(documentId.concat(".xml"));
 		} catch (Exception e) {
 			closeConnection(collection, resource);
 		}

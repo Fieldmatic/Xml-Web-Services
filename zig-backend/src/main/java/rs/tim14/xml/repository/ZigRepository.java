@@ -38,11 +38,11 @@ public class ZigRepository {
 
 
     public void save(String documentId, OutputStream os) throws Exception {
-        ExistDbManager.store(COLLECTION_ID, documentId, os.toString());
+        ExistDbManager.store(COLLECTION_ID, documentId.concat(".xml"), os.toString());
     }
 
-    public ZahtevZaPriznanjeZiga get(String id) throws Exception {
-        XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id + ".xml");
+    public ZahtevZaPriznanjeZiga getById(String id) throws Exception {
+        XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id);
         return jaxbParser.unmarshall(new StreamSource(new StringReader(resource.getContent().toString())));
     }
 
@@ -61,7 +61,7 @@ public class ZigRepository {
 
     public String download(String id) throws Exception {
         String path = Paths.get("data", "xml", id + ".xml").toAbsolutePath().toString();
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = get(id);
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getById(id);
         OutputStream os = jaxbParser.marshall(zahtevZaPriznanjeZiga, "./data/z-1.xsd");
         try (OutputStream outputStream = new FileOutputStream(path)) {
             ((ByteArrayOutputStream) os).writeTo(outputStream);
@@ -71,7 +71,7 @@ public class ZigRepository {
 
     public String getPath(String id) throws Exception {
         String path = Paths.get("autorska-prava-backend/data", "xml", id + ".xml").toAbsolutePath().toString();
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = get(id);
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getById(id);
         OutputStream os = JaxbParser.marshall(zahtevZaPriznanjeZiga, "./zig-backend/data/z-1.xsd");
         try (OutputStream outputStream = new FileOutputStream(path)) {
             ((ByteArrayOutputStream) os).writeTo(outputStream);

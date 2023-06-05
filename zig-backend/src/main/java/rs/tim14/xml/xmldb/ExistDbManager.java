@@ -51,7 +51,7 @@ public class ExistDbManager {
 
 	public XMLResource load(String collectionUri, String documentId) throws Exception  {
 		Collection collection = getCollection(collectionUri);
-		return (XMLResource) collection.getResource(documentId);
+		return (XMLResource) collection.getResource(documentId.concat(".xml"));
 	}
 
 	public Collection getCollection(String collectionUri) throws Exception {

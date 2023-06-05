@@ -8,12 +8,12 @@
 
 package rs.tim14.xml.model.autorska_prava;
 
+import rs.tim14.xml.model.autorska_prava.PodaciOAutorima.TAutor;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
-
-import rs.tim14.xml.model.autorska_prava.PodaciOAutorima.TAutor;
 
 @XmlRegistry
 public class ObjectFactory {
@@ -57,6 +57,10 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.xml.tim14.rs/autorska_prava", name = "punomocnik", scope = ZahtevZaAutorskaPrava.class)
     public JAXBElement<Punomocnik> createZahtevZaAutorskaPravaPunomocnik(Punomocnik value) {
         return new JAXBElement<Punomocnik>(_ZahtevZaAutorskaPravaPunomocnik_QNAME, Punomocnik.class, ZahtevZaAutorskaPrava.class, value);
+    }
+
+    public ResenjeZahteva createResenjeZahteva() {
+        return new ResenjeZahteva();
     }
 
 }

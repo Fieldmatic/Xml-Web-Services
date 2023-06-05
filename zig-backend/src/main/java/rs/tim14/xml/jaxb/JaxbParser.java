@@ -3,6 +3,7 @@ package rs.tim14.xml.jaxb;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ResenjeZahteva;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.MyValidationEventHandler;
 import rs.tim14.xml.util.NSPrefixMapper;
@@ -21,6 +22,16 @@ import java.io.OutputStream;
 
 @Service
 public class JaxbParser {
+	private static JAXBContext context;
+
+	static {
+		try {
+			context = JAXBContext.newInstance("rs.tim14.xml.model.zahtev_za_priznanje_ziga");
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	private static JAXBContext context;
 
@@ -63,7 +74,15 @@ public class JaxbParser {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
 		OutputStream os = new ByteArrayOutputStream();
-		marshaller.marshal(objectToMarshall,os);
+		marshaller.marshal(objectToMarshall, os);
+		return os;
+	}
+
+	public static OutputStream marshall(ResenjeZahteva resenjeZahteva) throws JAXBException {
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		OutputStream os = new ByteArrayOutputStream();
+		marshaller.marshal(resenjeZahteva, os);
 		return os;
 	}
 

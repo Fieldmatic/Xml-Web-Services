@@ -35,7 +35,7 @@ public class PatentRepository {
 
 
     public void save(String documentId, OutputStream os) throws Exception {
-        ExistDbManager.store(COLLECTION_ID, documentId, os.toString());
+        ExistDbManager.store(COLLECTION_ID, documentId.concat(".xml"), os.toString());
     }
 
     public ZahtevZaPriznanjePatenta getById(String id) throws XMLDBException {

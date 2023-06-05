@@ -1,13 +1,12 @@
 package rs.tim14.xml.jaxb;
+
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+import rs.tim14.xml.model.autorska_prava.ResenjeZahteva;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.MyValidationEventHandler;
 import rs.tim14.xml.util.NSPrefixMapper;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -16,9 +15,9 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.OutputStream;
 
 @Service
 public class JaxbParser {
@@ -31,6 +30,14 @@ public class JaxbParser {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static OutputStream marshall(ResenjeZahteva resenjeZahteva) throws JAXBException {
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		OutputStream os = new ByteArrayOutputStream();
+		marshaller.marshal(resenjeZahteva, os);
+		return os;
 	}
 
 	public OutputStream marshall(ZahtevZaAutorskaPrava autorskaPrava) throws JAXBException {
