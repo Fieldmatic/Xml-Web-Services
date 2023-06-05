@@ -1,5 +1,8 @@
 package rs.tim14.xml.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -7,7 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.tim14.xml.dto.AllResponse;
+import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
+import rs.tim14.xml.dto.requests.PretragaRequest;
+import rs.tim14.xml.dto.responses.ZahteviZaPriznanjeZigaDTO;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
+import rs.tim14.xml.service.MetadataService;
 import rs.tim14.xml.service.ZigService;
 
 @RestController
@@ -15,6 +22,8 @@ import rs.tim14.xml.service.ZigService;
 @RequiredArgsConstructor
 public class ZigController {
     private final ZigService zigService;
+
+    private final MetadataService metadataService;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
@@ -71,5 +80,24 @@ public class ZigController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", id.concat(".json"));
         return new ResponseEntity<>(result, headers, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/pretragaPoTekstu", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest) {
+        try {
+            List<ZahtevZaPriznanjeZiga> zahtevi = zigService.dobaviPoTekstu(pretragaRequest.getFilteri());
+            ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path="/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
+        List<ZahtevZaPriznanjeZiga> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
+        ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+        return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
     }
 }

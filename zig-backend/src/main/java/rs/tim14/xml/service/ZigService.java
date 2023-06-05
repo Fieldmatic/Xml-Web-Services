@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import rs.tim14.xml.dto.AllResponse;
 import rs.tim14.xml.dto.PrijavaResponse;
@@ -26,6 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class ZigService {
     private final MetadataExtractor metadataExtractor;
     private final FusekiWriter fusekiWriter;
     private final JaxbParser jaxbParser;
+    private final ZigRepository zigRepository;
 
     public ZahtevZaPriznanjeZiga create(ZahtevZaPriznanjeZiga zahtev) throws Exception {
         XMLGregorianCalendar currentDate = Util.getXMLGregorianCalendarCurrentDate();
@@ -146,4 +149,10 @@ public class ZigService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviPoTekstu(final List<String> filteri)
+        throws XMLDBException, IOException {
+        return zigRepository.dobaviPoTekstu(filteri);
+    }
+
 }

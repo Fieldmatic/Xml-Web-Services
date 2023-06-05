@@ -1,6 +1,7 @@
 package rs.tim14.xml.jaxb;
 
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.MyValidationEventHandler;
@@ -21,14 +22,22 @@ import java.io.OutputStream;
 @Service
 public class JaxbParser {
 
+	private static JAXBContext context;
+
+	static {
+		try {
+			context = JAXBContext.newInstance("rs.tim14.xml.model.zahtev_za_priznanje_ziga");
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public ZahtevZaPriznanjeZiga unmarshall(StreamSource ss) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(ss);
 	}
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {
-		JAXBContext context = JAXBContext.newInstance(jaxbContextPath);
 
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		Schema schema = schemaFactory.newSchema(new File(schemaPath));
@@ -56,6 +65,11 @@ public class JaxbParser {
 		OutputStream os = new ByteArrayOutputStream();
 		marshaller.marshal(objectToMarshall,os);
 		return os;
+	}
+
+	public static ZahtevZaPriznanjeZiga unmarshallFromDOM(Node data) throws JAXBException {
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(data);
 	}
 
 }
