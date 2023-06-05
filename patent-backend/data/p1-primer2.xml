@@ -13,6 +13,7 @@
         <naziv_pronalaska_rs>pronalazak_na_srpskom</naziv_pronalaska_rs>
         <naziv_pronalaska_eng>pronalazak_na_engleskom</naziv_pronalaska_eng>
     </pronalazak>
+    <statusZahteva>PRIHVACEN</statusZahteva>
     <podaci_o_podnosiocu>
         <je_pronalazac>false</je_pronalazac>
         <podnosilac xsi:type="ks:TFizicko_Lice">

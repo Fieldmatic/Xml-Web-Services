@@ -13,6 +13,7 @@
         <naziv_pronalaska_rs>проналазак на српском</naziv_pronalaska_rs>
         <naziv_pronalaska_eng>проналазак на енглеском</naziv_pronalaska_eng>
     </pronalazak>
+    <statusZahteva>PRIHVACEN</statusZahteva>
     <podaci_o_podnosiocu>
         <je_pronalazac>false</je_pronalazac>
         <podnosilac xsi:type="ks:TPravno_Lice">
