@@ -1,18 +1,6 @@
 import { LoggedInUser } from 'src/app/auth/model/logged-in-user';
-import * as AuthActions from '../auth/store/auth.actions';
-import { Store } from '@ngrx/store';
-import {
-  Component,
-  DoCheck,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  SimpleChanges,
-} from '@angular/core';
-import { map, Subscription } from 'rxjs';
-import * as fromApp from '../store/app.reducer';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit,} from '@angular/core';
+import {AuthService} from "../auth/services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -20,30 +8,19 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  private userSub: Subscription;
-  isAuthenticated = false;
   loggedInUser: LoggedInUser = null;
 
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private toastr: ToastrService
-  ) {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.userSub = this.store
-      .select('auth')
-      .pipe(map((authState) => authState.user))
-      .subscribe((user) => {
-        this.isAuthenticated = !user ? false : true;
-        this.loggedInUser = user;
-      });
+  get isAuthenticated(): boolean {
+    return !!this.loggedInUser;
   }
 
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+  ngOnInit(): void {
+    this.authService.loggedInUser.subscribe(user => this.loggedInUser = user);
   }
 
   onLogout() {
-    this.store.dispatch(new AuthActions.LogoutStart());
+    this.authService.logOut();
   }
 }

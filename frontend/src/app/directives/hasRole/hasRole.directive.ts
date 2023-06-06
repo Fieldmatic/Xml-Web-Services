@@ -1,13 +1,11 @@
-import * as fromApp from '../../store/app.reducer';
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import { LoggedInUser } from 'src/app/auth/model/logged-in-user';
+import {AuthService} from "../../auth/services/auth.service";
 
 @Directive({
   selector: '[appHasRole]',
 })
-export class HasRoleDirective {
+export class HasRoleDirective implements OnInit {
   currentUser!: LoggedInUser;
   requiredRoles!: string[];
   isVisible = false;
@@ -15,17 +13,11 @@ export class HasRoleDirective {
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
-    private store: Store<fromApp.AppState>
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.store
-      .select('auth')
-      .pipe(map((authState) => authState.user))
-      .subscribe((user: LoggedInUser) => {
-        this.currentUser = user;
-        this.updateView();
-      });
+    this.authService.loggedInUser.subscribe(user => this.currentUser = user);
   }
 
   @Input()

@@ -1,12 +1,9 @@
 import {A1Module} from './a1/a1.module';
 import {DirectivesModule} from './directives/directives.module';
-import {AuthEffects} from './auth/store/auth.effects';
 import {APP_CONFIG, APP_SERVICE_CONFIG} from './appConfig/appconfig.service';
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavbarComponent} from './navbar/navbar.component';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
@@ -23,17 +20,16 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {PatentModule} from './patent/patent-module';
 import {ZigModule} from './zig/zig.module';
 import {ZigEffects} from './zig/store/zig.effects';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent],
   imports: [
-    BrowserModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects, ZigEffects]),
+    EffectsModule.forRoot([ZigEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     BrowserAnimationsModule,

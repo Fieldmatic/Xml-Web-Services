@@ -12,7 +12,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
-import {ReactiveFormsModule} from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
@@ -20,26 +19,27 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {PretragaZahtevaComponent} from './pretraga-zahteva/pretraga-zahteva.component';
 import {MatChipsModule} from '@angular/material/chips';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [ConfirmationDialogComponent, PretragaZahtevaComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatGridListModule,
-    MatCardModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        MatGridListModule,
+        MatCardModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+    ],
   exports: [
     CommonModule,
     ReactiveFormsModule,
