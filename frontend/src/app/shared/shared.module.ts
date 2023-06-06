@@ -6,7 +6,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
-import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -23,7 +22,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [ConfirmationDialogComponent, PretragaZahtevaComponent],
+  declarations: [PretragaZahtevaComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
