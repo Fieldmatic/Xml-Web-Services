@@ -1,6 +1,5 @@
 package rs.tim14.xml.repository;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +17,12 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
 import rs.tim14.xml.jaxb.JaxbParser;
-import rs.tim14.xml.model.autorska_prava.AutorskoDelo;
+import rs.tim14.xml.model.autorska_prava.ResenjeZahteva;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
-import static rs.tim14.xml.repository.AutorskaPravaRepository.COLLECTION_ID;
+import static rs.tim14.xml.repository.AutorskaPravaRepository.COLLECTION_A1_ID;
+import static rs.tim14.xml.repository.ResenjeRepository.COLLECTION_RESENJE_ID;
 
 @Service
 public class ExistDbManager {
@@ -142,7 +142,7 @@ public class ExistDbManager {
 			col.setProperty(OutputKeys.INDENT, "yes");
 			for(String s: col.listResources()){
 				res = (XMLResource)col.getResource(s);
-				zahtevZaDeloList.add(JaxbParser.unmarshallFromDOM(res.getContentAsDOM()));
+				zahtevZaDeloList.add((ZahtevZaAutorskaPrava) JaxbParser.unmarshallFromDOM(res.getContentAsDOM()));
 			}
 
 			return zahtevZaDeloList;
@@ -174,14 +174,14 @@ public class ExistDbManager {
 		Collection col = null;
 		XMLResource res = null;
 		try {
-			col = DatabaseManager.getCollection(conn.uri + COLLECTION_ID);
+			col = DatabaseManager.getCollection(conn.uri + COLLECTION_A1_ID);
 			col.setProperty(OutputKeys.INDENT, "yes");
 			res = (XMLResource) col.getResource(id.concat(".xml"));
 
 			if(res == null) {
 				System.out.println("[WARNING] Document '" + id + "' can not be found!");
 			} else {
-				return JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
+				return (ZahtevZaAutorskaPrava) JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
 			}
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);

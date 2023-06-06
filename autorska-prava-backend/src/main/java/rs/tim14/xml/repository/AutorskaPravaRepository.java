@@ -22,34 +22,25 @@ import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
-import javax.xml.bind.JAXBException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
 @Repository
 public class AutorskaPravaRepository {
 
-	public static final String COLLECTION_ID = "/db/zahtevi_za_autorska_prava";
+	public static final String COLLECTION_A1_ID = "/db/zahtevi_za_autorska_prava";
 
 	public AutorskaPravaRepository() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
 		ExistDbManager.init();
 	}
 
 	public List<ZahtevZaAutorskaPrava> getAll() {
-		return ExistDbManager.getAll(COLLECTION_ID);
+		return ExistDbManager.getAll(COLLECTION_A1_ID);
 	}
 
 	public XMLResource load(String documentId) throws Exception {
-		return ExistDbManager.load(COLLECTION_ID, documentId.concat(".xml"));
+		return ExistDbManager.load(COLLECTION_A1_ID, documentId.concat(".xml"));
 	}
 
 	public void save(String documentId, OutputStream os) throws Exception {
-		ExistDbManager.store(COLLECTION_ID, documentId.concat(".xml"), os.toString());
+		ExistDbManager.store(COLLECTION_A1_ID, documentId.concat(".xml"), os.toString());
 	}
 
 	public ZahtevZaAutorskaPrava getById(final String id) throws XMLDBException {
@@ -63,7 +54,7 @@ public class AutorskaPravaRepository {
 		return zahtevi;
 	}
 
-	public String getPath(final String id) throws Exception {
+	public String getObrazacPath(final String id) throws Exception {
 		final String path = Paths.get("autorska-prava-backend/data", "xml", id + ".xml").toAbsolutePath().toString();
 		final ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = getById(id);
 		final OutputStream os = JaxbParser.marshall(zahtevZaAutorskaPrava, "./autorska-prava-backend/data/a-1.xsd");
@@ -80,7 +71,7 @@ public class AutorskaPravaRepository {
 		ZahtevZaAutorskaPrava obrazacAutorskoDelo = null;
 		List<ZahtevZaAutorskaPrava> obrasci = null;
 		try {
-			col = DatabaseManager.getCollection(conn.uri + COLLECTION_ID);
+			col = DatabaseManager.getCollection(conn.uri + COLLECTION_A1_ID);
 			final XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
 			xPathQueryService.setProperty("indent", "yes");
 
@@ -91,7 +82,7 @@ public class AutorskaPravaRepository {
 			obrasci = new ArrayList<>();
 			while (i.hasMoreResources()) {
 				res = (XMLResource) i.nextResource();
-				obrazacAutorskoDelo = JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
+				obrazacAutorskoDelo = (ZahtevZaAutorskaPrava) JaxbParser.unmarshallFromDOM(res.getContentAsDOM());
 				if (!obrasci.contains(obrazacAutorskoDelo))
 					obrasci.add(obrazacAutorskoDelo);
 			}

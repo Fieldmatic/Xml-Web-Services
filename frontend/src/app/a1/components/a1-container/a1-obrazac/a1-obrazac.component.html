@@ -1,3 +1,8 @@
+{{a1Obrazac?.podnosilac.ime}}
+{{a1Obrazac?.podnosilac.prezime}}
+{{a1Obrazac?.podnosilac.tipPodnosioca}}
+{{a1Obrazac?.podnosilac.adresaPodnosioca.drzava}}
+
 <div class="a1Form">
   <form
     class="p-4"
@@ -13,7 +18,7 @@
             class="form-check-input"
             type="radio"
             name="tipPodnosioca"
-            value="fizickoLice"
+            value="Fizicko_Lice"
             id="fizickoLice"
             formControlName="tipPodnosioca"
           />
@@ -26,7 +31,7 @@
             class="form-check-input"
             type="radio"
             name="tipPodnosioca"
-            value="pravnoLice"
+            value="Pravno_Lice"
             id="pravnoLice"
             formControlName="tipPodnosioca"
           />
@@ -58,7 +63,7 @@
       <div
         class="d-flex"
         *ngIf="
-          a1Form.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Fizicko_Lice'
         "
       >
         <div class="mb-3 me-5" style="width: 30%">
@@ -85,7 +90,7 @@
       <div
         class="d-flex"
         *ngIf="
-          a1Form.get('podnosilac').get('tipPodnosioca').value === 'pravnoLice'
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Pravno_Lice'
         "
       >
         <div class="mb-3 me-5" style="width: 30%">
@@ -103,7 +108,7 @@
       <div
         formGroupName="drzavljanstvo"
         *ngIf="
-          a1Form.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Fizicko_Lice'
         "
       >
         <h3>Drzavljanstvo podnosioca</h3>

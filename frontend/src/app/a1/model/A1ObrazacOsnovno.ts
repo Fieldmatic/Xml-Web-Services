@@ -1,4 +1,4 @@
-export class A1 {
+export class A1ObrazacOsnovno {
   constructor(
     public id: string = '',
     public nazivPodnosioca: string = '',

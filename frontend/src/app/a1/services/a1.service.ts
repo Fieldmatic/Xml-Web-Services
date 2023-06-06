@@ -3,9 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {AppConfig} from 'src/app/appConfig/appconfig.interface';
 import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
-import {A1} from "../model/A1";
+import {A1ObrazacOsnovno} from "../model/A1ObrazacOsnovno";
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
+import {map} from "rxjs";
+import {A1Obrazac, AutorskoDelo, Podnosilac, Primer} from "../model/A1Obrazac";
 
+declare var require: any;
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +80,23 @@ export class A1Service {
     );
   }
 
+  dobaviZahtevPoIdu(id: string) {
+    return this.http.get(
+      this.config.autorskoPravoEndpoint + 'autorska-prava/' + id,
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        responseType: 'text',
+      }
+    ).pipe(map(response => {
+      let xmlResult = require('xml-js').xml2json(response, {
+        compact: true,
+        spaces: 4,
+        trim: true,
+      });
+      return JSON.parse(xmlResult);
+    }))
+  }
+
   pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
     let zahtev = "<metadata>"
     for (const triplet of triplets) {
@@ -119,7 +139,7 @@ export class A1Service {
   }
 
   kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
-    let a1Zahtev = new A1();
+    let a1Zahtev = new A1ObrazacOsnovno();
     a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
 
     let podnosilac = xmlZahtev['ns3:podnosilac']
@@ -172,5 +192,50 @@ export class A1Service {
       headers: new HttpHeaders().append('Content-Type', 'application/json'),
       responseType: 'blob' as 'json'
     });
+  }
+
+  mapirajObjekatA1(objekat: any): A1Obrazac {
+    const a1 = new A1Obrazac();
+
+    if (objekat.zahtev_za_autorska_prava) {
+      const zahtev = objekat.zahtev_za_autorska_prava;
+      a1.brojPrijave = zahtev['prijava']['broj_prijave']._text
+      a1.podnosilac = new Podnosilac();
+      if (zahtev.podnosilac) {
+        const podnosilac = zahtev.podnosilac;
+        a1.podnosilac.tipPodnosioca = podnosilac["_attributes"]["xsi:type"].replace("ns2:T", "");
+        a1.podnosilac.email = podnosilac["ns2:email"]._text;
+        a1.podnosilac.brojTelefona = podnosilac["ns2:broj_mobilnog_telefona"]._text;
+        a1.podnosilac.ime = podnosilac["ns2:puno_ime"]["ns2:ime"]._text;
+        a1.podnosilac.prezime = podnosilac["ns2:puno_ime"]["ns2:prezime"]._text;
+
+        if (podnosilac["ns2:adresa"]) {
+          const adresa = podnosilac["ns2:adresa"];
+          a1.podnosilac.adresaPodnosioca.mesto = adresa["ns2:mesto"]._text;
+          a1.podnosilac.adresaPodnosioca.ulica = adresa["ns2:ulica"]._text;
+          a1.podnosilac.adresaPodnosioca.broj = adresa["ns2:broj"]._text;
+          a1.podnosilac.adresaPodnosioca.postanskiBroj = adresa["ns2:postanski_broj"]._text;
+          a1.podnosilac.adresaPodnosioca.drzava = adresa["ns2:drzava"]._text;
+        }
+      }
+
+      a1.autorskoDelo = new AutorskoDelo();
+      if (zahtev.autorsko_delo) {
+        const autorskoDelo = zahtev.autorsko_delo;
+        a1.autorskoDelo.naslov = autorskoDelo["naslov_autorskog_dela"]._text;
+        a1.autorskoDelo.vrstaDela = autorskoDelo["vrsta_autorskog_dela"]._text;
+        a1.autorskoDelo.formaZapisa = autorskoDelo["forma_zapisa"]._text;
+        a1.autorskoDelo.uRadnomOdnosu = autorskoDelo["stvoreno_u_radnom_odnosu"]._text === "true";
+        a1.autorskoDelo.nacinKoriscenja = autorskoDelo["nacin_koriscenja_autorskog_dela"]._text;
+
+        a1.autorskoDelo.primer = new Primer();
+        if (autorskoDelo["primer_autorskog_dela"]) {
+          const primer = autorskoDelo["primer_autorskog_dela"];
+          console.log("Primer " + autorskoDelo["primer_autorskog_dela"]["putanja_do_primera"]._text)
+          a1.autorskoDelo.primer.putanjaDoPrimera = primer["putanja_do_primera"]._text;
+        }
+      }
+    }
+    return a1;
   }
 }

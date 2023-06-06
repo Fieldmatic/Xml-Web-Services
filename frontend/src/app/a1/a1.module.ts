@@ -8,6 +8,7 @@ import {DodajAutoraDijalogComponent} from './components/a1-container/a1-obrazac/
 import {A1AllRequestsComponent} from './components/a1-container/a1-all-requests/a1-all-requests.component';
 import {A1ContainerComponent} from './components/a1-container/a1-container.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { A1ObradaObrascaComponent } from './components/a1-container/a1-obrada-obrasca/a1-obrada-obrasca.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     DodajAutoraDijalogComponent,
     A1AllRequestsComponent,
     A1ContainerComponent,
+    A1ObradaObrascaComponent,
   ],
   imports: [CommonModule, A1RoutingModule, SharedModule, MatPaginatorModule],
 })

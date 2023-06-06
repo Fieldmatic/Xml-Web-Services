@@ -1,5 +1,6 @@
 package rs.tim14.xml.repository;
 
+import org.springframework.stereotype.Repository;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -8,14 +9,21 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.autorska_prava.ResenjeZahteva;
+import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.util.AuthenticationUtilities;
 
 import javax.xml.bind.JAXBException;
-import java.io.IOException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+@Repository
 public class ResenjeRepository {
 
-    public static final String COLLECTION_ID = "/db/resenja_za_autorska_prava";
+    public static final String COLLECTION_RESENJE_ID = "/db/resenja_za_autorska_prava";
 
 
     private static Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
@@ -77,8 +85,8 @@ public class ResenjeRepository {
         XMLResource res;
         try {
 
-            System.out.println("[INFO] Retrieving the collection: " + COLLECTION_ID);
-            col = getOrCreateCollection(COLLECTION_ID, conn);
+            System.out.println("[INFO] Retrieving the collection: " + COLLECTION_RESENJE_ID);
+            col = getOrCreateCollection(COLLECTION_RESENJE_ID, conn);
             String documentName = "resenjeAutorskoPravo_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
             res = (XMLResource) col.createResource(documentName, XMLResource.RESOURCE_TYPE);
             res.setContent(JaxbParser.marshall(resenjeZahteva));
@@ -97,5 +105,14 @@ public class ResenjeRepository {
             }
         }
         return resenjeZahteva;
+    }
+
+    public String getResenjeZahtevaPath(ResenjeZahteva resenjeZahteva) throws Exception {
+        final String path = Paths.get("autorska-prava-backend/data", "xml", "resenje_" + resenjeZahteva.getBrojPrijave() + ".xml").toAbsolutePath().toString();
+        final OutputStream os = JaxbParser.marshall(resenjeZahteva);
+        try (final OutputStream outputStream = Files.newOutputStream(Paths.get(path))) {
+            ((ByteArrayOutputStream) os).writeTo(outputStream);
+        }
+        return path;
     }
 }

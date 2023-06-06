@@ -38,4 +38,19 @@ public class ResenjeZahteva {
     private String razlogOdbijanja;
     @XmlElement(name = "sifra")
     private String sifra;
+
+    public ResenjeZahteva() {}
+
+    public ResenjeZahteva(final String brojPrijave, final String imeSluzbenika, final String prezimeSluzbenika, final String emailSluzbenika,
+        final Date datumObrade, final boolean odbijen,
+        final String razlogOdbijanja, final String sifra) {
+        this.brojPrijave = brojPrijave;
+        this.imeSluzbenika = imeSluzbenika;
+        this.prezimeSluzbenika = prezimeSluzbenika;
+        this.emailSluzbenika = emailSluzbenika;
+        this.datumObrade = datumObrade;
+        this.odbijen = odbijen;
+        this.razlogOdbijanja = razlogOdbijanja;
+        this.sifra = sifra;
+    }
 }

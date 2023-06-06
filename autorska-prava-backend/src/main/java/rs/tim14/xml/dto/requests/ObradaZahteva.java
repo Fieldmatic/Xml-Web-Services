@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
         "id",
+        "emailSluzbenika",
         "imeSluzbenika",
         "prezimeSluzbenika",
         "odbijen",
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ObradaZahteva {
     private String id;
+    private String emailSluzbenika;
     private String imeSluzbenika;
     private String prezimeSluzbenika;
     private boolean odbijen;

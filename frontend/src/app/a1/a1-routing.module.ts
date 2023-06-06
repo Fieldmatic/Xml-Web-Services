@@ -3,6 +3,7 @@ import { A1ObrazacComponent } from './components/a1-container/a1-obrazac/a1-obra
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { A1AllRequestsComponent } from './components/a1-container/a1-all-requests/a1-all-requests.component';
+import {A1ObradaObrascaComponent} from "./components/a1-container/a1-obrada-obrasca/a1-obrada-obrasca.component";
 
 const routes: Routes = [
   {
@@ -14,15 +15,13 @@ const routes: Routes = [
         pathMatch: 'full',
         component: A1AllRequestsComponent,
       },
-      // {
-      //   path: ':id',
-      //   component: ZigRequestComponent,
-      // },
       {
         path: 'novi',
         pathMatch: 'full',
         component: A1ObrazacComponent,
       },
+      { path: 'obrada/:id',
+        component: A1ObradaObrascaComponent },
     ],
   },
 ];

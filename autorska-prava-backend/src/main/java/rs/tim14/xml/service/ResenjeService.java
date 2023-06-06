@@ -1,11 +1,17 @@
 package rs.tim14.xml.service;
 
 import lombok.RequiredArgsConstructor;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.tim14.xml.dto.requests.ObradaZahteva;
 import rs.tim14.xml.model.autorska_prava.ResenjeZahteva;
 import rs.tim14.xml.repository.ResenjeRepository;
+import rs.tim14.xml.xslfo.XSLFOTransformer;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -13,9 +19,14 @@ import java.util.Date;
 public class ResenjeService {
     private final AutorskaPravaService autorskaPravaService;
 
+    private final ResenjeRepository resenjeRepository;
+
+    private final MailService mailService;
+
     public void obradiZahtev(ObradaZahteva obradaZahteva) throws Exception {
         ResenjeZahteva resenjeZahteva = new ResenjeZahteva();
         resenjeZahteva.setBrojPrijave(obradaZahteva.getId());
+        resenjeZahteva.setEmailSluzbenika(obradaZahteva.getEmailSluzbenika());
         resenjeZahteva.setImeSluzbenika(obradaZahteva.getImeSluzbenika());
         resenjeZahteva.setPrezimeSluzbenika(obradaZahteva.getPrezimeSluzbenika());
         resenjeZahteva.setDatumObrade(new Date());
@@ -27,6 +38,15 @@ public class ResenjeService {
         ResenjeRepository.write(resenjeZahteva);
 
         autorskaPravaService.setObradjen(obradaZahteva.getId(), obradaZahteva.isOdbijen());
-        // poslati mail
+        //treba da posaljes podnosiocu na mail a ne sluzbeniku
+        mailService.sendMailWithAttachment(resenjeZahteva.getEmailSluzbenika(), resenjeZahteva, getPDF(resenjeZahteva));
+    }
+
+    public byte[] getPDF(final ResenjeZahteva resenjeZahteva) throws Exception {
+        final String xmlPath = resenjeRepository.getResenjeZahtevaPath(resenjeZahteva);
+        final String resultPath = "./autorska-prava-backend/data/result/resenja/" + resenjeZahteva.getBrojPrijave() + ".pdf";
+        final XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
+        xslfoTransformer.generatePDF(xmlPath, "./autorska-prava-backend/data/xsl_fo/a1_resenje_fo.xsl", resultPath);
+        return FileUtils.readFileToByteArray(new File(resultPath));
     }
 }

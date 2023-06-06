@@ -1,15 +1,13 @@
 import { A1Service } from '../../../services/a1.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective,
-  Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { auto } from '@popperjs/core';
 import { DodajAutoraDijalogComponent } from './dodaj-autora-dijalog/dodaj-autora-dijalog.component';
+import {A1Obrazac} from "../../../model/A1Obrazac";
 
 export class Autor {
   preminuliAutor: boolean;
@@ -31,14 +29,14 @@ export class Autor {
   };
 }
 
-declare var require: any;
-
 @Component({
   selector: 'app-a1-obrazac',
   templateUrl: './a1-obrazac.component.html',
   styleUrls: ['./a1-obrazac.component.scss'],
 })
-export class A1ObrazacComponent implements OnInit {
+export class A1ObrazacComponent implements OnInit, OnChanges {
+  @Input() a1Obrazac: A1Obrazac;
+
   a1Form!: FormGroup;
   autori: Autor[] = [];
   originalniAutor: Autor;
@@ -48,62 +46,77 @@ export class A1ObrazacComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private a1Service: A1Service
+    private a1Service: A1Service,
   ) {}
 
   ngOnInit(): void {
+    this.setupForm()
+  }
+
+  setupForm() {
     this.a1Form = this.formBuilder.group({
       podnosilac: this.formBuilder.group({
-        tipPodnosioca: new FormControl('fizickoLice'),
-        email: new FormControl('istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl('0656564261'),
-        ime: new FormControl('Ivana'),
-        prezime: new FormControl('Milic'),
+        tipPodnosioca: new FormControl(this.a1Obrazac?.podnosilac?.tipPodnosioca || 'Fizicko_Lice'),
+        email: new FormControl(this.a1Obrazac?.podnosilac?.email || 'istevanovic3112@gmail.com'),
+        brojTelefona: new FormControl(this.a1Obrazac?.podnosilac?.brojTelefona || '0656564261'),
+        ime: new FormControl(this.a1Obrazac?.podnosilac?.ime || 'Sipak'),
+        prezime: new FormControl(this.a1Obrazac?.podnosilac?.prezime || 'Milic'),
         drzavljanstvo: this.formBuilder.group({
-          tip: new FormControl('страно'),
-          jmbg: new FormControl('3112999185855'),
-          brojPasosa: new FormControl('1234567890'),
+          tip: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.tip || 'страно'),
+          jmbg: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.jmbg || '3112999185855'),
+          brojPasosa: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.brojPasosa || '1234567890'),
         }),
-        poslovnoIme: new FormControl('milic-prom'),
+        poslovnoIme: new FormControl(this.a1Obrazac?.podnosilac?.poslovnoIme || 'milic-prom'),
         adresaPodnosioca: this.formBuilder.group({
-          mesto: new FormControl('Bijeljina'),
-          ulica: new FormControl('Nikole Tesle'),
-          broj: new FormControl('10'),
-          drzava: new FormControl('Srbija'),
-          postanskiBroj: new FormControl('21000'),
+          mesto: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.mesto || 'Bijeljina'),
+          ulica: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.ulica || 'Nikole Tesle'),
+          broj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.broj || '10'),
+          drzava: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.drzava || 'Srbija'),
+          postanskiBroj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.postanskiBroj || '21000'),
         }),
       }),
       punomocnik: this.formBuilder.group({
-        prijavaSePodnosiPrekoPunomocnika: new FormControl(false),
-        ime: new FormControl(''),
-        prezime: new FormControl(''),
+        prijavaSePodnosiPrekoPunomocnika: new FormControl(this.a1Obrazac?.punomocnik?.prijavaSePodnosiPrekoPunomocnika || false),
+        ime: new FormControl(this.a1Obrazac?.punomocnik?.ime || ''),
+        prezime: new FormControl(this.a1Obrazac?.punomocnik?.prezime || ''),
         adresaPunomocnika: this.formBuilder.group({
-          mesto: new FormControl(''),
-          ulica: new FormControl(''),
-          broj: new FormControl(''),
-          drzava: new FormControl(''),
-          postanskiBroj: new FormControl(''),
+          mesto: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.mesto || ''),
+          ulica: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.ulica || ''),
+          broj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.broj || ''),
+          drzava: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.drzava || ''),
+          postanskiBroj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.postanskiBroj || ''),
         }),
       }),
       autorskoDelo: this.formBuilder.group({
-        naslov: new FormControl('Covek po imenu Uve'),
-        vrstaDela: new FormControl('патенти'),
-        formaZapisa: new FormControl('рукопис'),
-        uRadnomOdnosu: new FormControl(false),
-        nacinKoriscenja: new FormControl('da se koristi bre'),
-        tipAutora: new FormControl('anonimni'),
+        naslov: new FormControl(this.a1Obrazac?.autorskoDelo?.naslov || 'Covek po imenu Uve'),
+        vrstaDela: new FormControl(this.a1Obrazac?.autorskoDelo?.vrstaDela || 'патенти'),
+        formaZapisa: new FormControl(this.a1Obrazac?.autorskoDelo?.formaZapisa || 'рукопис'),
+        uRadnomOdnosu: new FormControl(this.a1Obrazac?.autorskoDelo?.uRadnomOdnosu || false),
+        nacinKoriscenja: new FormControl(this.a1Obrazac?.autorskoDelo?.nacinKoriscenja || 'da se koristi bre'),
+        tipAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.tipAutora || 'anonimni'),
         originalnoDelo: this.formBuilder.group({
-          originalno: new FormControl('true'),
-          naslov: new FormControl('Covek po imenu Ivee'),
+          originalno: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.originalno || true),
+          naslov: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.naslov || 'Covek po imenu Ivee'),
         }),
         primer: this.formBuilder.group({
-          putanjaDoPrimera: new FormControl(''),
+          putanjaDoPrimera: new FormControl(),
         }),
         opis: this.formBuilder.group({
-          putanjaDoOpisa: new FormControl(''),
+          putanjaDoOpisa: new FormControl(),
         }),
       }),
     });
+    if (this.a1Obrazac !== undefined) {
+      this.a1Form.disable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['a1Obrazac']) {
+      if (!changes['a1Obrazac'].firstChange) {
+        this.setupForm();
+      }
+    }
   }
 
   onSubmit() {
@@ -143,19 +156,6 @@ export class A1ObrazacComponent implements OnInit {
       this.primerDelaFile,
       this.opisDelaFile
     );
-
-    // this.a1Service.getAllZahtevi().subscribe((result) => {
-    //   console.log(result);
-    //   console.log('op');
-    //   var convert = require('xml-js');
-    //   var result1 = convert.xml2json(result, {
-    //     compact: true,
-    //     spaces: 4,
-    //     trim: true,
-    //   });
-    //   var res = JSON.parse(result1);
-    //   console.log(res.zahtevi.zahtev);
-    // });
   }
 
   sacuvajOpisDela(event) {
@@ -174,7 +174,7 @@ export class A1ObrazacComponent implements OnInit {
 
   kreirajPodnosioca(podnosilacForm: FormGroup): string {
     let podnosilac = '';
-    if (podnosilacForm['tipPodnosioca'] === 'fizickoLice') {
+    if (podnosilacForm['tipPodnosioca'] === 'Fizicko_Lice') {
       podnosilac += '<podnosilac xsi:type="ks:TFizicko_Lice">';
       podnosilac += this.kreirajFizickoLice(podnosilacForm);
     } else {
@@ -298,6 +298,7 @@ export class A1ObrazacComponent implements OnInit {
     adresa += '<postanski_broj>' + postanskiBroj + '</postanski_broj>';
     adresa += '<ulica>' + ulica + '</ulica>';
     adresa += '<broj>' + broj + '</broj>';
+    adresa += '<drzava>' + drzava + '</drzava>';
     adresa += '</adresa>';
     return adresa;
   }

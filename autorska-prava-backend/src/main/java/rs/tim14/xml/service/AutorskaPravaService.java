@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import lombok.RequiredArgsConstructor;
 import rs.tim14.xml.dto.requests.IzvestajRequest;
 import rs.tim14.xml.itext.HTMLTransformer;
 import rs.tim14.xml.jaxb.JaxbParser;
@@ -39,10 +38,8 @@ import rs.tim14.xml.xslfo.XSLFOTransformer;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
+
 import java.io.*;
-import java.math.BigInteger;
-import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -114,7 +111,7 @@ public class AutorskaPravaService {
 	}
 
 	public byte[] getHTML(final String id) throws Exception {
-		final String xmlPath = autorskaPravaRepository.getPath(id);
+		final String xmlPath = autorskaPravaRepository.getObrazacPath(id);
 		final String resultPath = "./autorska-prava-backend/data/result/" + id + ".html";
 		final HTMLTransformer htmlTransformer = new HTMLTransformer();
 		htmlTransformer.generateHTML(xmlPath, "./autorska-prava-backend/data/xsl/a1.xsl", resultPath);
@@ -122,7 +119,7 @@ public class AutorskaPravaService {
 	}
 
 	public byte[] getPDF(final String id) throws Exception {
-		final String xmlPath = autorskaPravaRepository.getPath(id);
+		final String xmlPath = autorskaPravaRepository.getObrazacPath(id);
 		final String resultPath = "./autorska-prava-backend/data/result/" + id + ".pdf";
 		final XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
 		xslfoTransformer.generatePDF(xmlPath, "./autorska-prava-backend/data/xsl_fo/a1_fo.xsl", resultPath);

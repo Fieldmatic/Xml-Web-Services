@@ -52,9 +52,9 @@ public class JaxbParser {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return (ZahtevZaAutorskaPrava) unmarshaller.unmarshal(new File(filepath));
 	}
-	public static ZahtevZaAutorskaPrava unmarshallFromDOM(Node data) throws JAXBException {
+	public static Object unmarshallFromDOM(Node data) throws JAXBException {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return (ZahtevZaAutorskaPrava) unmarshaller.unmarshal(data);
+		return unmarshaller.unmarshal(data);
 	}
 
 	public <T> T unmarshall(String xmlPath, String jaxbContextPath, String schemaPath) throws JAXBException, SAXException {
