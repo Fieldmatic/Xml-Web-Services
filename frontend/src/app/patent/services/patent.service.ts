@@ -5,6 +5,9 @@ import {AppConfig} from 'src/app/appConfig/appconfig.interface';
 import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
 import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
+import {map} from "rxjs";
+
+declare var require: any;
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +70,23 @@ export class PatentService {
   //     }
   //   );
   // }
+
+  dobaviZahtevPoIdu(id: string) {
+    return this.http.get(
+      this.config.patentEndpoint + 'patent/' + id,
+      {
+        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        responseType: 'text',
+      }
+    ).pipe(map(response => {
+      let xmlResult = require('xml-js').xml2json(response, {
+        compact: true,
+        spaces: 4,
+        trim: true,
+      });
+      return JSON.parse(xmlResult);
+    }))
+  }
 
   pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
     let zahtev = "<metadata>"
