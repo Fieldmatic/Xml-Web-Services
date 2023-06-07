@@ -8,7 +8,7 @@
       <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated"
         >Pretraga</a
       >
-      <a mat-button routerLink="/patent" *ngIf="isAuthenticated">Patent</a>
+      <a mat-button routerLink="/patent/novi" *ngIf="isAuthenticated">Patent</a>
       <a
         mat-button
         routerLink="/auth/login"
@@ -16,6 +16,7 @@
         id="loginBtn"
         >Log in</a
       >
+      <a mat-button *ngIf="isAuthenticated" routerLink="/patent/zahtevi">Patenti</a>
       <a mat-button *ngIf="isAuthenticated" routerLink="/zig/zahtevi">Žig</a>
       <a mat-button *ngIf="isAuthenticated" (click)="onLogout()">Log out</a>
       <a mat-raised-button *ngIf="!isAuthenticated" routerLink="/auth/signup"

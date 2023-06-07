@@ -2,16 +2,10 @@ import {Component} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {A1Service} from 'src/app/a1/services/a1.service';
 import {saveAs} from 'file-saver';
+import {OsnovniPodaciObrascu} from "../../../../shared/model/OsnovniPodaciObrascu";
 
 
 declare var require: any;
-
-interface OsnovniPodaciObrascu {
-  id: string;
-  nazivPodnosioca: string;
-  datumPodnosenja: Date;
-  status: string
-}
 
 @Component({
   selector: 'app-a1-all-requests',

@@ -6,7 +6,7 @@ import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
 import {map} from "rxjs";
 import {A1Obrazac, AutorskoDelo, Podnosilac, Primer} from "../model/A1Obrazac";
-import { A1ObrazacOsnovno } from '../model/A1ObrazacOsnovno';
+import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
 
 declare var require: any;
 
@@ -139,7 +139,7 @@ export class A1Service {
   }
 
   kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
-    let a1Zahtev = new A1ObrazacOsnovno();
+    let a1Zahtev = new OsnovniPodaciObrascu();
     a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
 
     let podnosilac = xmlZahtev['ns3:podnosilac']
