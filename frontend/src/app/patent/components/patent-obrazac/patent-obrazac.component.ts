@@ -1,6 +1,6 @@
-import { PatentService } from '../../services/patent.service'
-import { DodajPrijavuDijalogComponent } from '../dodaj-prijavu-dijalog/dodaj-prijavu-dijalog.component';
-import { Component, OnInit } from '@angular/core';
+import {PatentService} from '../../services/patent.service'
+import {DodajPrijavuDijalogComponent} from '../dodaj-prijavu-dijalog/dodaj-prijavu-dijalog.component';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,9 +8,12 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { auto } from '@popperjs/core';
-import { Prijava } from '../../model/Prijava';
+import {MatDialog} from '@angular/material/dialog';
+import {auto} from '@popperjs/core';
+import {Prijava} from '../../model/Prijava';
+import {XonomyService} from "../../services/xonomy.service";
+
+declare const Xonomy: any;
 
 export class Autor {
   preminuliAutor: boolean;
@@ -44,8 +47,10 @@ export class PatentObrazacComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private patentService: PatentService
-  ) {}
+    private patentService: PatentService,
+    private xonomyService: XonomyService
+  ) {
+  }
 
   ngOnInit(): void {
     this.patent = this.formBuilder.group({
@@ -55,25 +60,7 @@ export class PatentObrazacComponent implements OnInit {
       }),
       podnosilac: this.formBuilder.group({
         tipPodnosioca: new FormControl('fizickoLice'),
-        email: new FormControl('istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl('0656564261'),
         jePronalazac: new FormControl(false),
-        ime: new FormControl('Ivana'),
-        prezime: new FormControl('Milic'),
-        drzavljanstvo: this.formBuilder.group({
-          tip: new FormControl('страно'),
-          jmbg: new FormControl('3112999185855'),
-          brojPasosa: new FormControl('1234567890'),
-        }),
-        poslovnoIme: new FormControl('milic-prom'),
-        brojFaksa: new FormControl('0552502534'),
-        adresaPodnosioca: this.formBuilder.group({
-          mesto: new FormControl('Bijeljina'),
-          ulica: new FormControl('Nikole Tesle'),
-          broj: new FormControl('10'),
-          drzava: new FormControl('Srbija'),
-          postanskiBroj: new FormControl('21000'),
-        }),
       }),
       pronalazac: this.formBuilder.group({
         neZeliDaBudeNaveden: new FormControl(false),
@@ -122,10 +109,38 @@ export class PatentObrazacComponent implements OnInit {
         datumPodnosenja: new FormControl()
       }),
     });
+    this.promeniTipPodnosioca("fizickoLice");
+    this.patent.get('podnosilac.tipPodnosioca').valueChanges.subscribe((value) => {
+      this.promeniTipPodnosioca(value);
+    });
+  }
+
+  promeniTipPodnosioca(value: string) {
+    console.log(value)
+    if (value === 'pravnoLice') {
+      this.setPravnoLice();
+    } else {
+      this.setFizickoLice();
+    }
+  }
+
+  setFizickoLice() {
+    let element = document.getElementById("podnosilac");
+    let specification = this.xonomyService.fizickoLice;
+    let xmlString = '<podnosilac></podnosilac>';
+    Xonomy.render(xmlString, element, specification);
+  }
+
+  setPravnoLice() {
+    let element = document.getElementById("podnosilac");
+    let specification = this.xonomyService.pravnoLice;
+    let xmlString = '<podnosilac></podnosilac>';
+    Xonomy.render(xmlString, element, specification);
   }
 
   onSubmit() {
-    console.log(this.patent.value);
+    console.log(Xonomy.harvest())
+    let podnosilacXonomy = Xonomy.harvest();
     let zahtev =
       '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_priznanje_patenta xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
 
@@ -133,17 +148,18 @@ export class PatentObrazacComponent implements OnInit {
 
     let pronalazak = this.kreirajPronalazak(this.patent.get('nazivPronalaska').value);
 
-    let podnosilac = this.kreirajPodnosioca(
-      this.patent.get('podnosilac').value
+    let podnosilac = this.kreirajPodnosioca(this.patent.get('podnosilac').value,
+      podnosilacXonomy
     );
-    
+    console.log(podnosilac)
+
     let pronalazac = this.kreirajPronalazaca(this.patent.get('pronalazac').value)
 
     let punomocnik = this.kreirajPunomocnika(
       this.patent.get('punomocnik').value
     );
     let podacioDostavljanju = this.kreirajPodatkeoDostavljanju(this.patent.get('podacioDostavljanju').value)
-    
+
     let osnovnaPrijava = this.kreirajOsnovnuPrijavu(this.patent.get('osnovnaPrijava').value)
 
     let ranijePrijave = this.kreirajRanijePrijave();
@@ -224,7 +240,7 @@ export class PatentObrazacComponent implements OnInit {
     let pronalazak = '<pronalazak>';
     pronalazak += '<naziv_pronalaska_rs>' + nazivPronalaska['nazivPronalaskaRS'] + '</naziv_pronalaska_rs>';
     pronalazak += '<naziv_pronalaska_eng>' + nazivPronalaska['nazivPronalaskaENG'] + '</naziv_pronalaska_eng>';
-    pronalazak+="</pronalazak>";
+    pronalazak += "</pronalazak>";
     return pronalazak;
   }
 
@@ -234,18 +250,37 @@ export class PatentObrazacComponent implements OnInit {
     return prijava;
   }
 
-  kreirajPodnosioca(podnosilacForm: FormGroup): string {
+  kreirajPodnosioca(podnosilacForm: FormGroup, podnosilacXonomy: string): string {
+    podnosilacXonomy = podnosilacXonomy.replaceAll(" xml:space='preserve'", "");
+    console.log(podnosilacXonomy)
     let podnosilac = '';
     podnosilac = '<podaci_o_podnosiocu>'
-    podnosilac+= '<je_pronalazac>' +podnosilacForm['jePronalazac']+'</je_pronalazac>';
+    podnosilac += '<je_pronalazac>' + podnosilacForm['jePronalazac'] + '</je_pronalazac>';
     if (podnosilacForm['tipPodnosioca'] === 'fizickoLice') {
-      podnosilac += '<podnosilac xsi:type="ks:TFizicko_Lice">';
-      podnosilac += this.kreirajFizickoLice(podnosilacForm);
+      podnosilacXonomy = podnosilacXonomy.replace("<podnosilac>", '<podnosilac xsi:type="ks:TFizicko_Lice">');
     } else {
-      podnosilac += '<podnosilac xsi:type="ks:TPravno_Lice">';
-      podnosilac += this.kreirajPravnoLice(podnosilacForm);
+      podnosilacXonomy = podnosilacXonomy.replace("<podnosilac>", '<podnosilac xsi:type="ks:TPravno_Lice">');
     }
-    podnosilac += '</podnosilac>'
+    podnosilacXonomy = podnosilacXonomy.replaceAll('adresa', 'ks:adresa')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('mesto', 'ks:mesto')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('ulica', 'ks:ulica')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('<broj>', '<ks:broj>')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('</broj>', '</ks:broj>')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('postanski_broj', 'ks:postanski_broj')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('broj_mobilnog_telefona', 'ks:broj_mobilnog_telefona')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('broj_faksa', 'ks:broj_mobilnog_telefona')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('drzava', 'ks:drzava')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('email', 'ks:email')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('puno_ime', 'ks:puno_ime')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('<ime>', '<ks:ime>')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('</ime>', '</ks:ime>')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('prezime', 'ks:prezime')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('drzavljanstvo', 'ks:drzavljanstvo')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('tip_drzavljanstva', 'ks:tip_drzavljanstva')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('jmbg', 'ks:jmbg')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('broj_pasosa', 'ks:broj_pasosa')
+    podnosilacXonomy = podnosilacXonomy.replaceAll('poslovno_ime', 'ks:poslovno_ime')
+    podnosilac += podnosilacXonomy;
     podnosilac += '</podaci_o_podnosiocu>';
     return podnosilac;
   }
@@ -271,54 +306,6 @@ export class PatentObrazacComponent implements OnInit {
     return punomocnik;
   }
 
-  kreirajFizickoLice(fizickoLiceForm: FormGroup): string {
-    let fizickoLice = this.kreirajAdresu(
-      fizickoLiceForm['adresaPodnosioca']['mesto'],
-      fizickoLiceForm['adresaPodnosioca']['postanskiBroj'],
-      fizickoLiceForm['adresaPodnosioca']['ulica'],
-      fizickoLiceForm['adresaPodnosioca']['broj'],
-      fizickoLiceForm['adresaPodnosioca']['drzava']
-    );
-    fizickoLice +=
-      '<ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">' +
-      fizickoLiceForm['brojTelefona'] +
-      '</ks:broj_mobilnog_telefona>';
-    fizickoLice +=
-      '<ks:email xmlns="http://www.xml.tim14.rs/korisnici">' +
-      fizickoLiceForm['email'] +
-      '</ks:email>';
-    fizickoLice += this.kreirajPunoIme(
-      fizickoLiceForm['ime'],
-      fizickoLiceForm['prezime']
-    );
-    return fizickoLice;
-  }
-
-  kreirajPravnoLice(pravnoLiceForm: FormGroup): string {
-    let pravnoLice = this.kreirajAdresu(
-      pravnoLiceForm['adresaPodnosioca']['mesto'],
-      pravnoLiceForm['adresaPodnosioca']['postanskiBroj'],
-      pravnoLiceForm['adresaPodnosioca']['ulica'],
-      pravnoLiceForm['adresaPodnosioca']['broj'],
-      pravnoLiceForm['adresaPodnosioca']['drzava']
-    );
-    pravnoLice +=
-      '<ks:broj_mobilnog_telefona xmlns="http://www.xml.tim14.rs/korisnici">' +
-      pravnoLiceForm['brojTelefona'] +
-      '</ks:broj_mobilnog_telefona>';
-    pravnoLice+=
-    '<ks:broj_faksa>'+pravnoLiceForm['brojFaksa'] + '</ks:broj_faksa>'
-    pravnoLice +=
-      '<ks:email xmlns="http://www.xml.tim14.rs/korisnici">' +
-      pravnoLiceForm['email'] +
-      '</ks:email>';
-    pravnoLice +=
-      '<ks:poslovno_ime>' +
-      pravnoLiceForm['poslovnoIme'] +
-      '</ks:poslovno_ime>';
-    return pravnoLice;
-  }
-
   kreirajPunoIme(ime: string, prezime: string): string {
     let punoIme = '<ks:puno_ime>';
     punoIme += '<ks:ime>' + ime + '</ks:ime>';
@@ -341,15 +328,6 @@ export class PatentObrazacComponent implements OnInit {
     adresa += '<broj>' + broj + '</broj>';
     adresa += '</ks:adresa>';
     return adresa;
-  }
-
-  kreirajDrzavljanstvo(tip: string, jmbg: string, brojPasosa: string): string {
-    let drzavljanstvo = '<ks:drzavljanstvo>';
-    drzavljanstvo += '<ks:tip_drzavljanstva>' + tip + '</ks:tip_drzavljanstva>';
-    drzavljanstvo += '<ks:jmbg>' + jmbg + '</ks:jmbg>';
-    drzavljanstvo += '<ks:broj_pasosa>' + brojPasosa + '</ks:broj_pasosa>';
-    drzavljanstvo += '</ks:drzavljanstvo>';
-    return drzavljanstvo;
   }
 
   dodajRanijuPrijavu() {

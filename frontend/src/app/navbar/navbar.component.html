@@ -4,9 +4,11 @@
       <h1 mat-button>MUP</h1>
     </div>
     <div class="authentication">
-      <a mat-button routerLink="/patent">Patent</a>
       <a mat-button routerLink="/a1/novi">Delo</a>
-      <a mat-button routerLink="/a1/zahtevi">Pretraga</a>
+      <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated"
+        >Pretraga</a
+      >
+      <a mat-button routerLink="/patent" *ngIf="isAuthenticated">Patent</a>
       <a
         mat-button
         routerLink="/auth/login"
