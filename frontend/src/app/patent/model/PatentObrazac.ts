@@ -2,7 +2,6 @@ export class PatentObrazac {
   public patent: any;
 
   constructor(obj: any) {
-    console.log("objekat: " + obj)
     const getFieldText = (field: any) => field?._text;
 
     const getFieldValue = (field: any) => {
@@ -26,8 +25,6 @@ export class PatentObrazac {
     const punomocnik = obj['zahtev_za_priznanje_patenta']['podaci_o_punomocniku'];
     const dostavljanje = obj['zahtev_za_priznanje_patenta']['podaci_o_dostavljanju'];
     const osnovnaPrijava = obj['zahtev_za_priznanje_patenta']['ranije_prijave'];
-
-    console.log("pronalazak " + getFieldText(obj['zahtev_za_priznanje_patenta']['statusZahteva']))
 
     this.patent = {
       statusZahteva: getFieldText(obj['zahtev_za_priznanje_patenta']['statusZahteva']),

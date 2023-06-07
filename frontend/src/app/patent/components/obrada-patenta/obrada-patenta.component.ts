@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {A1Service} from "../../../a1/services/a1.service";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {ResenjeService} from "../../../a1/services/resenje.service";
+import {ResenjeService} from "../../../shared/services/resenje.service";
 import {switchMap} from "rxjs";
 import {ConfirmationDialogComponent} from "../../../shared/confirmation-dialog/confirmation-dialog.component";
 import {PatentObrazac} from "../../model/PatentObrazac";
@@ -16,6 +14,7 @@ import {PatentService} from "../../services/patent.service";
 })
 export class ObradaPatentaComponent {
   patentObrazac: PatentObrazac;
+  idObrasca: string;
 
   constructor(
     private patentService: PatentService,
@@ -28,8 +27,8 @@ export class ObradaPatentaComponent {
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap(params => {
-        const id = params.get('id');
-        return this.patentService.dobaviZahtevPoIdu(id);
+        this.idObrasca = params.get('id');
+        return this.patentService.dobaviZahtevPoIdu(this.idObrasca);
       })
     ).subscribe(jsonResult => {
       this.patentObrazac = new PatentObrazac(jsonResult);
@@ -51,17 +50,23 @@ export class ObradaPatentaComponent {
   }
 
   openDialog(data: any): void {
-    // const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data});
-    //
-    // dialogRef.afterClosed().subscribe((result: any) => {
-    //   if (result) {
-    //     let request = {id: this.a1Obrazac.brojPrijave, emailSluzbenika:"istevanovic3112@gmail.com", imeSluzbenika: "ime sluzbenika", prezimeSluzbenika: "prezime", odbijen: !result.accepted, razlogOdbijanja: result.reason}
-    //     this.resenjeService.obradiZahtev(request).subscribe(() =>
-    //     {
-    //       console.log("vrh")
-    //     })
-    //   }
-    // });
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data});
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        let request = {
+          id: this.idObrasca,
+          emailSluzbenika: "istevanovic3112@gmail.com",
+          imeSluzbenika: "ime sluzbenika",
+          prezimeSluzbenika: "prezime",
+          odbijen: !result.accepted,
+          razlogOdbijanja: result.reason
+        }
+        // this.resenjeService.obradiZahtev(request, 'p').subscribe(() => {
+        //   console.log("vrh")
+        // })
+      }
+    });
   }
 
 }
