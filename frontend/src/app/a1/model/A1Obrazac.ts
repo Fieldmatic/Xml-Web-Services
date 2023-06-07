@@ -1,5 +1,6 @@
 export class A1Obrazac {
   brojPrijave: string;
+  statusZahteva: string;
   podnosilac: Podnosilac;
   punomocnik: Punomocnik;
   autorskoDelo: AutorskoDelo;

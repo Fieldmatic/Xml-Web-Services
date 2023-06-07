@@ -3,10 +3,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {AppConfig} from 'src/app/appConfig/appconfig.interface';
 import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
-import {A1ObrazacOsnovno} from "../model/A1ObrazacOsnovno";
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
 import {map} from "rxjs";
 import {A1Obrazac, AutorskoDelo, Podnosilac, Primer} from "../model/A1Obrazac";
+import { A1ObrazacOsnovno } from '../model/A1ObrazacOsnovno';
 
 declare var require: any;
 
@@ -200,6 +200,7 @@ export class A1Service {
     if (objekat.zahtev_za_autorska_prava) {
       const zahtev = objekat.zahtev_za_autorska_prava;
       a1.brojPrijave = zahtev['prijava']['broj_prijave']._text
+      a1.statusZahteva = zahtev['statusZahteva']._text
       a1.podnosilac = new Podnosilac();
       if (zahtev.podnosilac) {
         const podnosilac = zahtev.podnosilac;

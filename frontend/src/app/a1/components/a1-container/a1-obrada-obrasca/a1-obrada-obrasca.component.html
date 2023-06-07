@@ -1,14 +1,49 @@
 <div class="row">
   <div class="col"><app-a1-obrazac [a1Obrazac]="a1Obrazac"></app-a1-obrazac>
   </div>
-  <div class="col" style="margin-left: 10%">
+  <div class="col p-4" style="margin-left: 3%">
+    <ng-container  *ngIf="a1Obrazac?.statusZahteva === 'PODNET'">
     <div class="row">
-      <div class="col">
-        <button mat-button style="color: white; background-color: black; width: 50%" (click)="openConfirmationDialog()">Prihvati</button>
+        <div class="col">
+          <form [formGroup]="priloziForm">
+            <div class="row">
+              <div class="col"></div>
+              <div class="col"><h2>Popunjava zavod</h2></div>
+              <div class="col"></div>
+            </div>
+            <div class="row" style="margin-bottom: 2%">
+              <div class="col"><span>Prilozi uz prijavu:</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-checkbox formControlName="opisDelaChecked" color="primary">1. Opis autorskog dela (ako je podneto na optičkom disku)</mat-checkbox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+              <mat-checkbox formControlName="primerDelaChecked" color="primary">2. Primer autorskog dela</mat-checkbox>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="col">
-        <button mat-button style="color: white; background-color: black; width: 50%" (click)="openRejectDialog()">Odbij</button>
+      <div class="row" style="margin-top: 5%">
+          <div class="col">
+            <button mat-button [disabled]="!priloziForm.controls['primerDelaChecked'].value" style="color: white; background-color: black; width: 80%; margin-left: 20%" (click)="openConfirmationDialog()">Prihvati</button>
+          </div>
+          <div class="col">
+            <button mat-button style="color: white; background-color: black; width: 80%; margin-right: 10%" (click)="openRejectDialog()">Odbij</button>
+          </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-container  *ngIf="a1Obrazac?.statusZahteva === 'PRIHVACEN'" style="display: flex; align-items: center">
+      <span style="font-weight: bold">Status zahteva: </span>
+      <span style="color: green; margin-left: 10px; font-weight: bold">Zahtev je PRIHVAĆEN.</span>
+    </ng-container>
+    <ng-container  *ngIf="a1Obrazac?.statusZahteva === 'ODBIJEN'" style="display: flex; align-items: center">
+      <span style="font-weight: bold">Status zahteva: </span>
+      <span style="color: red; margin-left: 10px; font-weight: bold">Zahtev je ODBIJEN.</span>
+    </ng-container>
   </div>
 </div>
