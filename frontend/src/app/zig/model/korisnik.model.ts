@@ -1,4 +1,4 @@
-import { Adresa } from './adresa.model';
+import { Adresa } from "./adresa.model";
 
 export class Korisnik {
   constructor(
@@ -10,19 +10,20 @@ export class Korisnik {
     public brojMobilnogTelefona: string,
     public brojFaksa: string,
     public email: string
-  ) {}
+  ) {
+  }
 
   toXML(): string {
-    let XML = '';
+    let XML = "";
     if (this.poslovnoIme === null) {
-      XML += `<puno_ime><ime>${this.ime}</ime><prezime>${this.prezime}</prezime></puno_ime>`;
+      XML += `<ks:puno_ime><ks:ime>${this.ime}</ks:ime><ks:prezime>${this.prezime}</ks:prezime></ks:puno_ime>`;
     } else {
-      XML += `<poslovno_ime>${this.poslovnoIme}</poslovno_ime>`;
+      XML += `<ks:poslovno_ime>${this.poslovnoIme}</ks:poslovno_ime>`;
     }
     XML += this.adresa.toXML();
-    XML += `<broj_mobilnog_telefona>${this.brojMobilnogTelefona}</broj_mobilnog_telefona>`;
-    XML += `<broj_faksa>${this.brojFaksa}</broj_faksa>`;
-    XML += `<email>${this.email}</email>`;
+    XML += `<ks:broj_mobilnog_telefona>${this.brojMobilnogTelefona}</ks:broj_mobilnog_telefona>`;
+    XML += `<ks:broj_faksa>${this.brojFaksa}</ks:broj_faksa>`;
+    XML += `<ks:email>${this.email}</ks:email>`;
     return XML;
   }
 }

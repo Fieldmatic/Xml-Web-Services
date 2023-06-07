@@ -54,9 +54,14 @@ public class ZigService {
         String id = Util.getNextId();
 
         zahtev.setAbout("http://www.ftn.uns.ac.rs/rdf/zig/" + id);
-        zahtev.getPrijava().getBrojPrijave().setValue(BigInteger.valueOf(Long.parseLong(id)));
-        zahtev.getPrijava().getDatumPodnosenja().setValue(currentDate);
-
+        TPrijava prijava = new TPrijava();
+        TPrijava.BrojPrijave brojPrijave = new TPrijava.BrojPrijave();
+        brojPrijave.setValue(BigInteger.valueOf(Long.parseLong(id)));
+        prijava.setBrojPrijave(brojPrijave);
+        TPrijava.DatumPodnosenja datumPodnosenja = new TPrijava.DatumPodnosenja();
+        datumPodnosenja.setValue(currentDate);
+        prijava.setDatumPodnosenja(datumPodnosenja);
+        zahtev.setPrijava(prijava);
 
         zahtev.getPrijava().getBrojPrijave().setProperty("pred:brojPrijave");
         zahtev.getPrijava().getBrojPrijave().setDatatype("xs:string");

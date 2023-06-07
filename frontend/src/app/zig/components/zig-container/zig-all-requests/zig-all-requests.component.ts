@@ -18,13 +18,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./zig-all-requests.component.scss'],
 })
 export class ZigAllRequestsComponent
-  implements AfterViewInit, OnInit, OnDestroy
+  implements AfterViewInit, OnInit
 {
   searchControl: FormControl;
   metadataSearch: FormGroup;
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<PrijavaResponse>;
-  storeSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,12 +38,8 @@ export class ZigAllRequestsComponent
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  ngOnDestroy(): void {
-    this.storeSubscription.unsubscribe();
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
 
   searchMetadata() {

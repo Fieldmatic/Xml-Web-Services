@@ -32,17 +32,6 @@ public class JaxbParser {
 		}
 	}
 
-
-	private static JAXBContext context;
-
-	static {
-		try {
-			context = JAXBContext.newInstance("rs.tim14.xml.model.zahtev_za_priznanje_ziga");
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public ZahtevZaPriznanjeZiga unmarshall(StreamSource ss) throws JAXBException {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(ss);

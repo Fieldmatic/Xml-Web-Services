@@ -11,11 +11,11 @@ import javax.xml.bind.annotation.XmlType;
         "primerakZnaka",
         "spisakRobeIUsluga",
         "punomocje",
+        "generalnoPunomocjePredano",
+        "punomocjeCeBitiPredano",
         "aktiOKolektivnomZigIliZiguGarancije",
         "dokazOPravuPrvenstva",
         "dokazOUplatiTakse",
-        "generalnoPunomocjePredano",
-        "punomocjeCeBitiPredano",
 })
 public class PriloziUzZahtev {
 
@@ -24,16 +24,16 @@ public class PriloziUzZahtev {
     @XmlElement(name = "spisak_robe_i_usluga")
     protected String spisakRobeIUsluga;
     protected String punomocje;
+    @XmlElement(name = "generalno_punomocje_predano")
+    protected Boolean generalnoPunomocjePredano;
+    @XmlElement(name = "punomocje_ce_biti_predano")
+    protected Boolean punomocjeCeBitiPredano;
     @XmlElement(name = "akti_o_kolektivnom_zig_ili_zigu_garancije")
     protected String aktiOKolektivnomZigIliZiguGarancije;
     @XmlElement(name = "dokaz_o_pravu_prvenstva")
     protected String dokazOPravuPrvenstva;
     @XmlElement(name = "dokaz_o_uplati_takse")
     protected String dokazOUplatiTakse;
-    @XmlElement(name = "generalno_punomocje_predano")
-    protected Boolean generalnoPunomocjePredano;
-    @XmlElement(name = "punomocje_ce_biti_pradno")
-    protected Boolean punomocjeCeBitiPredano;
 
     public String getPrimerakZnaka() {
         return primerakZnaka;

@@ -7,10 +7,10 @@
     <xs:element name="zahtev_za_priznanje_ziga">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="prijava" type="z1:TPrijava"/>
+                <xs:element minOccurs="0" name="prijava" type="z1:TPrijava"/>
                 <xs:element name="podnosilac" type="ks:TLice"/>
                 <xs:element name="punomocnik" type="ks:TLice"/>
-                <xs:element name="statusZahteva" type="z1:TStatus_zahteva"/>
+                <xs:element minOccurs="0" name="statusZahteva" type="z1:TStatus_zahteva"/>
                 <xs:element minOccurs="0" name="zajednicki_predstavnik" type="ks:TLice"/>
                 <xs:element name="vrsta_ziga">
                     <xs:complexType>
@@ -78,16 +78,14 @@
                 <xs:element name="Prilozi_uz_zahtev">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="primerak_znaka" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="spisak_robe_i_usluga" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="primerak_znaka" type="z1:TPrilog"/>
+                            <xs:element name="spisak_robe_i_usluga" type="z1:TPrilog"/>
                             <xs:element name="punomocje" type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije"
-                                type="z1:TPrilog" minOccurs="0"/>
-                            <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog"
-                                minOccurs="0"/>
-                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog" minOccurs="0"/>
                             <xs:element name="generalno_punomocje_predano" type="xs:boolean"/>
-                            <xs:element name="punomocje_ce_biti_pradno" type="xs:boolean"/>
+                            <xs:element name="punomocje_ce_biti_predano" type="xs:boolean"/>
+                            <xs:element name="akti_o_kolektivnom_zig_ili_zigu_garancije" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="dokaz_o_pravu_prvenstva" type="z1:TPrilog" minOccurs="0"/>
+                            <xs:element name="dokaz_o_uplati_takse" type="z1:TPrilog"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

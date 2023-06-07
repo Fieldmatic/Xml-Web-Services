@@ -1,10 +1,10 @@
-import { Prijava } from './prijava.model';
-import { Korisnik } from './korisnik.model';
-import { Znak } from './znak.model';
-import { PravoPrvenstva } from './pravo-prvenstva.model';
-import { FileDTO } from './FileDTO';
-import { Takse } from './takse.model';
-import { Punomocje } from './punomocje.model';
+import { Prijava } from "./prijava.model";
+import { Korisnik } from "./korisnik.model";
+import { Znak } from "./znak.model";
+import { PravoPrvenstva } from "./pravo-prvenstva.model";
+import { FileDTO } from "./FileDTO";
+import { Takse } from "./takse.model";
+import { Punomocje } from "./punomocje.model";
 
 export class ZahtevZaPriznanjeZiga {
   constructor(
@@ -20,16 +20,19 @@ export class ZahtevZaPriznanjeZiga {
     public spisakRobeIUsluga: FileDTO,
     public pravoPrvenstva: PravoPrvenstva,
     public takse: Takse
-  ) {}
+  ) {
+  }
 
   toXML(): string {
-    let XML = '<zahtev_za_priznanje_ziga>';
-    XML += this.prijavaToXML();
-    XML += `<podnosilac>${this.podnosilac.toXML()}</podnosilac>`;
-    XML += `<punomocnik>${this.punomocnik.toXML()}</punomocnik>`;
+    let XML = "<zahtev_za_priznanje_ziga " +
+      "xmlns=\"http://www.xml.tim14.rs/zahtev_za_priznanje_ziga\"\n" +
+      "                          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+      "                          xmlns:ks=\"http://www.xml.tim14.rs/korisnici\">";
+    XML += `<podnosilac xsi:type="ks:${this.podnosilac.tip == "fizickoLice" ? "TFizicko_Lice" : "TPravno_Lice"}">${this.podnosilac.toXML()}</podnosilac>`;
+    XML += `<punomocnik xsi:type="ks:${this.podnosilac.tip == "fizickoLice" ? "TFizicko_Lice" : "TPravno_Lice"}">${this.punomocnik.toXML()}</punomocnik>`;
     XML += this.zajednickiPredstavnik
-      ? `<zajednicki_predstavnik>${this.zajednickiPredstavnik.toXML()}</zajednicki_predstavnik>`
-      : '';
+      ? `<zajednicki_predstavnik xsi:type="ks:${this.podnosilac.tip == "fizickoLice" ? "TFizicko_Lice" : "TPravno_Lice"}">${this.zajednickiPredstavnik.toXML()}</zajednicki_predstavnik>`
+      : "";
     XML += `<vrsta_ziga>${this.vrstaZiga}</vrsta_ziga>`;
     XML += this.znak.toXML();
     for (let klasa of this.klaseRobe) {
@@ -38,29 +41,29 @@ export class ZahtevZaPriznanjeZiga {
     XML += this.pravoPrvenstva.toXML();
     XML += this.takse.toXML();
     XML += this.priloziToXML();
-    XML += '</zahtev_za_priznanje_ziga>';
+    XML += "</zahtev_za_priznanje_ziga>";
     return XML;
   }
 
   private prijavaToXML() {
-    let XML = '<prijava>';
+    let XML = "<prijava>";
     XML += `<broj_prijave>${this.prijava.broj_prijave}</broj_prijave>`;
     XML += `<broj_prijave>${this.prijava.datum_podnosenja.getFullYear()}-${this.prijava.datum_podnosenja.getMonth()}-${this.prijava.datum_podnosenja.getDate()}</broj_prijave>`;
-    XML += '</prijava>';
+    XML += "</prijava>";
     return XML;
   }
 
   private priloziToXML() {
-    let XML = '<Prilozi_uz_zahtev>';
+    let XML = "<Prilozi_uz_zahtev>";
     XML += `<primerak_znaka>${this.znak.izgled.naziv}</primerak_znaka>`;
     XML += `<spisak_robe_i_usluga>${this.spisakRobeIUsluga.naziv}</spisak_robe_i_usluga>`;
     XML += this.punomocje.toXML();
-    XML += `<akti_o_kolektivnom_zig_ili_zigu_garancije>${this.opstiAktOKolektivnomZiguIliZiguGarancije}</primerak_znaka>`;
-    XML += this.pravoPrvenstva.zatrazeno
+    XML += this.opstiAktOKolektivnomZiguIliZiguGarancije ? `<akti_o_kolektivnom_zig_ili_zigu_garancije>${this.opstiAktOKolektivnomZiguIliZiguGarancije}</akti_o_kolektivnom_zig_ili_zigu_garancije>` : "";
+    XML += this.pravoPrvenstva.zatrazeno && this.pravoPrvenstva.dokaz && this.pravoPrvenstva.dokaz.naziv
       ? `<dokaz_o_pravu_prvenstva>${this.pravoPrvenstva.dokaz.naziv}</dokaz_o_pravu_prvenstva>`
-      : '';
+      : "";
     XML += `<dokaz_o_uplati_takse>${this.takse.dokazOUplati.naziv}</dokaz_o_uplati_takse>`;
-    XML += '</Prilozi_uz_zahtev>';
+    XML += "</Prilozi_uz_zahtev>";
     return XML;
   }
 }

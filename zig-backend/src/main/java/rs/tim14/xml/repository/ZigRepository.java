@@ -128,7 +128,7 @@ public class ZigRepository {
     public List<ZahtevZaPriznanjeZiga> getByIds(final List<String> ids) throws Exception {
         final List<ZahtevZaPriznanjeZiga> zahtevi = new ArrayList<>();
         for (final String id : ids)
-            zahtevi.add(get(id));
+            zahtevi.add(getById(id));
         return zahtevi;
     }
 

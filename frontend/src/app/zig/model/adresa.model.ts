@@ -5,16 +5,17 @@ export class Adresa {
     public mesto: string,
     public postanskiBroj: string,
     public drzava: string
-  ) {}
+  ) {
+  }
 
   toXML(): string {
-    let XML = '<adresa>';
+    let XML = "<adresa xmlns=\"http://www.xml.tim14.rs/korisnici\">";
     XML += `<ulica>${this.ulica}</ulica>`;
     XML += `<broj>${this.broj}</broj>`;
     XML += `<mesto>${this.mesto}</mesto>`;
     XML += `<postanski_broj>${this.postanskiBroj}</postanski_broj>`;
     XML += `<drzava>${this.drzava}</drzava>`;
-    XML += '</adresa>';
+    XML += "</adresa>";
     return XML;
   }
 }
