@@ -485,26 +485,46 @@
     </section>
     <section class="mb-5">
       <div class="d-flex-column">
-        <h3 class="w-50 fw-bold">Ranije prijave</h3>
-        <button
-              type="button"
-              style="left: 40%; width: 20%"
-              mat-button
-              (click)="dodajRanijuPrijavu()"
-            >
-              Dodaj prijavu
-            </button>
-            <div *ngIf="ranijePrijave.length" class="mt-5">
-              <ul>
-                <li *ngFor="let prijava of ranijePrijave">
-                  <p>Prijava broj: {{ prijava.brojPrijave }}, datum podnosenja: {{ prijava.datumPodnosenja }}, oznaka drzave: {{prijava.oznakaDrzave}}</p>
-                </li>
-              </ul>
-            </div>
+        <ng-container *ngIf="!patentObrazac">
+          <h3 class="w-50 fw-bold">Ranije prijave</h3>
+          <button
+            type="button"
+            style="left: 40%; width: 20%"
+            mat-button
+            (click)="dodajRanijuPrijavu()"
+          >
+            Dodaj prijavu
+          </button>
+          <div *ngIf="ranijePrijave.length" class="mt-5">
+            <ul>
+              <li *ngFor="let prijava of ranijePrijave">
+                <p>Prijava broj: {{ prijava.brojPrijave }}, datum podnosenja: {{ prijava.datumPodnosenja }}, oznaka
+                  drzave: {{prijava.oznakaDrzave}}</p>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="patentObrazac">
+
+          <div class="mt-5" *ngIf="patentObrazac.patent['ranijePrijave'].length > 0">
+            <h3 class="w-50 fw-bold">Ranije prijave</h3>
+            <ul>
+              <li *ngFor="let prijava of patentObrazac.patent['ranijePrijave']">
+                <a target=”_blank”
+                   [href]="'/patent/obrada/' + prijava['brojPrijave'].replaceAll(' ', '').replaceAll('/', '-')">
+                  Prijava broj: {{ prijava['brojPrijave'] }}, datum podnosenja: {{ prijava['datumPodnosenja'] }},
+                  oznaka
+                  drzave: {{prijava['oznakaDrzave']}}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
       </div>
     </section>
-    <button type="submit" mat-button style="width: 30%; left: 35%">
-      Submit
-    </button>
+    <ng-container *ngIf="!patentObrazac">
+      <button type="submit" mat-button style="width: 30%; left: 35%">
+        Submit
+      </button>
+    </ng-container>
   </form>
 </div>
