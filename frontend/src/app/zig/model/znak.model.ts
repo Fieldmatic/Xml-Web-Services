@@ -18,7 +18,12 @@ export class Znak {
     if (vrsta_znaka === "DRUGI") {
       druga_vrsta_znaka = xml["ns3:vrsta_znaka"]["ns3:druga_vrsta_znaka"]["_text"];
     }
-    const boje = xml["ns3:boje_znaka"].map(boja => boja["_text"]);
+    let boje = [];
+    if ("_text" in xml["ns3:boje_znaka"]) {
+      boje.push(xml["ns3:boje_znaka"]["_text"]);
+    } else {
+      boje = xml["ns3:boje_znaka"].map(boja => boja["_text"]);
+    }
     let transliteracija = "";
     if ("ns3:transliteracija" in xml) {
       transliteracija = xml["ns3:transliteracija_znaka"]["_text"];

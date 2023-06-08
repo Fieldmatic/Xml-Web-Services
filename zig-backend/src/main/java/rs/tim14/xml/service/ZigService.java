@@ -6,6 +6,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.glxn.qrgen.core.image.ImageType;
+import net.glxn.qrgen.javase.QRCode;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
@@ -93,6 +95,24 @@ public class ZigService {
         XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id);
         byte[] out = metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());
         fusekiWriter.saveRdf(new ByteArrayInputStream(out), "/zahtevi_za_priznanje_ziga");
+
+        String link = "http://localhost:7005/api/zig/pdf?id=" + id;
+
+        // Generate QR code from the link
+        QRCode qrCode = (QRCode) QRCode.from(link)
+                .to(ImageType.PNG)
+                .withSize(250, 250); // You can adjust the size as needed
+
+        ByteArrayOutputStream qrCodeOutputStream = qrCode.stream();
+        byte[] qrCodeByteArray = qrCodeOutputStream.toByteArray();
+
+        String filePath = "./zig-backend/data/result/" + id + ".png";
+        try (FileOutputStream qrCodeFileOutputStream = new FileOutputStream(filePath)) {
+            qrCodeFileOutputStream.write(qrCodeByteArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return zahtev;
     }
 

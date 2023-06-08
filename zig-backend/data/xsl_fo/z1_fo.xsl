@@ -16,6 +16,9 @@
             <xsl:variable name="iz" select="z1:zahtev_za_priznanje_ziga/z1:Prilozi_uz_zahtev/z1:primerak_znaka"/>
             <xsl:variable name="split_parts" select="tokenize($iz, 'src')" />
             <xsl:variable name="izgled_znaka" select="concat('../src', $split_parts[2])" />
+            <xsl:variable name="broj_prijave" select="z1:zahtev_za_priznanje_ziga/z1:prijava/z1:broj_prijave"/>
+            <xsl:variable name="status" select="z1:zahtev_za_priznanje_ziga/z1:statusZahteva"/>
+            <xsl:variable name="putanja" select="concat('../data/result/resenja/',$broj_prijave,'.png')"/>
 
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="z1-page">
@@ -607,6 +610,18 @@
                         заштита обухвата само тако именоване, конкретне робе/услуге у њиховом јасном и недвосмисленом
                         значењу.
                     </fo:block>
+                    <xsl:if test="not($status = 'PODNET')">
+                        <fo:block-container>
+                            <fo:block display-align="center" width="100%">
+                                <fo:external-graphic src="{$putanja}"
+
+                                                     width="70px"
+                                                     height="70px"
+                                                     content-width="scale-to-fit"
+                                                     content-height="scale-to-fit"/>
+                            </fo:block>
+                        </fo:block-container>
+                    </xsl:if>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>

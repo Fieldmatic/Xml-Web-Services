@@ -1,5 +1,8 @@
 package rs.tim14.xml.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +22,7 @@ import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaPriznanjeZigaDTO;
 import rs.tim14.xml.dto.request.IzvestajRequest;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ResenjeZahteva;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.VrstaPriloga;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.service.MetadataService;
@@ -41,8 +45,8 @@ public class ZigController {
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ZahteviZaPriznanjeZigaDTO getRequestById(@RequestParam String id) throws Exception {
         List<ZahtevZaPriznanjeZiga> zahtevi = new ArrayList<>(Collections.singleton(zigService.get(id)));
-        ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
-        return autorskaPravaDTO;
+        ZahteviZaPriznanjeZigaDTO zigDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+        return zigDTO;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -135,5 +139,26 @@ public class ZigController {
     @PostMapping(value = "/obradi-zahtev")
     public void obradiZahtev(@RequestBody ObradaZahteva obradaZahteva) throws Exception {
         resenjeService.obradiZahtev(obradaZahteva);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/resenje", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getResenje(@RequestParam String id) throws Exception {
+        String filePath = "./zig-backend/data/result/resenja/" + id + ".pdf";
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/data/{path}/{name}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getData(@PathVariable String path, @PathVariable String name) throws Exception {
+        String filePath = "./zig-backend/data/result/" + path + "/" + name;
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/resource/{path}/{name}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getResource(@PathVariable String path, @PathVariable String name) throws Exception {
+        String filePath = "./zig-backend/src/main/resources/z1/" + path + "/" + name;
+        return Files.readAllBytes(Paths.get(filePath));
     }
 }
