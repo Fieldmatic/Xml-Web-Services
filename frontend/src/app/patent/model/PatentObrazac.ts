@@ -38,17 +38,17 @@ export class PatentObrazac {
         tipPodnosioca: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? 'fizickoLice' : 'pravnoLice',
         jePronalazac: getFieldText(podnosilac['je_pronalazac']) === 'true',
         adresa: parseAdresa(podnosilac['podnosilac']['ns2:adresa']),
-        ime: getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:ime']),
-        prezime: getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:prezime']),
-        poslovnoIme: getFieldValue(podnosilac['podnosilac']['ns2:poslovno_ime']),
+        ime: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:ime']) : null,
+        prezime: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:prezime']) : null,
+        poslovnoIme: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TPravno_Lice' ? getFieldText(podnosilac['podnosilac']['ns2:poslovno_ime']) : null,
         email: getFieldValue(podnosilac['podnosilac']['ns2:email']),
         brojTelefona: getFieldValue(podnosilac['podnosilac']['ns2:broj_mobilnog_telefona']),
-        brojFiksnogTelefona: getFieldValue(podnosilac['podnosilac']['ns2:broj_fiksnog_telefona']),
-        drzavljanstvo: {
+        brojFiksnogTelefona: getFieldValue(podnosilac['podnosilac']['ns2:broj_faksa']),
+        drzavljanstvo: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? {
           tipDrzavljanstva: getFieldText(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:tip_drzavljanstva']),
           jmbg: getFieldValue(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:jmbg']),
           brojPasosa: getFieldValue(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:broj_pasosa']),
-        },
+        } : null,
       },
       pronalazac: {
         neZeliDaBudeNaveden: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'true',
@@ -61,7 +61,7 @@ export class PatentObrazac {
       },
       punomocnik: {
         punomocnikZaPrijemPismena: getFieldText(punomocnik['punomocnik_za_prijem_pismena']) === 'true',
-        tipPunomocnika: punomocnik['punomocnik']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? 'fizickoLice' : 'pravnoLice',
+        tipPunomocnika: getFieldText(punomocnik['tip_punomocnika']),
         ime: getFieldText(punomocnik['punomocnik']['ns2:puno_ime']['ns2:ime']),
         prezime: getFieldText(punomocnik['punomocnik']['ns2:puno_ime']['ns2:prezime']),
         adresa: parseAdresa(punomocnik['punomocnik']['ns2:adresa']),
@@ -74,15 +74,20 @@ export class PatentObrazac {
         adresa: parseAdresa(dostavljanje['ns2:adresa']),
       },
       osnovnaPrijava: osnovnaPrijava ? {
-        dopunskaPrijava: getFieldText(osnovnaPrijava['ns3:dopunska_prijava']) === 'true',
-        brojOsnovnePrijave: getFieldValue(osnovnaPrijava['ns3:broj_osnovne_prijave']),
-        datumOsnovnePrijave: getFieldValue(osnovnaPrijava['ns3:datum_osnovne_prijave']),
+        brojPrijave: getFieldValue(osnovnaPrijava['broj_prijave']),
+        datumPodnosenja: getFieldValue(osnovnaPrijava['datum_podnosenja']),
       } : null,
-      ranijePrijave: (ranijePrijave && ranijePrijave.ranija_prijava) ? ranijePrijave.ranija_prijava.map((ranijaPrijava) => ({
-        brojPrijave: getFieldValue(ranijaPrijava.broj_prijave),
-        datumPodnosenja: getFieldValue(ranijaPrijava.datum_podnosenja),
-        oznakaDrzave: getFieldValue(ranijaPrijava.oznaka_drzave),
-      })) : [],
+      ranijePrijave: (ranijePrijave && ranijePrijave.ranija_prijava) ?
+        ranijePrijave.ranija_prijava.length > 1 ?
+          ranijePrijave.ranija_prijava.map((ranijaPrijava) => ({
+            brojPrijave: getFieldValue(ranijaPrijava.broj_prijave),
+            datumPodnosenja: getFieldValue(ranijaPrijava.datum_podnosenja),
+            oznakaDrzave: getFieldValue(ranijaPrijava.oznaka_drzave),
+          })) : [{
+            brojPrijave: getFieldValue(ranijePrijave['ranija_prijava']['broj_prijave']),
+            datumPodnosenja: getFieldValue(ranijePrijave['ranija_prijava']['datum_podnosenja']),
+            oznakaDrzave: getFieldValue(ranijePrijave['ranija_prijava']['oznaka_drzave'])
+          }] : [],
     };
   }
 }
