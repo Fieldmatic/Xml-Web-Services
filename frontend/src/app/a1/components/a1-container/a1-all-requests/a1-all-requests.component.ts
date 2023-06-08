@@ -3,9 +3,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {A1Service} from 'src/app/a1/services/a1.service';
 import {saveAs} from 'file-saver';
 import {OsnovniPodaciObrascu} from "../../../../shared/model/OsnovniPodaciObrascu";
+import { xml2json } from 'xml-js';
 
-
-declare var require: any;
 
 @Component({
   selector: 'app-a1-all-requests',
@@ -33,7 +32,7 @@ export class A1AllRequestsComponent {
   }
 
   prikaziRezultatePretrage(result: string) {
-    let xmlResult = require('xml-js').xml2json(result, {
+    let xmlResult = xml2json(result, {
       compact: true,
       spaces: 4,
       trim: true,

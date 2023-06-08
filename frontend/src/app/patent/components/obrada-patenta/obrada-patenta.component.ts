@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
 import {ResenjeService} from "../../../shared/services/resenje.service";
 import {switchMap} from "rxjs";
-import {ConfirmationDialogComponent} from "../../../shared/confirmation-dialog/confirmation-dialog.component";
 import {PatentObrazac} from "../../model/PatentObrazac";
 import {PatentService} from "../../services/patent.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmationDialogComponent} from "../../../shared/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-obrada-patenta',
   templateUrl: './obrada-patenta.component.html',
   styleUrls: ['./obrada-patenta.component.scss']
 })
-export class ObradaPatentaComponent {
+export class ObradaPatentaComponent implements OnDestroy {
   patentObrazac: PatentObrazac;
   idObrasca: string;
 
@@ -62,11 +62,16 @@ export class ObradaPatentaComponent {
           odbijen: !result.accepted,
           razlogOdbijanja: result.reason
         }
-        // this.resenjeService.obradiZahtev(request, 'p').subscribe(() => {
-        //   console.log("vrh")
-        // })
+        this.resenjeService.obradiZahtev(request, 'p').subscribe(() => {
+          console.log("vrh")
+        })
       }
     });
+  }
+
+  ngOnDestroy() {
+    console.log("Deleting object")
+    this.patentObrazac = null;
   }
 
 }

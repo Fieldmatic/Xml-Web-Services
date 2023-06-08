@@ -3,9 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {OsnovniPodaciObrascu} from "../../../shared/model/OsnovniPodaciObrascu";
 import {PatentService} from "../../services/patent.service";
 import {saveAs} from 'file-saver';
-
-
-declare var require: any;
+import { xml2json } from 'xml-js';
 
 @Component({
   selector: 'app-patenti-prikaz',
@@ -32,7 +30,7 @@ export class PatentiPrikazComponent {
   }
 
   prikaziRezultatePretrage(result: string) {
-    let xmlResult = require('xml-js').xml2json(result, {
+    let xmlResult = xml2json(result, {
       compact: true,
       spaces: 4,
       trim: true,

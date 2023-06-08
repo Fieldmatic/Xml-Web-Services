@@ -129,6 +129,7 @@ export class PatentService {
   }
 
   kreirajOsnovniPatentOdXmlZahteva(xmlZahtev: any) {
+    console.log(xmlZahtev)
     let patentZahtev = new OsnovniPodaciObrascu();
     let urlIdParts = xmlZahtev['_attributes']['about'].split("/");
     patentZahtev.id = urlIdParts[urlIdParts.length - 1];

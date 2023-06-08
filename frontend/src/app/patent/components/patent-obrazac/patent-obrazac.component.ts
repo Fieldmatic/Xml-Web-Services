@@ -10,28 +10,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {Prijava} from '../../model/Prijava';
 import {XonomyService} from "../../services/xonomy.service";
 import {PatentObrazac} from '../../model/PatentObrazac';
+import {ActivatedRoute} from "@angular/router";
 
 declare const Xonomy: any;
-
-export class Autor {
-  preminuliAutor: boolean;
-  ime: string;
-  prezime: string;
-  pseudonim: string;
-  godinaSmrti: string;
-  drzavljanstvo: {
-    tip: string;
-    jmbg: string;
-    brojPasosa: string;
-  };
-  adresa: {
-    mesto: string;
-    ulica: string;
-    broj: string;
-    drzava: string;
-    postanskiBroj: string;
-  };
-}
 
 @Component({
   selector: 'app-patent-obrazac',
@@ -43,20 +24,28 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
 
   patent!: FormGroup;
   ranijePrijave: Prijava[] = [];
+  samoPrikaz: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private patentService: PatentService,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.setupForm();
-    this.promeniTipPodnosioca("fizickoLice");
-    this.patent.get('podnosilac.tipPodnosioca').valueChanges.subscribe((value) => {
-      this.promeniTipPodnosioca(value);
+    this.setupForm()
+    this.route.url.subscribe(urlSegments => {
+      const hasObrada = urlSegments.some(segment => segment.path.includes('obrada'));
+      if (hasObrada) {
+        this.samoPrikaz = true;
+      }
+      this.promeniTipPodnosioca("fizickoLice");
+      this.patent.get('podnosilac.tipPodnosioca').valueChanges.subscribe((value) => {
+        this.promeniTipPodnosioca(value);
+      });
     });
   }
 
@@ -69,6 +58,24 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
       podnosilac: this.formBuilder.group({
         tipPodnosioca: new FormControl(this.patentObrazac?.patent.podnosilac?.tipPodnosioca || 'fizickoLice'),
         jePronalazac: new FormControl(this.patentObrazac?.patent.podnosilac?.jePronalazac || false),
+        email: new FormControl(this.patentObrazac?.patent.podnosilac?.email),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.podnosilac?.brojTelefona),
+        ime: new FormControl(this.patentObrazac?.patent.podnosilac?.ime),
+        prezime: new FormControl(this.patentObrazac?.patent.podnosilac?.prezime),
+        drzavljanstvo: this.formBuilder.group({
+          tip: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.tipDrzavljanstva),
+          jmbg: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.jmbg),
+          brojPasosa: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.brojPasosa),
+        }),
+        poslovnoIme: new FormControl(this.patentObrazac?.patent.podnosilac?.poslovnoIme),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.podnosilac?.brojFiksnogTelefona),
+        adresaPodnosioca: this.formBuilder.group({
+          mesto: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.mesto),
+          ulica: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.ulica),
+          broj: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.broj),
+          drzava: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.drzava),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.postanskiBroj),
+        }),
       }),
       pronalazac: this.formBuilder.group({
         neZeliDaBudeNaveden: new FormControl(this.patentObrazac?.patent.pronalazac?.neZeliDaBudeNaveden || false),
@@ -131,11 +138,12 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
   }
 
   promeniTipPodnosioca(value: string) {
-    console.log(value)
-    if (value === 'pravnoLice') {
-      this.setPravnoLice();
-    } else {
-      this.setFizickoLice();
+    if (!this.samoPrikaz) {
+      if (value === 'pravnoLice') {
+        this.setPravnoLice();
+      } else {
+        this.setFizickoLice();
+      }
     }
   }
 

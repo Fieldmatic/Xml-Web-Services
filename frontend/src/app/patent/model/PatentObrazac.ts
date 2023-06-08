@@ -2,6 +2,7 @@ export class PatentObrazac {
   public patent: any;
 
   constructor(obj: any) {
+    console.log(obj)
     const getFieldText = (field: any) => field?._text;
 
     const getFieldValue = (field: any) => {
@@ -35,6 +36,18 @@ export class PatentObrazac {
       podnosilac: {
         tipPodnosioca: podnosilac['podnosilac']['_attributes']['xsi:type'] === 'ns2:TFizicko_Lice' ? 'fizickoLice' : 'pravnoLice',
         jePronalazac: getFieldText(podnosilac['je_pronalazac']) === 'true',
+        adresa: parseAdresa(podnosilac['podnosilac']['ns2:adresa']),
+        ime: getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:ime']),
+        prezime: getFieldValue(podnosilac['podnosilac']['ns2:puno_ime']['ns2:prezime']),
+        poslovnoIme: getFieldValue(podnosilac['podnosilac']['ns2:poslovno_ime']),
+        email: getFieldValue(podnosilac['podnosilac']['ns2:email']),
+        brojTelefona: getFieldValue(podnosilac['podnosilac']['ns2:broj_mobilnog_telefona']),
+        brojFiksnogTelefona: getFieldValue(podnosilac['podnosilac']['ns2:broj_fiksnog_telefona']),
+        drzavljanstvo: {
+          tipDrzavljanstva: getFieldText(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:tip_drzavljanstva']),
+          jmbg: getFieldValue(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:jmbg']),
+          brojPasosa: getFieldValue(podnosilac['podnosilac']['ns2:drzavljanstvo']['ns2:broj_pasosa']),
+        },
       },
       pronalazac: {
         neZeliDaBudeNaveden: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'true',
