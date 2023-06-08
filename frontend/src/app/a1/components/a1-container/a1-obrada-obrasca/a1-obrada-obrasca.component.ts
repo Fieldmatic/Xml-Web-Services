@@ -7,6 +7,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../../../../shared/confirmation-dialog/confirmation-dialog.component";
 import {ResenjeService} from "../../../../shared/services/resenje.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {LoggedInUser} from "../../../../auth/model/logged-in-user";
+import {AuthService} from "../../../../auth/services/auth.service";
 
 @Component({
   selector: 'app-a1-obrada-obrasca',
@@ -16,13 +18,15 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class A1ObradaObrascaComponent {
   a1Obrazac: A1Obrazac;
   priloziForm: FormGroup;
+  loggedInUser: LoggedInUser = null;
 
   constructor(
     private a1Service: A1Service,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private resenjeService: ResenjeService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) {
     this.priloziForm = this.formBuilder.group({
       opisDelaChecked: [false],
@@ -31,6 +35,7 @@ export class A1ObradaObrascaComponent {
   }
 
   ngOnInit(): void {
+    this.authService.loggedInUser.subscribe(user => this.loggedInUser = user);
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
@@ -61,7 +66,7 @@ export class A1ObradaObrascaComponent {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        let request = {id: this.a1Obrazac.brojPrijave, emailSluzbenika:"istevanovic3112@gmail.com", imeSluzbenika: "ime sluzbenika", prezimeSluzbenika: "prezime", odbijen: !result.accepted, razlogOdbijanja: result.reason}
+        let request = {id: this.a1Obrazac.brojPrijave, emailSluzbenika: this.loggedInUser.email, imeSluzbenika: this.loggedInUser.name, prezimeSluzbenika: this.loggedInUser.surname, odbijen: !result.accepted, razlogOdbijanja: result.reason}
         this.resenjeService.obradiZahtev(request, 'a').subscribe(() => {
           console.log("vrh")
         })

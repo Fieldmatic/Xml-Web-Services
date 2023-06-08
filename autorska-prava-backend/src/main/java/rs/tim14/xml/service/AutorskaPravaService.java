@@ -144,7 +144,7 @@ public class AutorskaPravaService {
         }
     }
 
-    public void setObradjen(String id, boolean odbijen) throws Exception {
+    public ZahtevZaAutorskaPrava setObradjen(String id, boolean odbijen) throws Exception {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaRepository.getById(id);
         if (odbijen) {
             zahtevZaAutorskaPrava.setStatusZahteva(TStatusZahteva.ODBIJEN);
@@ -153,6 +153,7 @@ public class AutorskaPravaService {
         }
         OutputStream os = jaxbParser.marshall(zahtevZaAutorskaPrava, "./autorska-prava-backend/data/a-1.xsd");
         autorskaPravaRepository.save(id, os);
+		return zahtevZaAutorskaPrava;
     }
 
     public ByteArrayInputStream getReport(IzvestajRequest izvestajRequest) throws IOException, DocumentException, DatatypeConfigurationException {
