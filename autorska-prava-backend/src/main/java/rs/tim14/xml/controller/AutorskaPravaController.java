@@ -22,6 +22,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/autorska-prava")
@@ -32,6 +33,7 @@ public class AutorskaPravaController {
     private final UploadFile uploadFile;
 
     private final MetadataService metadataService;
+    private static final String resourcePath = "http://192.168.1.18:8081/autorska-prava-backend/src/main/resources/a1/";
     @PostMapping
     public ResponseEntity<ZahtevZaAutorskaPrava> create(@RequestBody ZahtevZaAutorskaPrava zahtev) throws Exception {
         return new ResponseEntity<>(autorskaPravaService.create(zahtev), HttpStatus.CREATED);
@@ -61,6 +63,14 @@ public class AutorskaPravaController {
     public ResponseEntity<ZahtevZaAutorskaPrava> getById(@PathVariable String id){
         try {
             ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaService.getById(id);
+            if (zahtevZaAutorskaPrava.getAutorskoDelo().getPrimerAutorskogDela().getPutanjaDoPrimera() != null && !Objects.equals(zahtevZaAutorskaPrava.getAutorskoDelo().getPrimerAutorskogDela().getPutanjaDoPrimera(), "")) {
+                String path = resourcePath + zahtevZaAutorskaPrava.getAutorskoDelo().getPrimerAutorskogDela().getPutanjaDoPrimera();
+                zahtevZaAutorskaPrava.getAutorskoDelo().getPrimerAutorskogDela().setPutanjaDoPrimera(path);
+            }
+            if (zahtevZaAutorskaPrava.getAutorskoDelo().getOpisAutorskogDela().getPutanjaDoOpisa() != null && !Objects.equals(zahtevZaAutorskaPrava.getAutorskoDelo().getOpisAutorskogDela().getPutanjaDoOpisa(), "")) {
+                String path = resourcePath + zahtevZaAutorskaPrava.getAutorskoDelo().getOpisAutorskogDela().getPutanjaDoOpisa();
+                zahtevZaAutorskaPrava.getAutorskoDelo().getOpisAutorskogDela().setPutanjaDoOpisa(path);
+            }
             return new ResponseEntity<>(zahtevZaAutorskaPrava, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

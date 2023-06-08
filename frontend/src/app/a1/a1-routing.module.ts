@@ -20,8 +20,10 @@ const routes: Routes = [
         pathMatch: 'full',
         component: A1ObrazacComponent,
       },
-      { path: 'obrada/:id',
-        component: A1ObradaObrascaComponent },
+      {
+        path: 'obrada/:id',
+        component: A1ObradaObrascaComponent
+      },
     ],
   },
 ];

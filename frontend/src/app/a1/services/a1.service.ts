@@ -4,9 +4,9 @@ import {Inject, Injectable} from '@angular/core';
 import {AppConfig} from 'src/app/appConfig/appconfig.interface';
 import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
-import {map} from "rxjs";
-import {A1Obrazac, AutorskoDelo, Podnosilac, Primer} from "../model/A1Obrazac";
-import { A1ObrazacOsnovno } from '../model/A1ObrazacOsnovno';
+import {concatMap, map, of, tap} from "rxjs";
+import {A1Obrazac, AutorskoDelo, Opis, Podnosilac, Primer} from "../model/A1Obrazac";
+import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
 
 declare var require: any;
 
@@ -25,21 +25,34 @@ export class A1Service {
     primerDelaFile: File,
     opisDelaFile: File
   ) {
-    this.ucitajFajl(primerDelaFile, false).subscribe((imePrimeraFajla) => {
-      zahtev += this.kreirajPrimerAutorskogDela(imePrimeraFajla);
-      if (opisDelaFile) {
-        this.ucitajFajl(opisDelaFile, true).subscribe((imeOpisaFajla) => {
-          zahtev += this.kreirajOpisAutorskogDela(imeOpisaFajla);
-        });
-      } else {
-        zahtev += this.kreirajOpisAutorskogDela('');
-      }
-      zahtev += '</autorsko_delo>';
-      zahtev += '</zahtev_za_autorska_prava>';
-      return this.sacuvajA1Obrazac(zahtev).subscribe((rezultat) => {
-        console.log(rezultat);
-      });
-    });
+    this.ucitajFajl(primerDelaFile, false).pipe(
+      concatMap((imePrimeraFajla) => {
+        zahtev += this.kreirajPrimerAutorskogDela(imePrimeraFajla);
+        if (opisDelaFile) {
+          return this.ucitajFajl(opisDelaFile, true).pipe(
+            map((imeOpisaFajla) => {
+              zahtev += this.kreirajOpisAutorskogDela(imeOpisaFajla);
+              return zahtev;
+            })
+          );
+        } else {
+          zahtev += this.kreirajOpisAutorskogDela('');
+          return of(zahtev);
+        }
+      }),
+      map((zahtev) => {
+        zahtev += '</autorsko_delo>';
+        zahtev += '</zahtev_za_autorska_prava>';
+        return zahtev;
+      }),
+      concatMap((zahtev) => {
+        return this.sacuvajA1Obrazac(zahtev).pipe(
+          tap((rezultat) => {
+            console.log(rezultat);
+          })
+        );
+      })
+    ).subscribe();
   }
 
   sacuvajA1Obrazac(request: string) {
@@ -139,7 +152,7 @@ export class A1Service {
   }
 
   kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
-    let a1Zahtev = new A1ObrazacOsnovno();
+    let a1Zahtev = new OsnovniPodaciObrascu();
     a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
 
     let podnosilac = xmlZahtev['ns3:podnosilac']
@@ -232,8 +245,13 @@ export class A1Service {
         a1.autorskoDelo.primer = new Primer();
         if (autorskoDelo["primer_autorskog_dela"]) {
           const primer = autorskoDelo["primer_autorskog_dela"];
-          console.log("Primer " + autorskoDelo["primer_autorskog_dela"]["putanja_do_primera"]._text)
           a1.autorskoDelo.primer.putanjaDoPrimera = primer["putanja_do_primera"]._text;
+        }
+
+        a1.autorskoDelo.opis = new Opis();
+        if (autorskoDelo["opis_autorskog_dela"]) {
+          const opis = autorskoDelo["opis_autorskog_dela"];
+          a1.autorskoDelo.opis.putanjaDoOpisa = opis["putanja_do_opisa"]._text;
         }
       }
     }

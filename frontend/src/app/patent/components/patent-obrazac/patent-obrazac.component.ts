@@ -1,126 +1,149 @@
 import {PatentService} from '../../services/patent.service'
 import {DodajPrijavuDijalogComponent} from '../dodaj-prijavu-dijalog/dodaj-prijavu-dijalog.component';
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective,
-  Validators,
 } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {auto} from '@popperjs/core';
 import {Prijava} from '../../model/Prijava';
 import {XonomyService} from "../../services/xonomy.service";
+import {PatentObrazac} from '../../model/PatentObrazac';
+import {ActivatedRoute} from "@angular/router";
 
 declare const Xonomy: any;
-
-export class Autor {
-  preminuliAutor: boolean;
-  ime: string;
-  prezime: string;
-  pseudonim: string;
-  godinaSmrti: string;
-  drzavljanstvo: {
-    tip: string;
-    jmbg: string;
-    brojPasosa: string;
-  };
-  adresa: {
-    mesto: string;
-    ulica: string;
-    broj: string;
-    drzava: string;
-    postanskiBroj: string;
-  };
-}
 
 @Component({
   selector: 'app-patent-obrazac',
   templateUrl: './patent-obrazac.component.html',
   styleUrls: ['./patent-obrazac.component.scss'],
 })
-export class PatentObrazacComponent implements OnInit {
+export class PatentObrazacComponent implements OnInit, OnChanges {
+  @Input() patentObrazac: PatentObrazac;
+
   patent!: FormGroup;
   ranijePrijave: Prijava[] = [];
+  samoPrikaz: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private patentService: PatentService,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.patent = this.formBuilder.group({
-      nazivPronalaska: this.formBuilder.group({
-        nazivPronalaskaRS: new FormControl('Srpski pronalazak'),
-        nazivPronalaskaENG: new FormControl('Engleski pronalazak'),
-      }),
-      podnosilac: this.formBuilder.group({
-        tipPodnosioca: new FormControl('fizickoLice'),
-        jePronalazac: new FormControl(false),
-      }),
-      pronalazac: this.formBuilder.group({
-        neZeliDaBudeNaveden: new FormControl(false),
-        email: new FormControl('istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl('0656564261'),
-        brojFaksa: new FormControl('0552502534'),
-        ime: new FormControl('Ivana'),
-        prezime: new FormControl('Milic'),
-        adresaPronalazaca: this.formBuilder.group({
-          mesto: new FormControl('Bijeljina'),
-          ulica: new FormControl('Nikole Tesle'),
-          broj: new FormControl('10'),
-          drzava: new FormControl('Srbija'),
-          postanskiBroj: new FormControl('21000'),
-        }),
-      }),
-      punomocnik: this.formBuilder.group({
-        punomocnikZaPrijemPismena: new FormControl(false),
-        tipPunomocnika: new FormControl('punomocnik_za_zastupanje'),
-        email: new FormControl('istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl('0656564261'),
-        brojFaksa: new FormControl('0552502534'),
-        ime: new FormControl('Ivana'),
-        prezime: new FormControl('Stevanovic'),
-        adresaPunomocnika: this.formBuilder.group({
-          mesto: new FormControl('Novi Sad'),
-          ulica: new FormControl('Dr ivana ribara'),
-          broj: new FormControl('5'),
-          drzava: new FormControl('Srbija'),
-          postanskiBroj: new FormControl('21000'),
-        }),
-      }),
-      podacioDostavljanju: this.formBuilder.group({
-        nacinDostavljanja: new FormControl('elektronskim_putem'),
-        adresa: this.formBuilder.group({
-          mesto: new FormControl('Novi Sad'),
-          ulica: new FormControl('Dr Ivana ribara'),
-          broj: new FormControl('5'),
-          drzava: new FormControl('Srbija'),
-          postanskiBroj: new FormControl('21000'),
-        }),
-      }),
-      osnovnaPrijava: this.formBuilder.group({
-        dopunskaPrijava: new FormControl(false),
-        brojPrijave: new FormControl('1'),
-        datumPodnosenja: new FormControl()
-      }),
-    });
-    this.promeniTipPodnosioca("fizickoLice");
-    this.patent.get('podnosilac.tipPodnosioca').valueChanges.subscribe((value) => {
-      this.promeniTipPodnosioca(value);
+    this.setupForm()
+    this.route.url.subscribe(urlSegments => {
+      const hasObrada = urlSegments.some(segment => segment.path.includes('obrada'));
+      if (hasObrada) {
+        this.samoPrikaz = true;
+      }
+      this.promeniTipPodnosioca("fizickoLice");
+      this.patent.get('podnosilac.tipPodnosioca').valueChanges.subscribe((value) => {
+        this.promeniTipPodnosioca(value);
+      });
     });
   }
 
+  setupForm() {
+    this.patent = this.formBuilder.group({
+      nazivPronalaska: this.formBuilder.group({
+        nazivPronalaskaRS: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaRS || 'Srpski pronalazak'),
+        nazivPronalaskaENG: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaENG || 'Engleski pronalazak'),
+      }),
+      podnosilac: this.formBuilder.group({
+        tipPodnosioca: new FormControl(this.patentObrazac?.patent.podnosilac?.tipPodnosioca || 'fizickoLice'),
+        jePronalazac: new FormControl(this.patentObrazac?.patent.podnosilac?.jePronalazac || false),
+        email: new FormControl(this.patentObrazac?.patent.podnosilac?.email),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.podnosilac?.brojTelefona),
+        ime: new FormControl(this.patentObrazac?.patent.podnosilac?.ime),
+        prezime: new FormControl(this.patentObrazac?.patent.podnosilac?.prezime),
+        drzavljanstvo: this.formBuilder.group({
+          tip: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.tipDrzavljanstva),
+          jmbg: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.jmbg),
+          brojPasosa: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.brojPasosa),
+        }),
+        poslovnoIme: new FormControl(this.patentObrazac?.patent.podnosilac?.poslovnoIme),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.podnosilac?.brojFiksnogTelefona),
+        adresaPodnosioca: this.formBuilder.group({
+          mesto: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.mesto),
+          ulica: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.ulica),
+          broj: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.broj),
+          drzava: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.drzava),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.podnosilac?.adresa.postanskiBroj),
+        }),
+      }),
+      pronalazac: this.formBuilder.group({
+        neZeliDaBudeNaveden: new FormControl(this.patentObrazac?.patent.pronalazac?.neZeliDaBudeNaveden || false),
+        email: new FormControl(this.patentObrazac?.patent.pronalazac?.email || 'istevanovic3112@gmail.com'),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.pronalazac?.brojTelefona || '0656564261'),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.pronalazac?.brojFaksa || '0552502534'),
+        ime: new FormControl(this.patentObrazac?.patent.pronalazac?.ime || 'Ivana'),
+        prezime: new FormControl(this.patentObrazac?.patent.pronalazac?.prezime || 'Milic'),
+        adresaPronalazaca: this.formBuilder.group({
+          mesto: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.mesto || 'Bijeljina'),
+          ulica: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.ulica || 'Nikole Tesle'),
+          broj: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.broj || '10'),
+          drzava: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.drzava || 'Srbija'),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.postanskiBroj || '21000'),
+        }),
+      }),
+      punomocnik: this.formBuilder.group({
+        punomocnikZaPrijemPismena: new FormControl(this.patentObrazac?.patent.punomocnik?.punomocnikZaPrijemPismena || false),
+        tipPunomocnika: new FormControl(this.patentObrazac?.patent.punomocnik?.tipPunomocnika || 'punomocnik_za_zastupanje'),
+        email: new FormControl(this.patentObrazac?.patent.punomocnik?.email || 'istevanovic3112@gmail.com'),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.punomocnik?.brojTelefona || '0656564261'),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.punomocnik?.brojFaksa || '0552502534'),
+        ime: new FormControl(this.patentObrazac?.patent.punomocnik?.ime || 'Ivana'),
+        prezime: new FormControl(this.patentObrazac?.patent.punomocnik?.prezime || 'Stevanovic'),
+        adresaPunomocnika: this.formBuilder.group({
+          mesto: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.mesto || 'Novi Sad'),
+          ulica: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.ulica || 'Dr ivana ribara'),
+          broj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.broj || '5'),
+          drzava: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.drzava || 'Srbija'),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.postanskiBroj || '21000'),
+        }),
+      }),
+      podacioDostavljanju: this.formBuilder.group({
+        nacinDostavljanja: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.nacinDostavljanja || 'elektronskim_putem'),
+        adresa: this.formBuilder.group({
+          mesto: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.mesto || 'Novi Sad'),
+          ulica: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.ulica || 'Dr Ivana ribara'),
+          broj: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.broj || '5'),
+          drzava: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.drzava || 'Srbija'),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.postanskiBroj || '21000'),
+        }),
+      }),
+      osnovnaPrijava: this.formBuilder.group({
+        dopunskaPrijava: new FormControl(this.patentObrazac?.patent.osnovnaPrijava?.dopunskaPrijava || false),
+        brojPrijave: new FormControl(this.patentObrazac?.patent.osnovnaPrijava?.brojPrijave || '1'),
+        datumPodnosenja: new FormControl(this.patentObrazac?.patent.osnovnaPrijava?.datumPodnosenja),
+      }),
+    });
+    if (this.patentObrazac !== undefined) {
+      this.patent.disable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['patentObrazac']) {
+      if (!changes['patentObrazac'].firstChange) {
+        this.setupForm();
+      }
+    }
+  }
+
   promeniTipPodnosioca(value: string) {
-    console.log(value)
-    if (value === 'pravnoLice') {
-      this.setPravnoLice();
-    } else {
-      this.setFizickoLice();
+    if (!this.samoPrikaz) {
+      if (value === 'pravnoLice') {
+        this.setPravnoLice();
+      } else {
+        this.setFizickoLice();
+      }
     }
   }
 

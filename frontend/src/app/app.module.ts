@@ -14,9 +14,12 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {PatentModule} from './patent/patent-module';
 import {ZigModule} from './zig/zig.module';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { PatentiPrikazComponent } from './patent/components/patenti-prikaz/patenti-prikaz.component';
+import { PatentContainerComponent } from './patent/components/patent-container/patent-container.component';
+import { ObradaPatentaComponent } from './patent/components/obrada-patenta/obrada-patenta.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomepageComponent],
+  declarations: [AppComponent, NavbarComponent, HomepageComponent, PatentiPrikazComponent, PatentContainerComponent, ObradaPatentaComponent],
   imports: [
     ReactiveFormsModule,
     HttpClientModule,
