@@ -1,6 +1,8 @@
 package rs.tim14.xml.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.tim14.xml.dto.AllResponse;
+import rs.tim14.xml.dto.request.ObradaZahteva;
 import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaPriznanjeZigaDTO;
@@ -19,6 +22,7 @@ import rs.tim14.xml.dto.request.IzvestajRequest;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.VrstaPriloga;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.service.MetadataService;
+import rs.tim14.xml.service.ResenjeService;
 import rs.tim14.xml.service.UploadFile;
 import rs.tim14.xml.service.ZigService;
 
@@ -31,11 +35,14 @@ public class ZigController {
     private final ZigService zigService;
     private final UploadFile uploadFile;
     private final MetadataService metadataService;
+    private final ResenjeService resenjeService;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public ZahtevZaPriznanjeZiga getAllRequests(@RequestParam String id) throws Exception {
-        return zigService.get(id);
+    public ZahteviZaPriznanjeZigaDTO getRequestById(@RequestParam String id) throws Exception {
+        List<ZahtevZaPriznanjeZiga> zahtevi = new ArrayList<>(Collections.singleton(zigService.get(id)));
+        ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+        return autorskaPravaDTO;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -123,5 +130,10 @@ public class ZigController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", ("izvestaj.pdf"));
         return new ResponseEntity<>(new InputStreamResource(result), headers, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/obradi-zahtev")
+    public void obradiZahtev(@RequestBody ObradaZahteva obradaZahteva) throws Exception {
+        resenjeService.obradiZahtev(obradaZahteva);
     }
 }

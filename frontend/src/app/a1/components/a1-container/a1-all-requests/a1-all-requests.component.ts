@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {A1Service} from 'src/app/a1/services/a1.service';
 import {saveAs} from 'file-saver';
@@ -11,11 +11,18 @@ import { xml2json } from 'xml-js';
   templateUrl: './a1-all-requests.component.html',
   styleUrls: ['./a1-all-requests.component.scss'],
 })
-export class A1AllRequestsComponent {
+export class A1AllRequestsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  metadataElementi: string[] = ['brojPrijave', 'datumPodnosenja', 'imePodnosioca', 'prezimePodnosioca']
 
   constructor(private a1Service: A1Service) {
+  }
+
+  ngOnInit(): void {
+    this.a1Service.dobaviSveZahteve().subscribe((result) => {
+      this.prikaziRezultatePretrage(result);
+    });
   }
 
   izvrsiNaprednuPetragu(triplets: any) {
@@ -73,7 +80,8 @@ export class A1AllRequestsComponent {
 
   preuzmiJsonMetapodatke(id: string) {
     this.a1Service.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
-      saveAs(response, 'autorska_prava_' + id + '.rdf');
+      saveAs(response, 'autorska_prava_' + id + '.json');
     });
   }
+
 }

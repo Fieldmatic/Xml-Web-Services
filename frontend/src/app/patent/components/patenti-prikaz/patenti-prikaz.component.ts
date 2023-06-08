@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {OsnovniPodaciObrascu} from "../../../shared/model/OsnovniPodaciObrascu";
 import {PatentService} from "../../services/patent.service";
@@ -10,11 +10,18 @@ import { xml2json } from 'xml-js';
   templateUrl: './patenti-prikaz.component.html',
   styleUrls: ['./patenti-prikaz.component.scss']
 })
-export class PatentiPrikazComponent {
+export class PatentiPrikazComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  metadataElementi: string[] = ['brojPrijave', 'datumPodnosenja', 'imePodnosioca', 'prezimePodnosioca']
 
   constructor(private patentService: PatentService) {
+  }
+
+  ngOnInit(): void {
+    this.patentService.dobaviSveZahteve().subscribe((result) => {
+      this.prikaziRezultatePretrage(result);
+    });
   }
 
   izvrsiNaprednuPetragu(triplets: any) {
@@ -71,7 +78,7 @@ export class PatentiPrikazComponent {
 
   preuzmiJsonMetapodatke(id: string) {
     this.patentService.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
-      saveAs(response, 'patent_' + id + '.rdf');
+      saveAs(response, 'patent_' + id + '.json');
     });
   }
 

@@ -60,6 +60,7 @@
                 <xsl:variable name="taksa_za_klase" select="z1:zahtev_za_priznanje_ziga/z1:takse/z1:taksa_za_klase/."/>
                 <xsl:variable name="taksa_za_graficko_resenje" select="z1:zahtev_za_priznanje_ziga/z1:takse/z1:taksa_za_graficko_resenje/."/>
                 <xsl:variable name="boje_znaka" select="z1:zahtev_za_priznanje_ziga/z1:znak/z1:boje_znaka/."/>
+                <xsl:variable name="izgled_znaka" select="z1:zahtev_za_priznanje_ziga/z1:Prilozi_uz_zahtev/z1:primerak_znaka"/>
 
                 <div class="container">
                     <h2>ЗАХТЕВ ЗА ПРИЗНАЊЕ ЖИГА</h2>
@@ -154,6 +155,7 @@
                             <td style="border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 5%; font-weight: bold">a)</td>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 32%">колективни жиг</td>
                             <td style="text-align: center; border-bottom: 1px solid; border-right: 1px solid; padding-top: 2px; padding-bottom: 2px"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:vrsta_ziga='KOLEKTIVNI'">X</xsl:if></td>
+                            <td rowspan="16" style="width: 100%; background-position: center; background-repeat: no-repeat; background-size: contain; background-image: url('{$izgled_znaka}')"></td>
                         </tr>
                         <tr>
                             <td style="border-right: 1px solid; border-bottom: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 5%"></td>

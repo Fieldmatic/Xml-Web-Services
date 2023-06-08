@@ -6,9 +6,6 @@
   <!-- Strict FO validation -->
   <strict-validation>true</strict-validation>
 
-  <!-- Base URL for resolving relative URLs -->
-  <base>./</base>
-
   <!-- Font Base URL for resolving relative font URLs -->
   <font-base>./</font-base>
 

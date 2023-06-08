@@ -83,7 +83,7 @@ export class A1Service {
     );
   }
 
-  getAllZahtevi() {
+  dobaviSveZahteve() {
     return this.http.get(
       this.config.autorskoPravoEndpoint + 'autorska-prava/getAll',
       {
