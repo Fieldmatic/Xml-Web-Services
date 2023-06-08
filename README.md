@@ -1,5 +1,4 @@
 <strong>Pokretanje front-enda</strong><br/> npm install <br/> ng serve
-<br/>Front end je na portu 4200
 <br/><strong>Pokretanje potrebnih Baza </strong><br/>
 Potrebno je pokrenuti fuseki server i napraviti XmlDataSet semu
 <br/>
