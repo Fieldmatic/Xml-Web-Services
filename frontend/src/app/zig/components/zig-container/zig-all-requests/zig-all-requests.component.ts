@@ -1,56 +1,79 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { PrijavaResponse } from '../../../model/prijavaResponse.model';
-import { Subscription } from 'rxjs';
+import { Component } from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
+import { OsnovniPodaciObrascu } from "../../../../a1/components/a1-container/a1-all-requests/a1-all-requests.component";
+import { ZigHttpService } from "../../../services/zig-http.service";
+import { saveAs } from "file-saver";
+import { xml2json } from "xml-js";
+import { ZahtevZaPriznanjeZiga } from "../../../model/zahtev-za-priznanje-ziga.model";
 
 @Component({
-  selector: 'app-zig-all-requests',
-  templateUrl: './zig-all-requests.component.html',
-  styleUrls: ['./zig-all-requests.component.scss'],
+  selector: "app-zig-all-requests",
+  templateUrl: "./zig-all-requests.component.html",
+  styleUrls: ["./zig-all-requests.component.scss"]
 })
-export class ZigAllRequestsComponent
-  implements AfterViewInit, OnInit
-{
-  searchControl: FormControl;
-  metadataSearch: FormGroup;
-  displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
-  dataSource: MatTableDataSource<PrijavaResponse>;
+export class ZigAllRequestsComponent {
+  displayedColumns: string[] = ["id", "name", "date", "status", "download"];
+  dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  constructor(private zigService: ZigHttpService) {
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.searchControl = new FormControl('');
-    this.metadataSearch = new FormGroup({
-      metadata: new FormControl('', Validators.required),
+  preuzmiHtml(id) {
+    this.zigService.getRequestXHtml(id).subscribe(data => {
+      saveAs(data, "zahtev_za_priznanje_ziga_" + id + ".html");
     });
   }
 
-  ngAfterViewInit(): void {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+  preuzmiPdf(id) {
+    this.zigService.getRequestPdf(id).subscribe(data => {
+      saveAs(data, "zahtev_za_priznanje_ziga_" + id + ".pdf");
+    });
   }
 
-  searchMetadata() {
-    console.log(this.metadataSearch.value.metadata);
+  preuzmiRdfMetapodatke(id) {
+    this.zigService.getRequestMetadataRdf(id).subscribe((response: any) => {
+      saveAs(response, "zahtev_za_priznanje_ziga_" + id + ".rdf");
+    });
   }
 
-  downloadXHTML(brojZahteva: string) {
-    //
+  preuzmiJsonMetapodatke(id) {
+    this.zigService.getRequestMetadataJson(id).subscribe((response: any) => {
+      saveAs(response, "zahtev_za_priznanje_ziga_" + id + ".json");
+    });
   }
 
-  downloadPDF(brojZahteva: string) {
-    //
+  izvrsiObicnuPretragu($event: any) {
+    this.zigService.getAllByText($event).subscribe((result) => {
+      this.prikaziRezultatePretrage(result);
+    });
+  }
+
+  izvrsiNaprednuPetragu($event: any) {
+    this.zigService.getAllByMetadata($event).subscribe((result) => {
+      this.prikaziRezultatePretrage(result);
+    });
+  }
+
+  prikaziRezultatePretrage(result: string) {
+    const xmlResult = xml2json(result, {
+      compact: true,
+      spaces: 4,
+      trim: true
+    });
+    const jsonResult = JSON.parse(xmlResult);
+    if (jsonResult.zahteviDTO.zahtevi) {
+      console.log(this.kreirajZ1Zahteve(this.napraviListuOdPristiglihZahteva(jsonResult.zahteviDTO.zahtevi)));
+      this.dataSource = new MatTableDataSource<OsnovniPodaciObrascu>(this.kreirajZ1Zahteve(this.napraviListuOdPristiglihZahteva(jsonResult.zahteviDTO.zahtevi)));
+    } else {
+      this.dataSource = new MatTableDataSource<OsnovniPodaciObrascu>([]);
+    }
+  }
+
+  kreirajZ1Zahteve(listaXmlZahteva: any) {
+    return listaXmlZahteva.map(xmlZahtev => ZahtevZaPriznanjeZiga.parseXML(xmlZahtev));
+  }
+
+  napraviListuOdPristiglihZahteva(zahtevi: any) {
+    return Array.isArray(zahtevi) ? zahtevi : [zahtevi];
   }
 }

@@ -17,8 +17,8 @@ public class UploadFile {
     public String execute(MultipartFile file, VrstaPriloga vrstaPriloga) {
         try {
             String fileName = getFileName(file, vrstaPriloga);
-            saveFile("./zig-backend/src/main/resources/z1/" + fileName, file.getBytes());
-            return fileName;
+            File savedFile = saveFile("zig-backend/src/main/resources/z1/" + fileName, file.getBytes());
+            return savedFile.getAbsolutePath().replaceAll("\\\\", "/");
         } catch (IOException | NullPointerException exception) {
             System.out.println(exception.getMessage());
             return "";
@@ -60,14 +60,16 @@ public class UploadFile {
         return ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE);
     }
 
-    public static void saveFile(String path, byte[] bytes){
+    public static File saveFile(String path, byte[] bytes){
         try {
             File saveFile = new File(path);
             FileOutputStream stream = new FileOutputStream(saveFile);
             stream.write(bytes);
             stream.close();
+            return saveFile;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }

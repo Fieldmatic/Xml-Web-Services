@@ -11,12 +11,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
+import { ZigRequestProcessingComponent } from './components/zig-container/zig-request-processing/zig-request-processing.component';
 
 @NgModule({
   declarations: [
     ZigContainerComponent,
     ZigAllRequestsComponent,
     ZigRequestComponent,
+    ZigRequestProcessingComponent,
   ],
   imports: [
     ZigRoutingModule,

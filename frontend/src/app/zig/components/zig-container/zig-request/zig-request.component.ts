@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { SafeUrl } from "@angular/platform-browser";
 import { DOCUMENT } from "@angular/common";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
@@ -19,9 +19,9 @@ import { ZigHttpService } from "../../../services/zig-http.service";
   templateUrl: "./zig-request.component.html",
   styleUrls: ["./zig-request.component.scss"]
 })
-export class ZigRequestComponent implements OnInit {
+export class ZigRequestComponent implements OnInit, OnChanges {
+  @Input() zig: ZahtevZaPriznanjeZiga;
   fileReader = new FileReader();
-  activeRoute: string;
   zigForma: FormGroup;
   izgledZnaka: SafeUrl = null;
   punomocjeFile: File;
@@ -110,100 +110,204 @@ export class ZigRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeRoute = this.route.snapshot.params["id"];
     this.initForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["zig"]) {
+      if (!changes["zig"].firstChange) {
+        this.initForm();
+      }
+    }
   }
 
   initForm() {
     const klaseRobe: FormGroup[] = [];
     for (let i = 0; i < 45; i++) {
+      let value = false;
+      if (this.zig) {
+        if (this.zig.klaseRobe.includes(i + 1)) {
+          value = true;
+        }
+      }
       klaseRobe.push(
         this.formBuilder.group({
-          klasa: new FormControl(false)
+          klasa: new FormControl(value)
         })
       );
     }
 
-    this.zigForma = this.formBuilder.group({
-      podnosilac: this.formBuilder.group({
-        tip: new FormControl("fizickoLice", Validators.required),
-        ime: new FormControl("Uros"),
-        prezime: new FormControl("Prijovic"),
-        poslovnoIme: new FormControl(""),
-        adresa: this.formBuilder.group({
-          mesto: new FormControl("Subotica", Validators.required),
-          ulica: new FormControl("Brace Radic", Validators.required),
-          broj: new FormControl("110", Validators.required),
-          drzava: new FormControl("Srbija", Validators.required),
-          postanskiBroj: new FormControl("24000", Validators.required)
+    if (this.zig) {
+      this.zigForma = this.formBuilder.group({
+        podnosilac: this.formBuilder.group({
+          tip: new FormControl(this.zig.podnosilac.tip, Validators.required),
+          ime: new FormControl(this.zig.podnosilac.ime),
+          prezime: new FormControl(this.zig.podnosilac.prezime),
+          poslovnoIme: new FormControl(this.zig.podnosilac.poslovnoIme),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl(this.zig.podnosilac.adresa.mesto, Validators.required),
+            ulica: new FormControl(this.zig.podnosilac.adresa.ulica, Validators.required),
+            broj: new FormControl(this.zig.podnosilac.adresa.broj, Validators.required),
+            drzava: new FormControl(this.zig.podnosilac.adresa.drzava, Validators.required),
+            postanskiBroj: new FormControl(this.zig.podnosilac.adresa.postanskiBroj, Validators.required)
+          }),
+          email: new FormControl(this.zig.podnosilac.email, Validators.required),
+          telefon: new FormControl(this.zig.podnosilac.brojMobilnogTelefona, Validators.required),
+          faks: new FormControl(this.zig.podnosilac.brojFaksa, Validators.required)
         }),
-        email: new FormControl("prijovic.uros13@gmail.com", Validators.required),
-        telefon: new FormControl("066430250", Validators.required),
-        faks: new FormControl("9473028764", Validators.required)
-      }),
-      punomocnik: this.formBuilder.group({
-        tip: new FormControl("fizickoLice", Validators.required),
-        ime: new FormControl("Krstina"),
-        prezime: new FormControl("Prijovic"),
-        poslovnoIme: new FormControl(""),
-        adresa: this.formBuilder.group({
-          mesto: new FormControl("Subotica", Validators.required),
-          ulica: new FormControl("Dragise Misovica", Validators.required),
-          broj: new FormControl("30", Validators.required),
-          drzava: new FormControl("Srbija", Validators.required),
-          postanskiBroj: new FormControl("240000", Validators.required)
+        punomocnik: this.formBuilder.group({
+          tip: new FormControl(this.zig.punomocnik.tip, Validators.required),
+          ime: new FormControl(this.zig.punomocnik.ime),
+          prezime: new FormControl(this.zig.punomocnik.prezime),
+          poslovnoIme: new FormControl(this.zig.punomocnik.poslovnoIme),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl(this.zig.punomocnik.adresa.mesto, Validators.required),
+            ulica: new FormControl(this.zig.punomocnik.adresa.ulica, Validators.required),
+            broj: new FormControl(this.zig.punomocnik.adresa.broj, Validators.required),
+            drzava: new FormControl(this.zig.punomocnik.adresa.drzava, Validators.required),
+            postanskiBroj: new FormControl(this.zig.punomocnik.adresa.postanskiBroj, Validators.required)
+          }),
+          email: new FormControl(this.zig.punomocnik.email, Validators.required),
+          telefon: new FormControl(this.zig.punomocnik.brojMobilnogTelefona, Validators.required),
+          faks: new FormControl(this.zig.punomocnik.brojFaksa, Validators.required),
+          vremePrilozenjaPunomocja: new FormControl(this.zig.punomocje.bicePredano ? "posle" : (this.zig.punomocje.punomocje.naziv ? "sad" : "pre"), Validators.required)
         }),
-        email: new FormControl("prijovic.krstina@gmail.com", Validators.required),
-        telefon: new FormControl("064848934", Validators.required),
-        faks: new FormControl("5127893462", Validators.required),
-        vremePrilozenjaPunomocja: new FormControl("posle", Validators.required)
-      }),
-      punomocje: new FormControl(null),
-      zajednickiPredstavnik: this.formBuilder.group({
-        zajednickiPredstavnikPostoji: new FormControl(
-          false,
-          Validators.required
-        ),
-        tip: new FormControl("fizickoLice"),
-        ime: new FormControl(""),
-        prezime: new FormControl(""),
-        poslovnoIme: new FormControl(""),
-        adresa: this.formBuilder.group({
-          mesto: new FormControl(""),
-          ulica: new FormControl(""),
-          broj: new FormControl(""),
-          drzava: new FormControl(""),
-          postanskiBroj: new FormControl("")
+        punomocje: new FormControl(this.zig.punomocje.punomocje?.naziv),
+        zajednickiPredstavnik: this.formBuilder.group({
+          zajednickiPredstavnikPostoji: new FormControl(
+            !!this.zig.zajednickiPredstavnik,
+            Validators.required
+          ),
+          tip: new FormControl(this.zig.zajednickiPredstavnik?.tip, Validators.required),
+          ime: new FormControl(this.zig.zajednickiPredstavnik?.ime),
+          prezime: new FormControl(this.zig.zajednickiPredstavnik?.prezime),
+          poslovnoIme: new FormControl(this.zig.zajednickiPredstavnik?.poslovnoIme),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl(this.zig.zajednickiPredstavnik?.adresa.mesto, Validators.required),
+            ulica: new FormControl(this.zig.zajednickiPredstavnik?.adresa.ulica, Validators.required),
+            broj: new FormControl(this.zig.zajednickiPredstavnik?.adresa.broj, Validators.required),
+            drzava: new FormControl(this.zig.zajednickiPredstavnik?.adresa.drzava, Validators.required),
+            postanskiBroj: new FormControl(this.zig.zajednickiPredstavnik?.adresa.postanskiBroj, Validators.required)
+          }),
+          email: new FormControl(this.zig.zajednickiPredstavnik?.email, Validators.required),
+          telefon: new FormControl(this.zig.zajednickiPredstavnik?.brojMobilnogTelefona, Validators.required),
+          faks: new FormControl(this.zig.zajednickiPredstavnik?.brojFaksa, Validators.required)
         }),
-        email: new FormControl(""),
-        telefon: new FormControl(""),
-        faks: new FormControl("")
-      }),
-      tipZiga: new FormControl("INDUVIDUALNI", Validators.required),
-      opstiAkt: new FormControl(null),
-      tipZnaka: new FormControl("VERBALNI", Validators.required),
-      izgledZnaka: new FormControl(null, Validators.required),
-      bojeZnaka: new FormArray([new FormGroup({
-        boja: new FormControl("zelena", Validators.required)
-      }), new FormGroup({
-        boja: new FormControl("bela", Validators.required)
-      })]),
-      transliteracijaZnaka: new FormControl(""),
-      prevodZnaka: new FormControl(""),
-      opisZnaka: new FormControl("Kucica sa wi-fi-znakom", Validators.required),
-      spisakRobe: new FormControl(null, Validators.required),
-      klaseRobe: this.formBuilder.array(klaseRobe),
-      pravoPrvenstva: this.formBuilder.group({
-        zatrazeno: new FormControl(false, Validators.required),
-        osnov: new FormControl("")
-      }),
-      dokazPravaPrvenstva: new FormControl(null),
-      dokazUplate: new FormControl(null, Validators.required),
-      takse: this.formBuilder.group({
-        osnovna: new FormControl(0, Validators.required),
-        zaKlase: new FormControl(0, Validators.required),
-        zaGrafickoResenje: new FormControl(0, Validators.required)
-      })
+        tipZiga: new FormControl(this.zig.vrstaZiga, Validators.required),
+        opstiAkt: new FormControl(this.zig.opstiAktOKolektivnomZiguIliZiguGarancije?.naziv),
+        tipZnaka: new FormControl(this.zig.znak.vrsta, Validators.required),
+        izgledZnaka: new FormControl(this.zig.znak.izgled.naziv, Validators.required),
+        bojeZnaka: new FormArray(this.zig.znak.boje.map(color => {
+          return new FormGroup({
+            boja: new FormControl(color, Validators.required)
+          });
+        })),
+        transliteracijaZnaka: new FormControl(this.zig.znak.transliteracija),
+        prevodZnaka: new FormControl(this.zig.znak.prevod),
+        opisZnaka: new FormControl(this.zig.znak.opis, Validators.required),
+        spisakRobe: new FormControl(this.zig.spisakRobeIUsluga.naziv, Validators.required),
+        klaseRobe: this.formBuilder.array(klaseRobe),
+        pravoPrvenstva: this.formBuilder.group({
+          zatrazeno: new FormControl(this.zig.pravoPrvenstva.zatrazeno, Validators.required),
+          osnov: new FormControl(this.zig.pravoPrvenstva.osnov)
+        }),
+        dokazPravaPrvenstva: new FormControl(this.zig.pravoPrvenstva.dokaz?.naziv),
+        dokazUplate: new FormControl(this.zig.takse.dokazOUplati.naziv, Validators.required),
+        takse: this.formBuilder.group({
+          osnovna: new FormControl(this.zig.takse.osnovna, Validators.required),
+          zaKlase: new FormControl(this.zig.takse.zaKlase, Validators.required),
+          zaGrafickoResenje: new FormControl(this.zig.takse.zaGrafickoResenje, Validators.required)
+        })
+      });
+      this.disableAllFormControls(this.zigForma);
+    } else {
+      this.zigForma = this.formBuilder.group({
+        podnosilac: this.formBuilder.group({
+          tip: new FormControl("fizickoLice", Validators.required),
+          ime: new FormControl(""),
+          prezime: new FormControl(""),
+          poslovnoIme: new FormControl(""),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl("", Validators.required),
+            ulica: new FormControl("", Validators.required),
+            broj: new FormControl("", Validators.required),
+            drzava: new FormControl("", Validators.required),
+            postanskiBroj: new FormControl("", Validators.required)
+          }),
+          email: new FormControl("", Validators.required),
+          telefon: new FormControl("", Validators.required),
+          faks: new FormControl("", Validators.required)
+        }),
+        punomocnik: this.formBuilder.group({
+          tip: new FormControl("fizickoLice", Validators.required),
+          ime: new FormControl(""),
+          prezime: new FormControl(""),
+          poslovnoIme: new FormControl(""),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl("", Validators.required),
+            ulica: new FormControl("", Validators.required),
+            broj: new FormControl("", Validators.required),
+            drzava: new FormControl("", Validators.required),
+            postanskiBroj: new FormControl("", Validators.required)
+          }),
+          email: new FormControl("", Validators.required),
+          telefon: new FormControl("", Validators.required),
+          faks: new FormControl("", Validators.required),
+          vremePrilozenjaPunomocja: new FormControl("posle", Validators.required)
+        }),
+        punomocje: new FormControl(null),
+        zajednickiPredstavnik: this.formBuilder.group({
+          zajednickiPredstavnikPostoji: new FormControl(
+            false,
+            Validators.required
+          ),
+          tip: new FormControl("fizickoLice"),
+          ime: new FormControl(""),
+          prezime: new FormControl(""),
+          poslovnoIme: new FormControl(""),
+          adresa: this.formBuilder.group({
+            mesto: new FormControl(""),
+            ulica: new FormControl(""),
+            broj: new FormControl(""),
+            drzava: new FormControl(""),
+            postanskiBroj: new FormControl("")
+          }),
+          email: new FormControl(""),
+          telefon: new FormControl(""),
+          faks: new FormControl("")
+        }),
+        tipZiga: new FormControl("", Validators.required),
+        opstiAkt: new FormControl(null),
+        tipZnaka: new FormControl("", Validators.required),
+        izgledZnaka: new FormControl(null, Validators.required),
+        bojeZnaka: new FormArray([]),
+        transliteracijaZnaka: new FormControl(""),
+        prevodZnaka: new FormControl(""),
+        opisZnaka: new FormControl("", Validators.required),
+        spisakRobe: new FormControl(null, Validators.required),
+        klaseRobe: this.formBuilder.array(klaseRobe),
+        pravoPrvenstva: this.formBuilder.group({
+          zatrazeno: new FormControl(false, Validators.required),
+          osnov: new FormControl("")
+        }),
+        dokazPravaPrvenstva: new FormControl(null),
+        dokazUplate: new FormControl(null, Validators.required),
+        takse: this.formBuilder.group({
+          osnovna: new FormControl(0, Validators.required),
+          zaKlase: new FormControl(0, Validators.required),
+          zaGrafickoResenje: new FormControl(0, Validators.required)
+        })
+      });
+    }
+  }
+
+  disableAllFormControls(formGroup: FormGroup | FormArray): void {
+    Object.values(formGroup.controls).forEach(control => {
+      if (control instanceof FormControl) {
+        control.disable();
+      } else if (control instanceof FormGroup || control instanceof FormArray) {
+        this.disableAllFormControls(control);
+      }
     });
   }
 
@@ -377,4 +481,6 @@ export class ZigRequestComponent implements OnInit {
       new FileDTO(null, this.dokazUplateFile)
     );
   }
+
+  protected readonly Boolean = Boolean;
 }

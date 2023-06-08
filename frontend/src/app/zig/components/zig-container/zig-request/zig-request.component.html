@@ -187,7 +187,7 @@
       <div class="row">
         <div *ngIf="sadPrilazemPunomocje" class="row">
           <label for="punomocje" class="form-label">Punomoćje</label>
-          <input class="form-control" accept="application/pdf" type="file" id="punomocje"
+          <input class="form-control" accept="application/pdf" type="file" id="punomocje" [disabled]="zig"
                  (change)="onFileChange($event, 'punomocje')">
         </div>
       </div>
@@ -311,7 +311,7 @@
           </div>
           <div *ngIf="zigNijeInduvidualni" class="row">
             <label for="opstiAkt" class="form-label">Opšti akt o kolektivnom žigu/žigu garancije</label>
-            <input class="form-control" accept="application/pdf" type="file" id="opstiAkt"
+            <input class="form-control" accept="application/pdf" type="file" id="opstiAkt" [disabled]="zig"
                    (change)="onFileChange($event, 'opstiAkt')">
           </div>
         </div>
@@ -361,7 +361,7 @@
       </div>
       <div class="row">
         <div class="col ps-0">
-          <input class="form-control" accept="image/png, image/jpeg" type="file" id="izgled_znaka"
+          <input class="form-control" accept="image/png, image/jpeg" type="file" id="izgled_znaka" [disabled]="zig"
                  (change)="onFileChange($event, 'izgledZnaka')">
         </div>
         <div class="col form-control">
@@ -374,7 +374,7 @@
 
       <div class="row mb-3" formArrayName="bojeZnaka">
         <label class="form-label">Boje znaka</label>
-        <div class="row">
+        <div class="row" *ngIf="!zig">
           <div class="col-12 ps-0">
             <button type="button" class="rounded-1 pt-1 pb-1" (click)="dodajBoju()">Dodaj boju</button>
           </div>
@@ -389,7 +389,7 @@
               class="form-control"
               formControlName="boja">
           </div>
-          <div class="col">
+          <div class="col" *ngIf="!zig">
             <button type="button" class="btn btn-danger" style="margin-top: 20px" (click)="ukloniBoju(id)">X</button>
           </div>
         </div>
@@ -424,7 +424,7 @@
       <div class="row mb-1">
         <label for="spisakRobe" class="form-label">Spisak robe i usluga</label>
         <input class="form-control" accept="application/pdf" type="file" (change)="onFileChange($event, 'spisakRobe')"
-               id="spisakRobe">
+               id="spisakRobe" [disabled]="zig">
       </div>
       <div class="row mb-3 d-inline-block" formArrayName="klaseRobe">
         <div *ngFor="let klasaRobeControl of controls2; let id = index" class="d-inline ps-0 pe-0 "
@@ -457,7 +457,7 @@
       </div>
       <div *ngIf="zatrazenoPravoPrvenstva" class="row">
         <label for="dokazPravaPrvenstva" class="form-label">Dokaz o pravu prvenstva</label>
-        <input class="form-control" accept="application/pdf" type="file" id="dokazPravaPrvenstva"
+        <input class="form-control" accept="application/pdf" type="file" id="dokazPravaPrvenstva" [disabled]="zig"
                (change)="onFileChange($event, 'dokazPravaPrvenstva')">
       </div>
     </section>
@@ -470,6 +470,7 @@
       <div class="row mb-1">
         <label for="dokazUplate" class="form-label">Dokaz o uplati takse</label>
         <input class="form-control" accept="application/pdf, image/png, image/jpeg" type="file" id="dokazUplate"
+               [disabled]="zig"
                (change)="onFileChange($event, 'dokazUplate')">
       </div>
       <div class="row">
@@ -496,7 +497,8 @@
         <div class="col ps-0 pe-0">
           <label for="taksa_grafickog_resenja" class="col-form-label">Taksa za grafičko rešenje</label>
           <div class="input-group">
-            <input type="number" class="form-control" min="0" id="taksa_grafickog_resenja" aria-labelledby="valuta2"
+            <input type="number" class="form-control" min="0" id="taksa_grafickog_resenja"
+                   aria-labelledby="valuta2"
                    formControlName="zaGrafickoResenje">
             <span class="input-group-text" id="valuta2">RSD</span>
           </div>
@@ -514,8 +516,8 @@
         </div>
       </div>
     </section>
-    <div class="row mb-3">
-      <button *ngIf="activeRoute === 'novi'" class="rounded-1 mt-5 pt-1 pb-1" type="submit">Pošalji zahtev</button>
+    <div class="row mb-3" *ngIf="!zig">
+      <button class="rounded-1 mt-5 pt-1 pb-1" type="submit">Pošalji zahtev</button>
     </div>
   </form>
 </div>

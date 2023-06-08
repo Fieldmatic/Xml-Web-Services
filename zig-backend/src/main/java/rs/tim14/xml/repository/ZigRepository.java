@@ -60,19 +60,9 @@ public class ZigRepository {
     }
 
     public String download(String id) throws Exception {
-        String path = Paths.get("data", "xml", id + ".xml").toAbsolutePath().toString();
+        String path = Paths.get("zig-backend","data", "xml", id + ".xml").toAbsolutePath().toString();
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getById(id);
-        OutputStream os = jaxbParser.marshall(zahtevZaPriznanjeZiga, "./data/z-1.xsd");
-        try (OutputStream outputStream = new FileOutputStream(path)) {
-            ((ByteArrayOutputStream) os).writeTo(outputStream);
-        }
-        return path;
-    }
-
-    public String getPath(String id) throws Exception {
-        String path = Paths.get("autorska-prava-backend/data", "xml", id + ".xml").toAbsolutePath().toString();
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getById(id);
-        OutputStream os = JaxbParser.marshall(zahtevZaPriznanjeZiga, "./zig-backend/data/z-1.xsd");
+        OutputStream os = jaxbParser.marshall(zahtevZaPriznanjeZiga, "./zig-backend/data/z-1.xsd");
         try (OutputStream outputStream = new FileOutputStream(path)) {
             ((ByteArrayOutputStream) os).writeTo(outputStream);
         }
