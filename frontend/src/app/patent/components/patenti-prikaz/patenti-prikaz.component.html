@@ -24,7 +24,7 @@
           Podnosilac zahteva
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.nazivPodnosioca | titlecase }}
+          {{ row.nazivPodnosioca }}
         </td>
       </ng-container>
 
@@ -33,7 +33,7 @@
           Datum podnošenja
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.datumPodnosenja | date : "dd.MM.yyyy." }}
+          {{ row.datumPodnosenja | date : "yyyy-MM-dd" }}
         </td>
       </ng-container>
 

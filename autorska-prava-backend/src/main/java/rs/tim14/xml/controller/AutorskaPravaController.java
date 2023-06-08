@@ -13,6 +13,7 @@ import rs.tim14.xml.dto.requests.IzvestajRequest;
 import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaAutorskaPravaDTO;
+import rs.tim14.xml.model.autorska_prava.TStatusZahteva;
 import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.service.AutorskaPravaService;
 import rs.tim14.xml.service.MetadataService;
@@ -23,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/autorska-prava")
@@ -49,12 +51,15 @@ public class AutorskaPravaController {
     }
 
     @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaAutorskaPravaDTO> getAll(){
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> getAll(@RequestHeader("role") String role) {
         try {
             List<ZahtevZaAutorskaPrava> autorskaPrava = autorskaPravaService.getAll();
+            if (role.equals("Klijent")) {
+                autorskaPrava = autorskaPrava.stream().filter((zahtev -> zahtev.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN))).collect(Collectors.toList());
+            }
             ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(autorskaPrava);
-            return new ResponseEntity<>(autorskaPravaDTO,HttpStatus.OK);
-        }catch (Exception e){
+            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -110,9 +115,12 @@ public class AutorskaPravaController {
     }
 
     @PostMapping(value = "/pretragaPoTekstu", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaAutorskaPravaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest) {
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest, @RequestHeader("role") String role) {
         try {
             List<ZahtevZaAutorskaPrava> obrasci = autorskaPravaService.dobaviPoTekstu(pretragaRequest.getFilteri());
+            if (role.equals("Klijent")) {
+                obrasci = obrasci.stream().filter((zahtev -> zahtev.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN))).collect(Collectors.toList());
+            }
             ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(obrasci);
             return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
         } catch (Exception e) {
@@ -121,8 +129,11 @@ public class AutorskaPravaController {
     }
 
     @PostMapping(path = "/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
+    public ResponseEntity<ZahteviZaAutorskaPravaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest, @RequestHeader("role") String role) throws Exception {
         List<ZahtevZaAutorskaPrava> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
+        if (role.equals("Klijent")) {
+            zahtevi = zahtevi.stream().filter((zahtev -> zahtev.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN))).collect(Collectors.toList());
+        }
         ZahteviZaAutorskaPravaDTO autorskaPravaDTO = new ZahteviZaAutorskaPravaDTO(zahtevi);
         return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
     }
