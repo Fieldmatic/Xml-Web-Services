@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
-import { OsnovniPodaciObrascu } from "../../../../a1/components/a1-container/a1-all-requests/a1-all-requests.component";
 import { ZigHttpService } from "../../../services/zig-http.service";
 import { saveAs } from "file-saver";
 import { xml2json } from "xml-js";
 import { ZahtevZaPriznanjeZiga } from "../../../model/zahtev-za-priznanje-ziga.model";
+import { OsnovniPodaciObrascu } from "../../../../shared/model/OsnovniPodaciObrascu";
 
 @Component({
   selector: "app-zig-all-requests",
