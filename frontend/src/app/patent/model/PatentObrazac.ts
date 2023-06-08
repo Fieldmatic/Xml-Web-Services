@@ -25,7 +25,8 @@ export class PatentObrazac {
     const pronalazac = obj['zahtev_za_priznanje_patenta']['podaci_o_pronalazacu'];
     const punomocnik = obj['zahtev_za_priznanje_patenta']['podaci_o_punomocniku'];
     const dostavljanje = obj['zahtev_za_priznanje_patenta']['podaci_o_dostavljanju'];
-    const osnovnaPrijava = obj['zahtev_za_priznanje_patenta']['ranije_prijave'];
+    const osnovnaPrijava = obj['zahtev_za_priznanje_patenta']['osnovna_prijava'];
+    const ranijePrijave = obj['zahtev_za_priznanje_patenta']['ranije_prijave'];
 
     this.patent = {
       statusZahteva: getFieldText(obj['zahtev_za_priznanje_patenta']['statusZahteva']),
@@ -72,11 +73,16 @@ export class PatentObrazac {
         nacinDostavljanja: getFieldText(dostavljanje['nacin_dostavljanja']),
         adresa: parseAdresa(dostavljanje['ns2:adresa']),
       },
-      osnovnaPrijava: {
+      osnovnaPrijava: osnovnaPrijava ? {
         dopunskaPrijava: getFieldText(osnovnaPrijava['ns3:dopunska_prijava']) === 'true',
         brojOsnovnePrijave: getFieldValue(osnovnaPrijava['ns3:broj_osnovne_prijave']),
         datumOsnovnePrijave: getFieldValue(osnovnaPrijava['ns3:datum_osnovne_prijave']),
-      },
+      } : null,
+      ranijePrijave: (ranijePrijave && ranijePrijave.ranija_prijava) ? ranijePrijave.ranija_prijava.map((ranijaPrijava) => ({
+        brojPrijave: getFieldValue(ranijaPrijava.broj_prijave),
+        datumPodnosenja: getFieldValue(ranijaPrijava.datum_podnosenja),
+        oznakaDrzave: getFieldValue(ranijaPrijava.oznaka_drzave),
+      })) : [],
     };
   }
 }

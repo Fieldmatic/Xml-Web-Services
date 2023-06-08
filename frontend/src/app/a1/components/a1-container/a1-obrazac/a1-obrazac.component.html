@@ -524,37 +524,50 @@
         <section>
           <h3 class="fw-bold">Prilozi uz prijavu</h3>
           <div class="d-flex">
-            <div class="mb-3 me-5" style="width: 100%" formGroupName="primer">
-              <label for="primerAutorskogDela" class="form-label"
+            <ng-container *ngIf="a1Obrazac">
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="primer"
+                   *ngIf="a1Obrazac.autorskoDelo.primer.putanjaDoPrimera && a1Obrazac.autorskoDelo.primer.putanjaDoPrimera!= ''">
+                <a [href]="a1Obrazac.autorskoDelo.primer.putanjaDoPrimera" target=”_blank”> Pogledaj primer</a>
+              </div>
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="opis"
+                   *ngIf="a1Obrazac.autorskoDelo.opis.putanjaDoOpisa && a1Obrazac.autorskoDelo.opis.putanjaDoOpisa!= ''">
+                <a [href]="a1Obrazac.autorskoDelo.opis.putanjaDoOpisa" target=”_blank”> Pogledaj opis</a>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!a1Obrazac">
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="primer">
+                <label for="primerAutorskogDela" class="form-label"
                 >Primer dela</label
-              >
-              <input
-                type="file"
-                class="form-control"
-                id="primerAutorskogDela"
-                formControlName="putanjaDoPrimera"
-                (change)="sacuvajPrimerDela($event)"
-              />
-            </div>
-            <div class="mb-3 me-5" style="width: 100%" formGroupName="opis">
-              <label for="opisAutorskogDela" class="form-label"
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="primerAutorskogDela"
+                  formControlName="putanjaDoPrimera"
+                  (change)="sacuvajPrimerDela($event)"
+                />
+              </div>
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="opis">
+                <label for="opisAutorskogDela" class="form-label"
                 >Opis dela</label
-              >
-              <input
-                type="file"
-                class="form-control"
-                id="opisAutorskogDela"
-                formControlName="putanjaDoOpisa"
-                (change)="sacuvajOpisDela($event)"
-              />
-            </div>
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="opisAutorskogDela"
+                  formControlName="putanjaDoOpisa"
+                  (change)="sacuvajOpisDela($event)"
+                />
+              </div>
+            </ng-container>
           </div>
         </section>
       </div>
     </section>
-
-    <button type="submit" mat-button style="width: 30%; left: 35%">
-      Submit
-    </button>
+    <ng-container *ngIf="!a1Obrazac">
+      <button type="submit" mat-button style="width: 30%; left: 35%">
+        Submit
+      </button>
+    </ng-container>
   </form>
 </div>
