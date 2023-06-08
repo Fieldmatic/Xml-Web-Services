@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.tim14.xml.dto.requests.ObradaZahteva;
 import rs.tim14.xml.model.autorska_prava.ResenjeZahteva;
+import rs.tim14.xml.model.autorska_prava.ZahtevZaAutorskaPrava;
 import rs.tim14.xml.repository.ResenjeRepository;
 import rs.tim14.xml.xslfo.XSLFOTransformer;
 
@@ -37,9 +38,8 @@ public class ResenjeService {
             resenjeZahteva.setSifra(obradaZahteva.getId());
         ResenjeRepository.write(resenjeZahteva);
 
-        autorskaPravaService.setObradjen(obradaZahteva.getId(), obradaZahteva.isOdbijen());
-        //treba da posaljes podnosiocu na mail a ne sluzbeniku
-        mailService.sendMailWithAttachment(resenjeZahteva.getEmailSluzbenika(), resenjeZahteva, getPDF(resenjeZahteva));
+        ZahtevZaAutorskaPrava a1 = autorskaPravaService.setObradjen(obradaZahteva.getId(), obradaZahteva.isOdbijen());
+        mailService.sendMailWithAttachment(a1.getEmailKlijenta(), resenjeZahteva, getPDF(resenjeZahteva));
     }
 
     public byte[] getPDF(final ResenjeZahteva resenjeZahteva) throws Exception {

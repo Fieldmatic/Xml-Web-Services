@@ -78,6 +78,20 @@
                                 </fo:table-cell>
                             </fo:table-row>
 
+<!--                        referenca-->
+                            <fo:table-row>
+                                <fo:table-cell number-columns-spanned="2" padding="15px 0px 15px 5px">
+                                    <fo:block>
+                                        3) Референца на захтев:
+                                        <fo:inline color="blue" text-decoration="underline">
+                                            <fo:basic-link color="blue" external-destination="http://localhost:4200/a1/obrada/{//a1:broj_prijave}">
+                                                A-<xsl:value-of select="//a1:broj_prijave"/>
+                                            </fo:basic-link>
+                                        </fo:inline>
+                                </fo:block>
+                                </fo:table-cell>
+                            </fo:table-row>
+
                             <!-- Prijava -->
                             <fo:table-row>
                                 <fo:table-cell column-number="2" border="1px solid black" margin-top="25px">

@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {A1Service} from 'src/app/a1/services/a1.service';
 import {saveAs} from 'file-saver';
 import {OsnovniPodaciObrascu} from "../../../../shared/model/OsnovniPodaciObrascu";
-import { xml2json } from 'xml-js';
+import {xml2json} from 'xml-js';
+import {LoggedInUser} from "../../../../auth/model/logged-in-user";
+import {AuthService} from "../../../../auth/services/auth.service";
 
 
 @Component({
@@ -11,22 +13,33 @@ import { xml2json } from 'xml-js';
   templateUrl: './a1-all-requests.component.html',
   styleUrls: ['./a1-all-requests.component.scss'],
 })
-export class A1AllRequestsComponent {
+export class A1AllRequestsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  metadataElementi: string[] = ['brojPrijave', 'datumPodnosenja', 'imePodnosioca', 'prezimePodnosioca']
+  loggedInUser: LoggedInUser = null;
 
-  constructor(private a1Service: A1Service) {
+  constructor(private a1Service: A1Service, private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
+    this.authService.loggedInUser.subscribe(user => {
+      this.loggedInUser = user
+      this.a1Service.dobaviSveZahteve(this.loggedInUser.role).subscribe((result) => {
+        this.prikaziRezultatePretrage(result);
+      });
+    });
   }
 
   izvrsiNaprednuPetragu(triplets: any) {
-    this.a1Service.pretraziZahtevePoMetapodacima(triplets).subscribe((result) => {
+    this.a1Service.pretraziZahtevePoMetapodacima(triplets, this.loggedInUser.role).subscribe((result) => {
       this.prikaziRezultatePretrage(result);
     });
   }
 
   izvrsiObicnuPretragu(filters: string[]) {
     console.log(filters)
-    this.a1Service.pretraziZahtevePoTekstu(filters).subscribe((result) => {
+    this.a1Service.pretraziZahtevePoTekstu(filters, this.loggedInUser.role).subscribe((result) => {
       this.prikaziRezultatePretrage(result);
     });
   }
@@ -73,7 +86,8 @@ export class A1AllRequestsComponent {
 
   preuzmiJsonMetapodatke(id: string) {
     this.a1Service.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
-      saveAs(response, 'autorska_prava_' + id + '.rdf');
+      saveAs(response, 'autorska_prava_' + id + '.json');
     });
   }
+
 }

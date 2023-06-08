@@ -38,7 +38,9 @@
         <div class="col-4">
           <mat-form-field appearance="fill">
             <mat-label>Element</mat-label>
-            <input matInput formControlName="predikat"/>
+            <mat-select formControlName="predikat">
+              <mat-option *ngFor="let metaEl of metadataElementi" [value]="metaEl">{{ metaEl }}</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="col-4">

@@ -24,22 +24,6 @@ export class PatentService {
     zahtev: string,
   ) {
    this.sacuvajObrazac(zahtev)
-    // this.ucitajFajl(primerDelaFile, false).subscribe((imePrimeraFajla) => {
-    //   zahtev += this.kreirajPrimerAutorskogDela(imePrimeraFajla);
-    //   if (opisDelaFile) {
-    //     this.ucitajFajl(opisDelaFile, true).subscribe((imeOpisaFajla) => {
-    //       zahtev += this.kreirajOpisAutorskogDela(imeOpisaFajla);
-    //     });
-    //   } else {
-    //     zahtev += this.kreirajOpisAutorskogDela('');
-    //   }
-    //   zahtev += '</autorsko_delo>';
-    //   zahtev += '</zahtev_za_autorska_prava>';
-    //   return this.sacuvajA1Obrazac(zahtev).subscribe((rezultat) => {
-    //     console.log('top');
-    //     console.log(rezultat);
-    //   });
-   // });
   }
 
   sacuvajObrazac(request: string) {
@@ -58,18 +42,19 @@ export class PatentService {
     ).subscribe((response) => console.log(response))
   }
 
-  // ucitajFajl(file: File, type: boolean) {
-  //   const exampleFormData = new FormData();
-  //   exampleFormData.append('file', <File>file, (<File>file).name);
-  //   return this.http.post(
-  //     this.config.autorskoPravoEndpoint + 'autorska-prava/uploadFile/' + type,
-  //     exampleFormData,
-  //     {
-  //       observe: 'body',
-  //       responseType: 'text',
-  //     }
-  //   );
-  // }
+  dobaviSveZahteve(role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
+
+    return this.http.get(
+      this.config.patentEndpoint + 'patent/getAll',
+      {
+        headers,
+        responseType: 'text',
+      }
+    );
+  }
 
   dobaviZahtevPoIdu(id: string) {
     return this.http.get(
@@ -88,7 +73,11 @@ export class PatentService {
     }))
   }
 
-  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
+  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role)
+      .set('Accept', 'application/xml');
     let zahtev = "<metadata>"
     for (const triplet of triplets) {
       zahtev += "<triplet>" +
@@ -104,15 +93,15 @@ export class PatentService {
       {
         observe: 'body',
         responseType: 'text',
-        headers: {
-          'Content-Type': 'application/xml',
-          Accept: 'application/xml',
-        },
+        headers: headers
       }
     );
   }
 
-  pretraziZahtevePoTekstu(filteri: string[]) {
+  pretraziZahtevePoTekstu(filteri: string[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
     let zahtev = "<pretraga>"
     for (const filter of filteri) {
       zahtev += "<filteri>" + filter + "</filteri>"
@@ -122,14 +111,13 @@ export class PatentService {
       this.config.patentEndpoint + 'patent/pretragaPoTekstu',
       zahtev,
       {
-        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        headers: headers,
         responseType: 'text',
       }
     );
   }
 
   kreirajOsnovniPatentOdXmlZahteva(xmlZahtev: any) {
-    console.log(xmlZahtev)
     let patentZahtev = new OsnovniPodaciObrascu();
     let urlIdParts = xmlZahtev['_attributes']['about'].split("/");
     patentZahtev.id = urlIdParts[urlIdParts.length - 1];

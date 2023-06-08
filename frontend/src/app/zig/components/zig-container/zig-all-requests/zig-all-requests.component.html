@@ -24,7 +24,7 @@
           Podnosilac zahteva
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.podnosilac.tip === 'fizickoLice' ? row.podnosilac.ime + " " + row.podnosilac.prezime : row.podnosilac.poslovnoIme | titlecase }}
+          {{ row.podnosilac.tip === 'fizickoLice' ? row.podnosilac.ime + " " + row.podnosilac.prezime : row.podnosilac.poslovnoIme }}
         </td>
       </ng-container>
 
@@ -33,7 +33,7 @@
           Datum podnošenja
         </th>
         <td mat-cell *matCellDef="let row">
-          {{ row.prijava.datum_podnosenja | date : "dd.MM.yyyy." }}
+          {{ row.prijava.datum_podnosenja | date : "yyyy-MM-dd" }}
         </td>
       </ng-container>
 

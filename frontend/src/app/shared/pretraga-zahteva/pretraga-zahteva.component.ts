@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
@@ -12,6 +12,7 @@ import {MatChipInputEvent} from "@angular/material/chips";
 export class PretragaZahtevaComponent {
   @Output() obicnaPretragaEvent = new EventEmitter<any>();
   @Output() naprednaPretragaEvent = new EventEmitter<any>();
+  @Input() metadataElementi: string[];
 
   metadataSearchForm: FormGroup;
   filters: string[] = [];

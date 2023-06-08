@@ -83,11 +83,14 @@ export class A1Service {
     );
   }
 
-  getAllZahtevi() {
+  dobaviSveZahteve(role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
     return this.http.get(
       this.config.autorskoPravoEndpoint + 'autorska-prava/getAll',
       {
-        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        headers,
         responseType: 'text',
       }
     );
@@ -110,7 +113,11 @@ export class A1Service {
     }))
   }
 
-  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
+  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role)
+      .set('Accept', 'application/xml');
     let zahtev = "<metadata>"
     for (const triplet of triplets) {
       zahtev += "<triplet>" +
@@ -126,10 +133,7 @@ export class A1Service {
       {
         observe: 'body',
         responseType: 'text',
-        headers: {
-          'Content-Type': 'application/xml',
-          Accept: 'application/xml',
-        },
+        headers: headers,
       }
     );
   }
@@ -169,7 +173,10 @@ export class A1Service {
     return a1Zahtev;
   }
 
-  pretraziZahtevePoTekstu(filteri: string[]) {
+  pretraziZahtevePoTekstu(filteri: string[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
     let zahtev = "<pretraga>"
     for (const filter of filteri) {
       zahtev += "<filteri>" + filter + "</filteri>"
@@ -179,7 +186,7 @@ export class A1Service {
       this.config.autorskoPravoEndpoint + 'autorska-prava/pretragaPoTekstu',
       zahtev,
       {
-        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        headers: headers,
         responseType: 'text',
       }
     );

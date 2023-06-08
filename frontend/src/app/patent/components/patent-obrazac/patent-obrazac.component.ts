@@ -63,9 +63,9 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
         ime: new FormControl(this.patentObrazac?.patent.podnosilac?.ime),
         prezime: new FormControl(this.patentObrazac?.patent.podnosilac?.prezime),
         drzavljanstvo: this.formBuilder.group({
-          tip: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.tipDrzavljanstva),
-          jmbg: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.jmbg),
-          brojPasosa: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo.brojPasosa),
+          tip: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo?.tipDrzavljanstva),
+          jmbg: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo?.jmbg),
+          brojPasosa: new FormControl(this.patentObrazac?.patent.podnosilac?.drzavljanstvo?.brojPasosa),
         }),
         poslovnoIme: new FormControl(this.patentObrazac?.patent.podnosilac?.poslovnoIme),
         brojFaksa: new FormControl(this.patentObrazac?.patent.podnosilac?.brojFiksnogTelefona),
@@ -235,10 +235,12 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
     return '';
   }
 
-  kreirajPodatkeoDostavljanju(dostavljanjeForm: FormGroup): string  {
+  kreirajPodatkeoDostavljanju(dostavljanjeForm: FormGroup): string {
     let podacioDostavljanju = '<podaci_o_dostavljanju>'
-    podacioDostavljanju+= '<nacin_dostavljanja>' + dostavljanjeForm['nacinDostavljanja'] + '</nacin_dostavljanja>'
-    podacioDostavljanju += this.kreirajAdresu(dostavljanjeForm['adresa']['mesto'], dostavljanjeForm['adresa']['postanskiBroj'],dostavljanjeForm['adresa']['ulica'],dostavljanjeForm['adresa']['broj'],dostavljanjeForm['adresa']['drzava'] )
+    podacioDostavljanju += '<nacin_dostavljanja>' + dostavljanjeForm['nacinDostavljanja'] + '</nacin_dostavljanja>'
+    if (dostavljanjeForm['nacinDostavljanja'] == "u_papiroj_formi") {
+      podacioDostavljanju += this.kreirajAdresu(dostavljanjeForm['adresa']['mesto'], dostavljanjeForm['adresa']['postanskiBroj'], dostavljanjeForm['adresa']['ulica'], dostavljanjeForm['adresa']['broj'], dostavljanjeForm['adresa']['drzava'])
+    }
     podacioDostavljanju += '</podaci_o_dostavljanju>'
     return podacioDostavljanju;
   }
