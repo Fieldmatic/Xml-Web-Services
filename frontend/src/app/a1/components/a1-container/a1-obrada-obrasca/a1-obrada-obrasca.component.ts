@@ -5,7 +5,7 @@ import {A1Service} from "../../../services/a1.service";
 import {A1Obrazac} from "../../../model/A1Obrazac";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../../../../shared/confirmation-dialog/confirmation-dialog.component";
-import {ResenjeService} from "../../../services/resenje.service";
+import {ResenjeService} from "../../../../shared/services/resenje.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -62,8 +62,7 @@ export class A1ObradaObrascaComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         let request = {id: this.a1Obrazac.brojPrijave, emailSluzbenika:"istevanovic3112@gmail.com", imeSluzbenika: "ime sluzbenika", prezimeSluzbenika: "prezime", odbijen: !result.accepted, razlogOdbijanja: result.reason}
-        this.resenjeService.obradiZahtev(request).subscribe(() =>
-        {
+        this.resenjeService.obradiZahtev(request, 'a').subscribe(() => {
           console.log("vrh")
         })
       }

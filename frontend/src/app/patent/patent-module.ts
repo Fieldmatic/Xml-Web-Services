@@ -9,5 +9,8 @@ import { DodajPrijavuDijalogComponent } from './components/dodaj-prijavu-dijalog
 @NgModule({
   declarations: [PatentObrazacComponent, DodajPrijavuDijalogComponent],
   imports: [CommonModule, PatentRoutingModule, SharedModule],
+  exports: [
+    PatentObrazacComponent
+  ]
 })
 export class PatentModule {}

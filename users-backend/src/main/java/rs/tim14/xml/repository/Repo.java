@@ -1,4 +1,5 @@
 package rs.tim14.xml.repository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.modules.XMLResource;
@@ -8,7 +9,6 @@ import rs.tim14.xml.xmldb.ExistDbManager;
 
 import java.io.OutputStream;
 import java.util.Objects;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
