@@ -26,7 +26,7 @@ export class A1ObradaObrascaComponent {
     private dialog: MatDialog,
     private resenjeService: ResenjeService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.priloziForm = this.formBuilder.group({
       opisDelaChecked: [false],
@@ -68,7 +68,7 @@ export class A1ObradaObrascaComponent {
       if (result) {
         let request = {id: this.a1Obrazac.brojPrijave, emailSluzbenika: this.loggedInUser.email, imeSluzbenika: this.loggedInUser.name, prezimeSluzbenika: this.loggedInUser.surname, odbijen: !result.accepted, razlogOdbijanja: result.reason}
         this.resenjeService.obradiZahtev(request, 'a').subscribe(() => {
-          console.log("vrh")
+          this.ngOnInit();
         })
       }
     });

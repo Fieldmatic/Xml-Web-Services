@@ -61,7 +61,7 @@ export class ObradaPatentaComponent implements OnDestroy {
       if (result) {
         let request = {id: this.idObrasca, emailSluzbenika: this.loggedInUser.email, imeSluzbenika: this.loggedInUser.name, prezimeSluzbenika: this.loggedInUser.surname, odbijen: !result.accepted, razlogOdbijanja: result.reason}
         this.resenjeService.obradiZahtev(request, 'p').subscribe(() => {
-          console.log("vrh")
+          this.ngOnInit();
         })
       }
     });

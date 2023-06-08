@@ -14,6 +14,7 @@ import { xml2json } from 'xml-js';
 export class A1AllRequestsComponent {
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  metadataElementi: string[] = ['brojPrijave', 'datumPodnosenja', 'imePodnosioca', 'prezimePodnosioca']
 
   constructor(private a1Service: A1Service) {
   }
@@ -73,7 +74,7 @@ export class A1AllRequestsComponent {
 
   preuzmiJsonMetapodatke(id: string) {
     this.a1Service.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
-      saveAs(response, 'autorska_prava_' + id + '.rdf');
+      saveAs(response, 'autorska_prava_' + id + '.json');
     });
   }
 }

@@ -13,6 +13,7 @@ import { xml2json } from 'xml-js';
 export class PatentiPrikazComponent {
   displayedColumns: string[] = ['id', 'name', 'date', 'status', 'download'];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  metadataElementi: string[] = ['brojPrijave', 'datumPodnosenja', 'imePodnosioca', 'prezimePodnosioca']
 
   constructor(private patentService: PatentService) {
   }
@@ -71,7 +72,7 @@ export class PatentiPrikazComponent {
 
   preuzmiJsonMetapodatke(id: string) {
     this.patentService.preuzmiJsonMetapodatke(id).subscribe((response: any) => {
-      saveAs(response, 'patent_' + id + '.rdf');
+      saveAs(response, 'patent_' + id + '.json');
     });
   }
 
