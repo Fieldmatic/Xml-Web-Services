@@ -102,17 +102,17 @@ public class ZigService {
 
     public byte[] getHTML(String id) throws Exception {
         String xmlPath = repo.download(id);
-        String resultPath = "./data/result/" + id + ".html";
+        String resultPath = "./zig-backend/data/result/" + id + ".html";
         HTMLTransformer htmlTransformer = new HTMLTransformer();
-        htmlTransformer.generateHTML(xmlPath, "./data/xsl/z1.xsl", resultPath);
+        htmlTransformer.generateHTML(xmlPath, "./zig-backend/data/xsl/z1.xsl", resultPath);
         return FileUtils.readFileToByteArray(new File(resultPath));
     }
 
     public byte[] getPDF(String id) throws Exception {
         String xmlPath = repo.download(id);
-        String resultPath = "./data/result/" + id + ".pdf";
+        String resultPath = "./zig-backend/data/result/" + id + ".pdf";
         XSLFOTransformer xslfoTransformer = new XSLFOTransformer();
-        xslfoTransformer.generatePDF(xmlPath, "./data/xsl_fo/z1_fo.xsl", resultPath);
+        xslfoTransformer.generatePDF(xmlPath, "./zig-backend/data/xsl_fo/z1_fo.xsl", resultPath);
         return FileUtils.readFileToByteArray(new File(resultPath));
     }
 

@@ -13,6 +13,9 @@
             <xsl:variable name="taksa_za_klase" select="z1:zahtev_za_priznanje_ziga/z1:takse/z1:taksa_za_klase/."/>
             <xsl:variable name="taksa_za_graficko_resenje" select="z1:zahtev_za_priznanje_ziga/z1:takse/z1:taksa_za_graficko_resenje/."/>
             <xsl:variable name="boje_znaka" select="z1:zahtev_za_priznanje_ziga/z1:znak/z1:boje_znaka/."/>
+            <xsl:variable name="iz" select="z1:zahtev_za_priznanje_ziga/z1:Prilozi_uz_zahtev/z1:primerak_znaka"/>
+            <xsl:variable name="split_parts" select="tokenize($iz, 'src')" />
+            <xsl:variable name="izgled_znaka" select="concat('../src', $split_parts[2])" />
 
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="z1-page">
@@ -197,8 +200,15 @@
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:vrsta_ziga='KOLEKTIVNI'">X</xsl:if></fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
+                                <fo:table-cell display-align="center" width="100%" number-rows-spanned="15">
+                                    <fo:block-container>
+                                        <fo:block>
+                                            <fo:external-graphic src="{$izgled_znaka}"
+                                                                 width="100%"
+                                                                 content-width="scale-to-fit"
+                                                                 content-height="scale-to-fit"/>
+                                        </fo:block>
+                                    </fo:block-container>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -210,9 +220,6 @@
                                 </fo:table-cell>
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:vrsta_ziga='ZIG_GARANCIJE'">X</xsl:if></fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <!--   VRSTA ZNAKA   -->
@@ -226,9 +233,6 @@
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:znak/z1:vrsta_znaka/@vrsta_znaka='VERBALNI'">X</xsl:if></fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
                                 <fo:table-cell border-right="0.5px solid">
@@ -239,9 +243,6 @@
                                 </fo:table-cell>
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:znak/z1:vrsta_znaka/@vrsta_znaka='GRAFICKI'">X</xsl:if></fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -254,9 +255,6 @@
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:znak/z1:vrsta_znaka/@vrsta_znaka='KOMBINOVANI'">X</xsl:if></fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
                                 <fo:table-cell border-right="0.5px solid">
@@ -267,9 +265,6 @@
                                 </fo:table-cell>
                                 <fo:table-cell border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block margin-top="1px" text-align="center"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:znak/z1:vrsta_znaka/@vrsta_znaka='TRODIMENZIONALNI'">X</xsl:if></fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -286,34 +281,22 @@
                                         </xsl:if>
                                     </fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <!--   BOJE ZNAKA   -->
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="3" border-right="0.5px solid">
                                     <fo:block margin-left="5px" font-weight="bold">5. Назначење боје, односно боја из којих се знак састоји:</fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="3" border-right="0.5px solid" border-bottom="0.5px solid">
                                     <fo:block padding-top="4px" padding-bottom="4px" text-align="center"><xsl:value-of select="string-join($boje_znaka, ', ')"/></fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <!--   TRANSLITERACIJA ZNAKA   -->
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="3" border-right="0.5px solid">
                                     <fo:block margin-left="5px" font-weight="bold">6. Транслитерација знака*:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -327,17 +310,11 @@
                                         </xsl:if>
                                     </fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <!--   PREVOD ZNAKA   -->
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="3" border-right="0.5px solid">
                                     <fo:block margin-left="5px" font-weight="bold">7. Превод знака*:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -351,17 +328,11 @@
                                         </xsl:if>
                                     </fo:block>
                                 </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
-                                </fo:table-cell>
                             </fo:table-row>
                             <!--   OPIS ZNAKA   -->
                             <fo:table-row>
                                 <fo:table-cell number-columns-spanned="3" border-right="0.5px solid">
                                     <fo:block margin-left="5px" font-weight="bold">8. Опис знака:</fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                             <fo:table-row>
@@ -369,9 +340,6 @@
                                     <fo:block padding-top="4px" padding-bottom="4px" text-align="center">
                                         <xsl:value-of select="z1:zahtev_za_priznanje_ziga/z1:znak/z1:opis_znaka"/>
                                     </fo:block>
-                                </fo:table-cell>
-                                <fo:table-cell>
-                                    <fo:block></fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
                         </fo:table-body>

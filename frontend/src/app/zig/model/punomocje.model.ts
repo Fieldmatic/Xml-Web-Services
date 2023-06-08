@@ -8,6 +8,12 @@ export class Punomocje {
   ) {
   }
 
+  static parseXML(xml) {
+    const predano = xml["ns3:generalno_punomocje_predano"]["_text"] !== "false";
+    const bice_predano = xml["ns3:punomocje_ce_biti_predano"]["_text"] !== "false";
+    return new Punomocje(null, predano, bice_predano);
+  }
+
   toXML(): string {
     let XML = "";
     XML += this.punomocje.naziv

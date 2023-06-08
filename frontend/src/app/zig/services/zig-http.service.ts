@@ -1,10 +1,12 @@
 import { Inject, Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { forkJoin, mergeMap, of } from "rxjs";
+import { forkJoin, map, mergeMap, of } from "rxjs";
 import { APP_SERVICE_CONFIG } from "../../appConfig/appconfig.service";
 import { AppConfig } from "../../appConfig/appconfig.interface";
 import { ZahtevZaPriznanjeZiga } from "../model/zahtev-za-priznanje-ziga.model";
 import { FileDTO } from "../model/FileDTO";
+import { xml2json } from "xml-js";
+import { MetadataTriplet } from "../../shared/model/MetadataTriplet";
 
 @Injectable({
   providedIn: "root"
@@ -18,43 +20,96 @@ export class ZigHttpService {
 
   getAllRequests() {
     return this.http.get(this.config.zigEndpoint + "all", {
-      headers: new HttpHeaders().append("Accept", "application/xml"),
+      headers: new HttpHeaders().append("Content-Type", "application/xml"),
       responseType: "text"
     });
   }
 
-  getRequest() {
-    return of(null);
+  getRequest(id: string) {
+    return this.http.get(this.config.zigEndpoint, {
+      params: new HttpParams().append("id", id),
+      headers: new HttpHeaders().append("Content-Type", "application/xml"),
+      responseType: "text"
+    }).pipe(map(response => {
+      let xmlResult = xml2json(response, {
+        compact: true,
+        spaces: 4,
+        trim: true
+      });
+      return JSON.parse(xmlResult);
+    }));
   }
 
-  getAllByMetadata() {
-    return of(null);
+  getAllByMetadata(triplets: MetadataTriplet[]) {
+    let zahtev = "<metadata>";
+    for (const triplet of triplets) {
+      zahtev += "<triplet>" +
+        "<predikat>" + triplet.predikat + "</predikat>"
+        + "<objekat>" + triplet.objekat + "</objekat>"
+        + "<operator>" + triplet.operator + "</operator>"
+        + "</triplet>";
+    }
+    zahtev += "</metadata>";
+    return this.http.post(
+      this.config.zigEndpoint + "pretragaPoMetapodacima",
+      zahtev,
+      {
+        observe: "body",
+        responseType: "text",
+        headers: {
+          "Content-Type": "application/xml",
+          Accept: "application/xml"
+        }
+      }
+    );
   }
 
-  getReferencedDocument() {
+  getAllByText(text: string[]) {
+    let zahtev = "<pretraga>";
+    for (const filter of text) {
+      zahtev += "<filteri>" + filter + "</filteri>";
+    }
+    zahtev += "</pretraga>";
+    return this.http.post(
+      this.config.zigEndpoint + "pretragaPoTekstu",
+      zahtev,
+      {
+        headers: new HttpHeaders().set("Content-Type", "application/xml"),
+        responseType: "text"
+      }
+    );
+  }
+
+  getReferencedDocument(fileName: string) {
     return of(null);
   }
 
   getRequestPdf(id: string) {
-    return this.http.get<any>(this.config.zigEndpoint + "pdf", {
+    return this.http.get(this.config.zigEndpoint + "pdf", {
       params: new HttpParams().append("id", id),
-      responseType: "arraybuffer" as "json"
+      responseType: "blob"
     });
   }
 
   getRequestXHtml(id: string) {
-    return this.http.get<any>(this.config.zigEndpoint + "html", {
+    return this.http.get(this.config.zigEndpoint + "html", {
       params: new HttpParams().append("id", id),
-      responseType: "arraybuffer" as "json"
+      responseType: "blob"
     });
   }
 
-  getRequestMetadataRdf() {
-    return of(null);
+  getRequestMetadataRdf(id: string) {
+    return this.http.get(this.config.zigEndpoint + "rdf/" + id, {
+      headers: new HttpHeaders().append("Content-Type", "application/rdf+xml"),
+      responseType: "blob" as "json"
+    });
   }
 
-  getRequestMetadataJson() {
-    return of(null);
+  getRequestMetadataJson(id: string) {
+    return this.http.get(this.config.zigEndpoint + "json/" + id, {
+      headers: new HttpHeaders().append("Content-Type", "application/json"),
+      responseType: "blob" as "json"
+    });
   }
 
   getReport() {
@@ -150,13 +205,5 @@ export class ZigHttpService {
       observe: "body",
       responseType: "text"
     });
-  }
-
-  putAcceptRequest() {
-    return of(null);
-  }
-
-  putRejectRequest() {
-    return of(null);
   }
 }
