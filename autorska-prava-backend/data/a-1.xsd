@@ -119,6 +119,7 @@
             <xs:element name="godina_smrti" type="xs:positiveInteger" minOccurs="0"/>
             <xs:element name="licni_podaci" type="ks:TFizicko_Lice" minOccurs="0"/>
             <xs:element name="anonimni_autor" type="xs:boolean"/>
+            <xs:element name="podnosilac" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:simpleType name="TVrsta_autorskog_dela">

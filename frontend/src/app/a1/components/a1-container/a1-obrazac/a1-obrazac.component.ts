@@ -8,6 +8,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { DodajAutoraDijalogComponent } from './dodaj-autora-dijalog/dodaj-autora-dijalog.component';
 import {A1Obrazac} from "../../../model/A1Obrazac";
+import {LoggedInUser} from "../../../../auth/model/logged-in-user";
+import {AuthService} from "../../../../auth/services/auth.service";
 
 export class Autor {
   preminuliAutor: boolean;
@@ -42,14 +44,17 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
   originalniAutor: Autor;
   opisDelaFile!: File;
   primerDelaFile!: File;
+  loggedInUser: LoggedInUser = null;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private a1Service: A1Service,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.authService.loggedInUser.subscribe(user => this.loggedInUser = user);
     this.setupForm()
   }
 
@@ -95,8 +100,10 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
         nacinKoriscenja: new FormControl(this.a1Obrazac?.autorskoDelo?.nacinKoriscenja || 'da se koristi bre'),
         tipAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.tipAutora || 'anonimni'),
         originalnoDelo: this.formBuilder.group({
-          originalno: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.originalno || true),
+          originalno: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.originalno?.toString() || 'true'),
           naslov: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.naslov || 'Covek po imenu Ivee'),
+          imeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.imeOriginalnogAutora || 'Ime'),
+          prezimeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.prezimeOriginalnogAutora || 'Prezime'),
         }),
         primer: this.formBuilder.group({
           putanjaDoPrimera: new FormControl(),
@@ -107,6 +114,7 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       }),
     });
     if (this.a1Obrazac !== undefined) {
+      this.autori = this.a1Obrazac?.autorskoDelo?.autori;
       this.a1Form.disable();
     }
   }
@@ -120,14 +128,7 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.a1Form.value);
-    //drzavu za adresu
-    //na adresama ks: dodati
-    //fali ti drzavljanstvo kod podnosioca fizicko lice
-
-    const klijent = JSON.parse(localStorage.getItem('userData'));
-    //let userId = userData.id;
-    let emailKlijenta = 'ivana@gmail.com';
+    let emailKlijenta = this.loggedInUser.email;
 
     let zahtev =
       '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
@@ -229,6 +230,8 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       '<nacin_koriscenja_autorskog_dela>' +
       deloForm['nacinKoriscenja'] +
       '</nacin_koriscenja_autorskog_dela>';
+
+    console.log(autorskoDelo)
     return autorskoDelo;
   }
 
@@ -252,6 +255,7 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       fizickoLiceForm['ime'],
       fizickoLiceForm['prezime']
     );
+    fizickoLice += this.kreirajDrzavljanstvo(fizickoLiceForm['drzavljanstvo']['tip'], fizickoLiceForm['drzavljanstvo']['jmbg'], fizickoLiceForm['drzavljanstvo']['brojPasosa']);
     return fizickoLice;
   }
 
@@ -304,6 +308,7 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
   }
 
   kreirajDrzavljanstvo(tip: string, jmbg: string, brojPasosa: string): string {
+    console.log(tip)
     let drzavljanstvo = '<ks:drzavljanstvo>';
     drzavljanstvo += '<ks:tip_drzavljanstva>' + tip + '</ks:tip_drzavljanstva>';
     drzavljanstvo += '<ks:jmbg>' + jmbg + '</ks:jmbg>';
@@ -314,46 +319,64 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
 
   kreirajPodatkeOAutorima(): string {
     let podaciOAutorima = '<podaci_o_autorima>';
+    if (this.autori.length === 0) {
+      podaciOAutorima += this.kreirajAnonimnogAutora(this.a1Form.get('autorskoDelo').get('tipAutora').value);
+    }
     for (let i = 0; i < this.autori.length; i++) {
       let autor = this.autori[i];
-      podaciOAutorima += this.kreirajAutora(
-        autor,
-        this.a1Form.get('autorskoDelo').get('tipAutora').value,
-        false
-      );
+      podaciOAutorima += this.kreirajAutora(autor);
     }
     podaciOAutorima += '</podaci_o_autorima>';
+    console.log(podaciOAutorima)
+    return podaciOAutorima;
+  }
+
+  kreirajAnonimnogAutora(tipAutora: string) {
+    let podaciOAutorima =  '<autor><licni_podaci>\n' +
+      '                    <ks:puno_ime>\n' +
+      '                        <ks:ime></ks:ime>\n' +
+      '                        <ks:prezime></ks:prezime>\n' +
+      '                    </ks:puno_ime>\n' +
+      '                </licni_podaci>';
+    if (tipAutora === "anonimni") {
+      podaciOAutorima += '<anonimni_autor>true</anonimni_autor></autor>';
+    } else if (tipAutora === "podnosilac") {
+      podaciOAutorima += '<anonimni_autor>false</anonimni_autor><podnosilac>true</podnosilac></autor>';
+    }
     return podaciOAutorima;
   }
 
   kreirajAutora(
     autorObj: Autor,
-    tipAutora: string,
-    autorOriginalnogDela: boolean
   ): string {
-    let autor = '';
-    if (autorOriginalnogDela) autor = '<autor_izvornog_autorskog_dela>';
-    else autor = '<autor>';
-
-    if (tipAutora === 'anonimni') {
-      autor += '<anonimni_autor>' + true + '</anonimni_autor>';
-    } else if (autorObj.preminuliAutor) {
+    let autor = '<autor>';
+    if (autorObj.preminuliAutor) {
+      autor += '<pseudonim>' + autorObj.pseudonim + '</pseudonim>';
+      autor += this.kreirajLicnePodatkeSaPunimImenom(autorObj.ime, autorObj.prezime);
       autor += '<godina_smrti>' + autorObj.godinaSmrti + '</godina_smrti>';
       autor += '<anonimni_autor>' + false + '</anonimni_autor>';
     } else {
-      //zivi autor
+      console.log(autorObj)
       autor += '<pseudonim>' + autorObj.pseudonim + '</pseudonim>';
       autor += this.kreirajLicnePodatkeSaPunimImenomIAdresom(autorObj);
+      autor += this.kreirajDrzavljanstvo(autorObj.drzavljanstvo.tip, autorObj.drzavljanstvo.jmbg, autorObj.drzavljanstvo.brojPasosa);
       autor += '<anonimni_autor>' + false + '</anonimni_autor>';
     }
-    if (autorOriginalnogDela) autor += '</autor_izvornog_autorskog_dela>';
-    else autor += '</autor>';
+    autor += '</autor>';
     return autor;
   }
 
-  kreirajLicnePodatkeSaPunimImenom(autorObj: Autor): string {
+  kreirajOriginalnogAutora(imeAutora: string, prezimeAutora: string): string {
+    let autor = '<autor_izvornog_autorskog_dela>';
+    autor += this.kreirajLicnePodatkeSaPunimImenom(imeAutora, prezimeAutora);
+    autor += '<anonimni_autor>' + false + '</anonimni_autor>';
+    autor += '</autor_izvornog_autorskog_dela>';
+    return autor;
+  }
+
+  kreirajLicnePodatkeSaPunimImenom(ime: string, prezime: string): string {
     let licniPodaci = '<licni_podaci>';
-    licniPodaci += this.kreirajPunoIme(autorObj.ime, autorObj.prezime);
+    licniPodaci += this.kreirajPunoIme(ime, prezime);
     licniPodaci += '</licni_podaci>';
     return licniPodaci;
   }
@@ -385,11 +408,7 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
         '<naslov_izvornog_autorskog_dela>' +
         originalnoDeloForm['naslov'] +
         '</naslov_izvornog_autorskog_dela>';
-      originalnoDelo += this.kreirajAutora(
-        this.originalniAutor,
-        'poznati',
-        true
-      );
+      originalnoDelo += this.kreirajOriginalnogAutora(originalnoDeloForm['imeOriginalnogAutora'], originalnoDeloForm['prezimeOriginalnogAutora']);
       originalnoDelo += '</izvorno_autorsko_delo>';
     }
     return originalnoDelo;

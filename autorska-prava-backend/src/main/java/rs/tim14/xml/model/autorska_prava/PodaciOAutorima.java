@@ -45,7 +45,8 @@ public class PodaciOAutorima {
 		"pseudonim",
 		"godinaSmrti",
 		"licniPodaci",
-		"anonimniAutor"
+		"anonimniAutor",
+		"podnosilac"
 	})
 
 
@@ -59,6 +60,9 @@ public class PodaciOAutorima {
 		protected TFizickoLice licniPodaci;
 		@XmlElement(name = "anonimni_autor")
 		protected boolean anonimniAutor;
+
+		@XmlElement(name = "podnosilac")
+		protected boolean podnosilac;
 		public String getPseudonim() {
 			return pseudonim;
 		}

@@ -5,8 +5,10 @@ import {AppConfig} from 'src/app/appConfig/appconfig.interface';
 import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
 import {concatMap, map, of, tap} from "rxjs";
-import {A1Obrazac, AutorskoDelo, Opis, Podnosilac, Primer} from "../model/A1Obrazac";
+import {A1Obrazac, AutorskoDelo, Drzavljanstvo, Opis, OriginalnoDelo, Podnosilac, Primer} from "../model/A1Obrazac";
 import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
+import {Autor} from "../components/a1-container/a1-obrazac/a1-obrazac.component";
+import {auto} from "@popperjs/core";
 
 declare var require: any;
 
@@ -152,6 +154,7 @@ export class A1Service {
   }
 
   kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
+    console.log(xmlZahtev)
     let a1Zahtev = new OsnovniPodaciObrascu();
     a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
 
@@ -160,7 +163,7 @@ export class A1Service {
     if (tipPodnosioca === "ns2:TFizicko_Lice") {
       a1Zahtev.nazivPodnosioca = podnosilac["ns2:puno_ime"]["ns2:ime"]['_text'] + ' ' + podnosilac["ns2:puno_ime"]["ns2:prezime"]['_text']
     } else {
-      a1Zahtev.nazivPodnosioca = podnosilac["ns2:poslovnoIme"]["_text"]
+      a1Zahtev.nazivPodnosioca = podnosilac["ns2:poslovno_ime"]["_text"]
     }
     let datum = xmlZahtev['ns3:prijava']['ns3:datum_podnosenja']['_text'].replace('+', 'T')
     a1Zahtev.datumPodnosenja = new Date(datum)
@@ -215,46 +218,117 @@ export class A1Service {
       a1.brojPrijave = zahtev['prijava']['broj_prijave']._text
       a1.statusZahteva = zahtev['statusZahteva']._text
       a1.podnosilac = new Podnosilac();
-      if (zahtev.podnosilac) {
-        const podnosilac = zahtev.podnosilac;
+      const podnosilac = zahtev.podnosilac;
+      if (podnosilac) {
         a1.podnosilac.tipPodnosioca = podnosilac["_attributes"]["xsi:type"].replace("ns2:T", "");
+        if (a1.podnosilac.tipPodnosioca === 'Pravno_Lice') {
+          a1.podnosilac.poslovnoIme = podnosilac["ns2:poslovno_ime"]._text;
+        }
+        else {
+          a1.podnosilac.ime = podnosilac["ns2:puno_ime"]["ns2:ime"]._text;
+          a1.podnosilac.prezime = podnosilac["ns2:puno_ime"]["ns2:prezime"]._text;
+          a1.podnosilac.drzavljanstvo = new Drzavljanstvo();
+          const drzavljanstvo = podnosilac["ns2:drzavljanstvo"];
+          a1.podnosilac.drzavljanstvo.tip = drzavljanstvo["ns2:tip_drzavljanstva"]._text
+          a1.podnosilac.drzavljanstvo.jmbg = drzavljanstvo["ns2:jmbg"]._text
+          a1.podnosilac.drzavljanstvo.brojPasosa = drzavljanstvo["ns2:broj_pasosa"]._text
+        }
         a1.podnosilac.email = podnosilac["ns2:email"]._text;
         a1.podnosilac.brojTelefona = podnosilac["ns2:broj_mobilnog_telefona"]._text;
-        a1.podnosilac.ime = podnosilac["ns2:puno_ime"]["ns2:ime"]._text;
-        a1.podnosilac.prezime = podnosilac["ns2:puno_ime"]["ns2:prezime"]._text;
 
-        if (podnosilac["ns2:adresa"]) {
-          const adresa = podnosilac["ns2:adresa"];
+        const adresa = podnosilac["ns2:adresa"];
+        if (adresa) {
           a1.podnosilac.adresaPodnosioca.mesto = adresa["ns2:mesto"]._text;
           a1.podnosilac.adresaPodnosioca.ulica = adresa["ns2:ulica"]._text;
           a1.podnosilac.adresaPodnosioca.broj = adresa["ns2:broj"]._text;
           a1.podnosilac.adresaPodnosioca.postanskiBroj = adresa["ns2:postanski_broj"]._text;
           a1.podnosilac.adresaPodnosioca.drzava = adresa["ns2:drzava"]._text;
         }
+
+
+      }
+
+      const punomocnik = zahtev['punomocnik'];
+      if (punomocnik) {
+        a1.punomocnik.prijavaSePodnosiPrekoPunomocnika = true;
+        a1.punomocnik.ime = punomocnik["ns2:puno_ime"]["ns2:ime"]._text;
+        a1.punomocnik.prezime = punomocnik["ns2:puno_ime"]["ns2:prezime"]._text;
+        const adresa = punomocnik["ns2:adresa"];
+        a1.punomocnik.adresaPunomocnika.mesto = adresa["ns2:mesto"]._text;
+        a1.punomocnik.adresaPunomocnika.ulica = adresa["ns2:ulica"]._text;
+        a1.punomocnik.adresaPunomocnika.broj = adresa["ns2:broj"]._text;
+        a1.punomocnik.adresaPunomocnika.postanskiBroj = adresa["ns2:postanski_broj"]._text;
+        a1.punomocnik.adresaPunomocnika.drzava = adresa["ns2:drzava"]._text;
+      } else {
+        a1.punomocnik.prijavaSePodnosiPrekoPunomocnika = false;
       }
 
       a1.autorskoDelo = new AutorskoDelo();
-      if (zahtev.autorsko_delo) {
-        const autorskoDelo = zahtev.autorsko_delo;
+      const autorskoDelo = zahtev.autorsko_delo;
+      if (autorskoDelo) {
         a1.autorskoDelo.naslov = autorskoDelo["naslov_autorskog_dela"]._text;
         a1.autorskoDelo.vrstaDela = autorskoDelo["vrsta_autorskog_dela"]._text;
         a1.autorskoDelo.formaZapisa = autorskoDelo["forma_zapisa"]._text;
         a1.autorskoDelo.uRadnomOdnosu = autorskoDelo["stvoreno_u_radnom_odnosu"]._text === "true";
         a1.autorskoDelo.nacinKoriscenja = autorskoDelo["nacin_koriscenja_autorskog_dela"]._text;
 
+        a1.autorskoDelo.originalnoDelo = new OriginalnoDelo();
+        const originalnoDelo = autorskoDelo['izvorno_autorsko_delo']
+        if (originalnoDelo) {
+          console.log("Original" + originalnoDelo)
+          a1.autorskoDelo.originalnoDelo.originalno = false;
+          a1.autorskoDelo.originalnoDelo.naslov = originalnoDelo['naslov_izvornog_autorskog_dela']._text;
+          a1.autorskoDelo.originalnoDelo.imeOriginalnogAutora = originalnoDelo['autor_izvornog_autorskog_dela']['licni_podaci']['ns2:puno_ime']['ns2:ime']._text;
+          a1.autorskoDelo.originalnoDelo.prezimeOriginalnogAutora = originalnoDelo['autor_izvornog_autorskog_dela']['licni_podaci']['ns2:puno_ime']['ns2:prezime']._text;
+        } else {
+          a1.autorskoDelo.originalnoDelo.originalno = true;
+        }
+
+        const podaciOAutorima = autorskoDelo['podaci_o_autorima'];
+        const autori = podaciOAutorima["autor"];
+        console.log(autori)
+        if (Array.isArray(autori)) {
+          a1.autorskoDelo.tipAutora = "poznati";
+          a1.autorskoDelo.autori = [];
+          for(let autor of autori) {
+            a1.autorskoDelo.autori.push(this.kreirajPoznatogAutora(autor));
+          }
+        } else {
+          if (autori['anonimni_autor']._text === 'true') {
+            a1.autorskoDelo.tipAutora = "anonimni";
+          } else if (autori['podnosilac']._text === 'true') {
+            a1.autorskoDelo.tipAutora = "podnosilac";
+          } else {
+            a1.autorskoDelo.tipAutora = "poznati";
+            a1.autorskoDelo.autori = [];
+            a1.autorskoDelo.autori.push(this.kreirajPoznatogAutora(autori));
+          }
+        }
+
+
         a1.autorskoDelo.primer = new Primer();
-        if (autorskoDelo["primer_autorskog_dela"]) {
-          const primer = autorskoDelo["primer_autorskog_dela"];
+        const primer = autorskoDelo["primer_autorskog_dela"];
+        if (primer) {
           a1.autorskoDelo.primer.putanjaDoPrimera = primer["putanja_do_primera"]._text;
         }
 
         a1.autorskoDelo.opis = new Opis();
-        if (autorskoDelo["opis_autorskog_dela"]) {
-          const opis = autorskoDelo["opis_autorskog_dela"];
+        const opis = autorskoDelo["opis_autorskog_dela"];
+        if (opis) {
           a1.autorskoDelo.opis.putanjaDoOpisa = opis["putanja_do_opisa"]._text;
         }
       }
     }
     return a1;
+  }
+
+  private kreirajPoznatogAutora(autorObj) {
+    const autor = new Autor();
+    autor.ime = autorObj['licni_podaci']['ns2:puno_ime']['ns2:ime']._text;
+    autor.prezime = autorObj['licni_podaci']['ns2:puno_ime']['ns2:prezime']._text;
+    if (autorObj['godina_smrti']) {
+      autor.godinaSmrti = autorObj['godina_smrti']._text;
+    }
+    return autor;
   }
 }

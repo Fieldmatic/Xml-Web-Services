@@ -23,7 +23,7 @@ export class DodajAutoraDijalogComponent implements OnInit {
       pseudonim: new FormControl(''),
       godinaSmrti: new FormControl(''),
       drzavljanstvo: this.formBuilder.group({
-        tip: new FormControl(''),
+        tip: new FormControl('страно'),
         jmbg: new FormControl(''),
         brojPasosa: new FormControl(''),
       }),

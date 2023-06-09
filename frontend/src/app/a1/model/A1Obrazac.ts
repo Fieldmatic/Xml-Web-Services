@@ -1,3 +1,5 @@
+import {Autor} from "../components/a1-container/a1-obrazac/a1-obrazac.component";
+
 export class A1Obrazac {
   brojPrijave: string;
   statusZahteva: string;
@@ -23,27 +25,16 @@ export class Podnosilac {
   adresaPodnosioca: AdresaPodnosioca;
 
   constructor() {
-    this.tipPodnosioca = 'fizickoLice';
-    this.email = 'istevanovic3112@gmail.com';
-    this.brojTelefona = '0656564261';
-    this.ime = 'Ivana';
-    this.prezime = 'Milic';
     this.drzavljanstvo = new Drzavljanstvo();
-    this.poslovnoIme = 'milic-prom';
     this.adresaPodnosioca = new AdresaPodnosioca();
   }
 }
 
 export class Drzavljanstvo {
-  tip: string;
-  jmbg: string;
-  brojPasosa: string;
+  public tip: string;
+  public jmbg: string;
+  public brojPasosa: string;
 
-  constructor() {
-    this.tip = 'страно';
-    this.jmbg = '3112999185855';
-    this.brojPasosa = '1234567890';
-  }
 }
 
 export class AdresaPodnosioca {
@@ -52,14 +43,6 @@ export class AdresaPodnosioca {
   broj: string;
   drzava: string;
   postanskiBroj: string;
-
-  constructor() {
-    this.mesto = 'Bijeljina';
-    this.ulica = 'Nikole Tesle';
-    this.broj = '10';
-    this.drzava = 'Srbija';
-    this.postanskiBroj = '21000';
-  }
 }
 
 export class Punomocnik {
@@ -69,9 +52,6 @@ export class Punomocnik {
   adresaPunomocnika: AdresaPunomocnika;
 
   constructor() {
-    this.prijavaSePodnosiPrekoPunomocnika = false;
-    this.ime = '';
-    this.prezime = '';
     this.adresaPunomocnika = new AdresaPunomocnika();
   }
 }
@@ -82,14 +62,6 @@ export class AdresaPunomocnika {
   broj: string;
   drzava: string;
   postanskiBroj: string;
-
-  constructor() {
-    this.mesto = '';
-    this.ulica = '';
-    this.broj = '';
-    this.drzava = '';
-    this.postanskiBroj = '';
-  }
 }
 
 export class AutorskoDelo {
@@ -99,6 +71,7 @@ export class AutorskoDelo {
   uRadnomOdnosu: boolean;
   nacinKoriscenja: string;
   tipAutora: string;
+  autori: Autor[];
   originalnoDelo: OriginalnoDelo;
   primer: Primer;
   opis: Opis;
@@ -107,11 +80,8 @@ export class AutorskoDelo {
 export class OriginalnoDelo {
   originalno: boolean;
   naslov: string;
-
-  constructor() {
-    this.originalno = true;
-    this.naslov = '';
-  }
+  imeOriginalnogAutora: string;
+  prezimeOriginalnogAutora: string;
 }
 
 export class Primer {
