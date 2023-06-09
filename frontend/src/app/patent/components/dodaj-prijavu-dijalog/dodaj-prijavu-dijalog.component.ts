@@ -1,4 +1,4 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -19,7 +19,7 @@ export class DodajPrijavuDijalogComponent implements OnInit {
     this.prijavaForm = this.formBuilder.group({
       brojPrijave: new FormControl(''),
       datumPodnosenja: new FormControl(''),
-      oznakaDrzave: new FormControl(''),
+      oznakaDrzave: new FormControl('', Validators.pattern('[A-Z][A-Z]')),
       });
   }
 
@@ -28,6 +28,8 @@ export class DodajPrijavuDijalogComponent implements OnInit {
   }
 
   dodajPrijavu() {
-    this.dialogRef.close(this.prijavaForm.value);
+    if (this.prijavaForm.valid) {
+      this.dialogRef.close(this.prijavaForm.value);
+    }
   }
 }

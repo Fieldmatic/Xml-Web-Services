@@ -3,7 +3,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DodajAutoraDijalogComponent } from './dodaj-autora-dijalog/dodaj-autora-dijalog.component';
@@ -62,34 +62,34 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
     this.a1Form = this.formBuilder.group({
       podnosilac: this.formBuilder.group({
         tipPodnosioca: new FormControl(this.a1Obrazac?.podnosilac?.tipPodnosioca || 'Fizicko_Lice'),
-        email: new FormControl(this.a1Obrazac?.podnosilac?.email || 'istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl(this.a1Obrazac?.podnosilac?.brojTelefona || '0656564261'),
-        ime: new FormControl(this.a1Obrazac?.podnosilac?.ime || 'Sipak'),
-        prezime: new FormControl(this.a1Obrazac?.podnosilac?.prezime || 'Milic'),
+        email: new FormControl(this.a1Obrazac?.podnosilac?.email || 'istevanovic3112@gmail.com', [Validators.pattern('[^@]+@[^\\.]+\\..+'), Validators.required]),
+        brojTelefona: new FormControl(this.a1Obrazac?.podnosilac?.brojTelefona || '0656564261', [Validators.pattern('[+]?[0-9]*'), Validators.minLength(9), Validators.required]),
+        ime: new FormControl(this.a1Obrazac?.podnosilac?.ime || 'Marija',  [Validators.pattern('^[a-zA-Z]+$')]),
+        prezime: new FormControl(this.a1Obrazac?.podnosilac?.prezime || "Krstanovic", [Validators.pattern('^[a-zA-Z]+$')]),
         drzavljanstvo: this.formBuilder.group({
           tip: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.tip || 'страно'),
-          jmbg: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.jmbg || '3112999185855'),
-          brojPasosa: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.brojPasosa || '1234567890'),
+          jmbg: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.jmbg || '3112999185855', Validators.pattern('^[0-9]{13}$')),
+          brojPasosa: new FormControl(this.a1Obrazac?.podnosilac?.drzavljanstvo?.brojPasosa || '1234567890', [Validators.minLength(8)]),
         }),
         poslovnoIme: new FormControl(this.a1Obrazac?.podnosilac?.poslovnoIme || 'milic-prom'),
         adresaPodnosioca: this.formBuilder.group({
-          mesto: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.mesto || 'Bijeljina'),
-          ulica: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.ulica || 'Nikole Tesle'),
-          broj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.broj || '10'),
-          drzava: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.drzava || 'Srbija'),
-          postanskiBroj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.postanskiBroj || '21000'),
+          mesto: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.mesto || 'Bijeljina', Validators.required),
+          ulica: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.ulica || 'Nikole Tesle', Validators.required),
+          broj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.broj || '10', Validators.required),
+          drzava: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.drzava || 'Srbija', Validators.required),
+          postanskiBroj: new FormControl(this.a1Obrazac?.podnosilac?.adresaPodnosioca?.postanskiBroj || '21000', [Validators.pattern('[0-9]{5}'), Validators.required]),
         }),
       }),
       punomocnik: this.formBuilder.group({
         prijavaSePodnosiPrekoPunomocnika: new FormControl(this.a1Obrazac?.punomocnik?.prijavaSePodnosiPrekoPunomocnika || false),
-        ime: new FormControl(this.a1Obrazac?.punomocnik?.ime || ''),
-        prezime: new FormControl(this.a1Obrazac?.punomocnik?.prezime || ''),
+        ime: new FormControl(this.a1Obrazac?.punomocnik?.ime || 'Gordana', [Validators.pattern('^[a-zA-Z]+$')]),
+        prezime: new FormControl(this.a1Obrazac?.punomocnik?.prezime || 'Milic', [Validators.pattern('^[a-zA-Z]+$')]),
         adresaPunomocnika: this.formBuilder.group({
-          mesto: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.mesto || ''),
-          ulica: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.ulica || ''),
-          broj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.broj || ''),
-          drzava: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.drzava || ''),
-          postanskiBroj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.postanskiBroj || ''),
+          mesto: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.mesto || 'Novi Sad'),
+          ulica: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.ulica || 'Nikole Tesle'),
+          broj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.broj || '10'),
+          drzava: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.drzava || 'Srbija'),
+          postanskiBroj: new FormControl(this.a1Obrazac?.punomocnik?.adresaPunomocnika?.postanskiBroj || '21000', [Validators.pattern('[0-9]{5}')]),
         }),
       }),
       autorskoDelo: this.formBuilder.group({
@@ -97,16 +97,16 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
         vrstaDela: new FormControl(this.a1Obrazac?.autorskoDelo?.vrstaDela || 'патенти'),
         formaZapisa: new FormControl(this.a1Obrazac?.autorskoDelo?.formaZapisa || 'рукопис'),
         uRadnomOdnosu: new FormControl(this.a1Obrazac?.autorskoDelo?.uRadnomOdnosu || false),
-        nacinKoriscenja: new FormControl(this.a1Obrazac?.autorskoDelo?.nacinKoriscenja || 'da se koristi bre'),
+        nacinKoriscenja: new FormControl(this.a1Obrazac?.autorskoDelo?.nacinKoriscenja || 'Da se koristi', [Validators.required]),
         tipAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.tipAutora || 'anonimni'),
         originalnoDelo: this.formBuilder.group({
           originalno: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.originalno?.toString() || 'true'),
-          naslov: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.naslov || 'Covek po imenu Ivee'),
-          imeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.imeOriginalnogAutora || 'Ime'),
-          prezimeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.prezimeOriginalnogAutora || 'Prezime'),
+          naslov: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.naslov || 'Covek po imenu Uve'),
+          imeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.imeOriginalnogAutora),
+          prezimeOriginalnogAutora: new FormControl(this.a1Obrazac?.autorskoDelo?.originalnoDelo?.prezimeOriginalnogAutora),
         }),
         primer: this.formBuilder.group({
-          putanjaDoPrimera: new FormControl(),
+          putanjaDoPrimera: new FormControl('', Validators.required),
         }),
         opis: this.formBuilder.group({
           putanjaDoOpisa: new FormControl(),
@@ -128,35 +128,37 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    let emailKlijenta = this.loggedInUser.email;
+    if (this.a1Form.valid) {
+      let emailKlijenta = this.loggedInUser.email;
 
-    let zahtev =
-      '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
+      let zahtev =
+        '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_autorska_prava xmlns="http://www.xml.tim14.rs/autorska_prava" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
 
-    let prijava = this.kreirajPrijavu();
+      let prijava = this.kreirajPrijavu();
 
-    let podnosilac = this.kreirajPodnosioca(
-      this.a1Form.get('podnosilac').value
-    );
+      let podnosilac = this.kreirajPodnosioca(
+        this.a1Form.get('podnosilac').value
+      );
 
-    let punomocnik = this.kreirajPunomocnika(
-      this.a1Form.get('punomocnik').value
-    );
-    let autorskoDelo = this.kreirajAutorskoDelo(
-      this.a1Form.get('autorskoDelo').value
-    );
+      let punomocnik = this.kreirajPunomocnika(
+        this.a1Form.get('punomocnik').value
+      );
+      let autorskoDelo = this.kreirajAutorskoDelo(
+        this.a1Form.get('autorskoDelo').value
+      );
 
-    zahtev += '<emailKlijenta>' + emailKlijenta + '</emailKlijenta>';
-    zahtev += prijava;
-    zahtev += podnosilac;
-    zahtev += punomocnik;
-    zahtev += autorskoDelo;
+      zahtev += '<emailKlijenta>' + emailKlijenta + '</emailKlijenta>';
+      zahtev += prijava;
+      zahtev += podnosilac;
+      zahtev += punomocnik;
+      zahtev += autorskoDelo;
 
-    this.a1Service.sacuvajObrazacIFajlove(
-      zahtev,
-      this.primerDelaFile,
-      this.opisDelaFile
-    );
+      this.a1Service.sacuvajObrazacIFajlove(
+        zahtev,
+        this.primerDelaFile,
+        this.opisDelaFile
+      );
+    }
   }
 
   sacuvajOpisDela(event) {
@@ -231,7 +233,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       deloForm['nacinKoriscenja'] +
       '</nacin_koriscenja_autorskog_dela>';
 
-    console.log(autorskoDelo)
     return autorskoDelo;
   }
 
@@ -308,7 +309,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
   }
 
   kreirajDrzavljanstvo(tip: string, jmbg: string, brojPasosa: string): string {
-    console.log(tip)
     let drzavljanstvo = '<ks:drzavljanstvo>';
     drzavljanstvo += '<ks:tip_drzavljanstva>' + tip + '</ks:tip_drzavljanstva>';
     drzavljanstvo += '<ks:jmbg>' + jmbg + '</ks:jmbg>';
@@ -327,7 +327,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       podaciOAutorima += this.kreirajAutora(autor);
     }
     podaciOAutorima += '</podaci_o_autorima>';
-    console.log(podaciOAutorima)
     return podaciOAutorima;
   }
 
@@ -356,7 +355,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
       autor += '<godina_smrti>' + autorObj.godinaSmrti + '</godina_smrti>';
       autor += '<anonimni_autor>' + false + '</anonimni_autor>';
     } else {
-      console.log(autorObj)
       autor += '<pseudonim>' + autorObj.pseudonim + '</pseudonim>';
       autor += this.kreirajLicnePodatkeSaPunimImenomIAdresom(autorObj);
       autor += this.kreirajDrzavljanstvo(autorObj.drzavljanstvo.tip, autorObj.drzavljanstvo.jmbg, autorObj.drzavljanstvo.brojPasosa);
@@ -421,7 +419,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((autorForm) => {
       if (autorForm) {
-        console.log(autorForm);
         this.autori.push(autorForm);
       }
     });
@@ -434,7 +431,6 @@ export class A1ObrazacComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((autorForm) => {
       if (autorForm) {
-        console.log(autorForm);
         this.originalniAutor = autorForm;
       }
     });

@@ -17,6 +17,9 @@
               id="nazivPronalaskaRS"
               formControlName="nazivPronalaskaRS"
             />
+            <div *ngIf="patent.get('nazivPronalaska').get('nazivPronalaskaRS').touched && patent.get('nazivPronalaska').get('nazivPronalaskaRS').invalid" class="text-danger">
+              Naziv pronalaska je obavezno polje.
+            </div>
           </div>
           <div class="mb-3 w-35">
             <label for="nazivPronalaskaENG" class="form-label">Naziv pronalaska na engleskom</label>
@@ -26,6 +29,9 @@
               id="nazivPronalaskaENG"
               formControlName="nazivPronalaskaENG"
             />
+            <div *ngIf="patent.get('nazivPronalaska').get('nazivPronalaskaENG').touched && patent.get('nazivPronalaska').get('nazivPronalaskaENG').invalid" class="text-danger">
+              Naziv pronalaska je obavezno polje.
+            </div>
           </div>
         </div>
       </div>
@@ -275,6 +281,9 @@
             id="email"
             formControlName="email"
           />
+          <div *ngIf="patent.get('pronalazac').get('email').touched && patent.get('pronalazac').get('email').invalid" class="text-danger">
+            Neispravan format email-a.
+          </div>
         </div>
         <div class="mb-3 w-25">
           <label for="brTelefona" class="form-label">Broj telefona</label>
@@ -284,6 +293,9 @@
             id="brTelefona"
             formControlName="brojTelefona"
           />
+          <div *ngIf="patent.get('pronalazac').get('brojTelefona').touched && patent.get('pronalazac').get('brojTelefona').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
         </div>
         <div class="ms-5" style="width: 30%">
           <label for="brojFaksa" class="form-label">Broj faksa</label>
@@ -293,12 +305,16 @@
             id="brojFaksa"
             formControlName="brojFaksa"
           />
+          <div *ngIf="patent.get('pronalazac').get('brojFaksa').touched && patent.get('pronalazac').get('brojFaksa').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
         </div>
       </div>
 
       <!-- puno ime -->
       <div
         class="d-flex"
+        *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value"
       >
         <div class="mb-3 me-5" style="width: 30%">
           <label for="ime" class="form-label">Ime</label>
@@ -308,6 +324,9 @@
             id="ime"
             formControlName="ime"
           />
+          <div *ngIf="patent.get('pronalazac').get('ime').touched && patent.get('pronalazac').get('ime').invalid" class="text-danger">
+            Ime može imati samo slova.
+          </div>
         </div>
         <div class="mb-3 me-5" style="width: 30%">
           <label for="prezime" class="form-label">Prezime</label>
@@ -317,11 +336,13 @@
             id="prezime"
             formControlName="prezime"
           />
-        </div>
+          <div *ngIf="patent.get('pronalazac').get('prezime').touched && patent.get('pronalazac').get('prezime').invalid" class="text-danger">
+            Prezime može imati samo slova.
+          </div>        </div>
       </div>
 
       <!-- adresa pronalazaca -->
-      <div formGroupName="adresaPronalazaca" class="d-flex flex-column">
+      <div formGroupName="adresaPronalazaca" class="d-flex flex-column" *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value">
         <h3>Adresa pronalazaca</h3>
         <div class="d-flex">
           <div class="mb-3 me-5" style="width: 30%">
@@ -373,6 +394,9 @@
                 id="postanskiBroj"
                 formControlName="postanskiBroj"
               />
+              <div *ngIf="patent.get('pronalazac').get('adresaPronalazaca').get('postanskiBroj').touched && patent.get('pronalazac').get('adresaPronalazaca').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
             </div>
           </div>
         </div>
@@ -433,6 +457,9 @@
               id="ime"
               formControlName="ime"
             />
+            <div *ngIf="patent.get('punomocnik').get('ime').touched && patent.get('punomocnik').get('ime').invalid" class="text-danger">
+              Ime može imati samo slova.
+            </div>
           </div>
           <div class="mb-3 me-5" style="width: 30%">
             <label for="prezime" class="form-label">Prezime</label>
@@ -442,6 +469,9 @@
               id="prezime"
               formControlName="prezime"
             />
+            <div *ngIf="patent.get('punomocnik').get('prezime').touched && patent.get('punomocnik').get('prezime').invalid" class="text-danger">
+              Prezime može imati samo slova.
+            </div>
           </div>
         </div>
         <div class="d-flex mt-2">
@@ -453,6 +483,9 @@
               id="email"
               formControlName="email"
             />
+            <div *ngIf="patent.get('punomocnik').get('email').touched && patent.get('punomocnik').get('email').invalid" class="text-danger">
+              Neispravan format email-a.
+            </div>
           </div>
           <div class="mb-3 w-25">
             <label for="brojTelefona" class="form-label">Broj telefona</label>
@@ -462,6 +495,9 @@
               id="brojTelefona"
               formControlName="brojTelefona"
             />
+            <div *ngIf="patent.get('punomocnik').get('brojTelefona').touched && patent.get('punomocnik').get('brojTelefona').invalid" class="text-danger">
+              Broj telefona mora imati minimalno 9 cifara.
+            </div>
           </div>
           <div class="ms-5" style="width: 30%">
             <label for="brojFaksa" class="form-label">Broj faksa</label>
@@ -471,6 +507,9 @@
               id="brojFaksa"
               formControlName="brojFaksa"
             />
+            <div *ngIf="patent.get('punomocnik').get('brojFaksa').touched && patent.get('punomocnik').get('brojFaksa').invalid" class="text-danger">
+              Broj telefona mora imati minimalno 9 cifara.
+            </div>
           </div>
         </div>
 
@@ -486,6 +525,9 @@
                 id="ulica"
                 formControlName="ulica"
               />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('ulica').touched && patent.get('punomocnik').get('adresaPunomocnika').get('ulica').invalid" class="text-danger">
+                Ulica je obavezna.
+              </div>
             </div>
             <div class="mb-3 me-5" style="width: 30%">
               <label for="broj" class="form-label">Broj</label>
@@ -495,6 +537,9 @@
                 id="broj"
                 formControlName="broj"
               />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('broj').touched && patent.get('punomocnik').get('adresaPunomocnika').get('broj').invalid" class="text-danger">
+                Broj je obavezan.
+              </div>
             </div>
             <div class="mb-3 me-5" style="width: 30%">
               <label for="grad" class="form-label">Grad</label>
@@ -504,6 +549,9 @@
                 id="grad"
                 formControlName="mesto"
               />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('mesto').touched && patent.get('punomocnik').get('adresaPunomocnika').get('mesto').invalid" class="text-danger">
+                Grad je obavezan.
+              </div>
             </div>
           </div>
           <div>
@@ -516,6 +564,9 @@
                   id="drzava"
                   formControlName="drzava"
                 />
+                <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('drzava').touched && patent.get('punomocnik').get('adresaPunomocnika').get('drzava').invalid" class="text-danger">
+                  Drzava je obavezna.
+                </div>
               </div>
               <div class="mb-3 me-5" style="width: 30%">
                 <label for="postanskiBroj" class="form-label"
@@ -527,6 +578,9 @@
                   id="postanskiBroj"
                   formControlName="postanskiBroj"
                 />
+                <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').touched && patent.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').invalid" class="text-danger">
+                  Poštanski broj mora imati tačno 5 cifara.
+                </div>
               </div>
             </div>
           </div>
@@ -616,6 +670,9 @@
                 id="postanskiBroj"
                 formControlName="postanskiBroj"
               />
+              <div *ngIf="patent.get('podacioDostavljanju').get('adresa').get('postanskiBroj').touched && patent.get('podacioDostavljanju').get('adresa').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
             </div>
           </div>
         </div>

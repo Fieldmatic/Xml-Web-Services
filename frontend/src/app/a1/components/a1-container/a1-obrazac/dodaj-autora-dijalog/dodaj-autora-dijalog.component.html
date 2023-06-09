@@ -29,6 +29,9 @@
             class="form-control"
             id="ime"
           />
+          <div *ngIf="autorForm.get('ime').touched && autorForm.get('ime').invalid" class="text-danger">
+            Ime mora imati samo slova.
+          </div>
         </div>
         <div class="mb-3 me-5" style="width: 30%">
           <label for="prezime" class="form-label">Prezime</label>
@@ -38,6 +41,9 @@
             class="form-control"
             id="prezime"
           />
+          <div *ngIf="autorForm.get('prezime').touched && autorForm.get('prezime').invalid" class="text-danger">
+            Prezime mora imati samo slova.
+          </div>
         </div>
         <div class="mb-3 me-5" style="width: 30%">
           <label for="pseudonim" class="form-label"
@@ -66,6 +72,9 @@
             class="form-control"
             id="godinaSmrti"
           />
+          <div *ngIf="autorForm.get('godinaSmrti').touched && autorForm.get('godinaSmrti').invalid" class="text-danger">
+            Godina smrti mora imati samo cifre.
+          </div>
         </div>
       </div>
 
@@ -93,6 +102,9 @@
               id="jmbg"
               formControlName="jmbg"
             />
+            <div *ngIf="autorForm.get('drzavljanstvo').get('jmbg').touched && autorForm.get('drzavljanstvo').get('jmbg').invalid" class="text-danger">
+              Jmbg mora imati tačno 13 cifara.
+            </div>
           </div>
           <div class="mb-3" style="width: 30%">
             <label for="brojPasosa" class="form-label">Broj pasosa</label>
@@ -102,6 +114,9 @@
               id="brojPasosa"
               formControlName="brojPasosa"
             />
+            <div *ngIf="autorForm.get('drzavljanstvo').get('brojPasosa').touched && autorForm.get('drzavljanstvo').get('brojPasosa').invalid" class="text-danger">
+              Minimalna dužina broja pasoša je 8.
+            </div>
           </div>
         </div>
       </div>
@@ -163,6 +178,9 @@
                 id="postanskiBroj"
                 formControlName="postanskiBroj"
               />
+              <div *ngIf="autorForm.get('adresa').get('postanskiBroj').touched && autorForm.get('adresa').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
             </div>
           </div>
         </div>

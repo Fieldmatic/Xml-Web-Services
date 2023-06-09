@@ -42,6 +42,9 @@
             id="email"
             formControlName="email"
           />
+          <div *ngIf="a1Form.get('podnosilac').get('email').touched && a1Form.get('podnosilac').get('email').invalid" class="text-danger">
+            Neispravan format email-a.
+          </div>
         </div>
         <div class="mb-3 w-25">
           <label for="brTelefona" class="form-label">Broj telefona</label>
@@ -51,6 +54,9 @@
             id="brTelefona"
             formControlName="brojTelefona"
           />
+          <div *ngIf="a1Form.get('podnosilac').get('brojTelefona').touched && a1Form.get('podnosilac').get('brojTelefona').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
         </div>
       </div>
 
@@ -69,6 +75,9 @@
             id="ime"
             formControlName="ime"
           />
+          <div *ngIf="a1Form.get('podnosilac').get('ime').touched && a1Form.get('podnosilac').get('ime').invalid" class="text-danger">
+            Ime može imati samo slova.
+          </div>
         </div>
         <div class="mb-3 me-5" style="width: 30%">
           <label for="prezime" class="form-label">Prezime</label>
@@ -78,6 +87,9 @@
             id="prezime"
             formControlName="prezime"
           />
+          <div *ngIf="a1Form.get('podnosilac').get('prezime').touched && a1Form.get('podnosilac').get('prezime').invalid" class="text-danger">
+            Prezime može imati samo slova.
+          </div>
         </div>
       </div>
 
@@ -125,6 +137,9 @@
               id="jmbg"
               formControlName="jmbg"
             />
+            <div *ngIf="a1Form.get('podnosilac').get('drzavljanstvo').get('jmbg').touched && a1Form.get('podnosilac').get('drzavljanstvo').get('jmbg').invalid" class="text-danger">
+              Jmbg mora imati tačno 13 cifara.
+            </div>
           </div>
           <div class="mb-3" style="width: 30%">
             <label for="brojPasosa" class="form-label">Broj pasosa</label>
@@ -134,6 +149,9 @@
               id="brojPasosa"
               formControlName="brojPasosa"
             />
+            <div *ngIf="a1Form.get('podnosilac').get('drzavljanstvo').get('brojPasosa').touched && a1Form.get('podnosilac').get('drzavljanstvo').get('brojPasosa').invalid" class="text-danger">
+              Minimalna dužina broja pasoša je 8.
+            </div>
           </div>
         </div>
       </div>
@@ -150,6 +168,9 @@
               id="ulica"
               formControlName="ulica"
             />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('ulica').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('ulica').invalid" class="text-danger">
+              Ulica je obavezna.
+            </div>
           </div>
           <div class="mb-3 me-5" style="width: 30%">
             <label for="broj" class="form-label">Broj</label>
@@ -159,6 +180,9 @@
               id="broj"
               formControlName="broj"
             />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('broj').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('broj').invalid" class="text-danger">
+              Broj je obavezan.
+            </div>
           </div>
           <div class="mb-3 me-5" style="width: 30%">
             <label for="grad" class="form-label">Grad</label>
@@ -168,6 +192,9 @@
               id="grad"
               formControlName="mesto"
             />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('mesto').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('mesto').invalid" class="text-danger">
+              Grad je obavezan.
+            </div>
           </div>
         </div>
         <div>
@@ -180,6 +207,9 @@
                 id="drzava"
                 formControlName="drzava"
               />
+              <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('drzava').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('drzava').invalid" class="text-danger">
+                Država je obavezna.
+              </div>
             </div>
             <div class="mb-3 me-5" style="width: 30%">
               <label for="postanskiBroj" class="form-label"
@@ -191,6 +221,9 @@
                 id="postanskiBroj"
                 formControlName="postanskiBroj"
               />
+              <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('postanskiBroj').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
             </div>
           </div>
         </div>
@@ -230,6 +263,9 @@
               id="ime"
               formControlName="ime"
             />
+            <div *ngIf="a1Form.get('punomocnik').get('ime').touched && a1Form.get('punomocnik').get('ime').invalid" class="text-danger">
+              Ime može imati samo slova.
+            </div>
           </div>
           <div class="mb-3 me-5" style="width: 30%">
             <label for="prezime" class="form-label">Prezime</label>
@@ -239,6 +275,9 @@
               id="prezime"
               formControlName="prezime"
             />
+            <div *ngIf="a1Form.get('punomocnik').get('prezime').touched && a1Form.get('punomocnik').get('prezime').invalid" class="text-danger">
+              Prezime može imati samo slova.
+            </div>
           </div>
         </div>
 
@@ -295,6 +334,9 @@
                   id="postanskiBroj"
                   formControlName="postanskiBroj"
                 />
+                <div *ngIf="a1Form.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').touched && a1Form.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').invalid" class="text-danger">
+                  Poštanski broj mora imati tačno 5 cifara.
+                </div>
               </div>
             </div>
           </div>
@@ -378,6 +420,9 @@
             id="nacinKoriscenja"
             formControlName="nacinKoriscenja"
           />
+          <div *ngIf="a1Form.get('autorskoDelo').get('nacinKoriscenja').touched && a1Form.get('autorskoDelo').get('nacinKoriscenja').invalid" class="text-danger">
+            Morate navesti način korišćenja.
+          </div>
         </div>
 
         <!-- autori -->
@@ -542,6 +587,9 @@
                   formControlName="putanjaDoPrimera"
                   (change)="sacuvajPrimerDela($event)"
                 />
+                <div *ngIf="a1Form.get('autorskoDelo').get('primer').get('putanjaDoPrimera').touched && a1Form.get('autorskoDelo').get('primer').get('putanjaDoPrimera').invalid" class="text-danger">
+                  Primer je obavezno polje.
+                </div>
               </div>
               <div class="mb-3 me-5" style="width: 100%" formGroupName="opis">
                 <label for="opisAutorskogDela" class="form-label"

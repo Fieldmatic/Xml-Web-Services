@@ -36,6 +36,9 @@
             class="form-control"
             id="oznakaDrzave"
           />
+          <div *ngIf="prijavaForm.get('oznakaDrzave').touched && prijavaForm.get('oznakaDrzave').invalid" class="text-danger">
+            Oznaka države mora imati tačno dva velika slova.
+          </div>
         </div>
       </div>
       <div mat-dialog-actions class="d-flex justify-content-between mt-3">

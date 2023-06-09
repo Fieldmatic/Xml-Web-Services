@@ -4,7 +4,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, Validators,
 } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {Prijava} from '../../model/Prijava';
@@ -52,8 +52,8 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
   setupForm() {
     this.patent = this.formBuilder.group({
       nazivPronalaska: this.formBuilder.group({
-        nazivPronalaskaRS: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaRS || 'Srpski pronalazak'),
-        nazivPronalaskaENG: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaENG || 'Engleski pronalazak'),
+        nazivPronalaskaRS: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaRS || 'Srpski pronalazak', [Validators.required]),
+        nazivPronalaskaENG: new FormControl(this.patentObrazac?.patent.nazivPronalaska.nazivPronalaskaENG || 'Engleski pronalazak', [Validators.required]),
       }),
       podnosilac: this.formBuilder.group({
         tipPodnosioca: new FormControl(this.patentObrazac?.patent.podnosilac?.tipPodnosioca || 'fizickoLice'),
@@ -79,33 +79,33 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
       }),
       pronalazac: this.formBuilder.group({
         neZeliDaBudeNaveden: new FormControl(this.patentObrazac?.patent.pronalazac?.neZeliDaBudeNaveden || false),
-        email: new FormControl(this.patentObrazac?.patent.pronalazac?.email || 'istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl(this.patentObrazac?.patent.pronalazac?.brojTelefona || '0656564261'),
-        brojFaksa: new FormControl(this.patentObrazac?.patent.pronalazac?.brojFaksa || '0552502534'),
-        ime: new FormControl(this.patentObrazac?.patent.pronalazac?.ime || 'Ivana'),
-        prezime: new FormControl(this.patentObrazac?.patent.pronalazac?.prezime || 'Milic'),
+        email: new FormControl(this.patentObrazac?.patent.pronalazac?.email || 'istevanovic3112@gmail.com', [Validators.pattern('[^@]+@[^\\.]+\\..+')]),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.pronalazac?.brojTelefona || '0656564261', [Validators.pattern('[+]?[0-9]*'), Validators.minLength(9)]),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.pronalazac?.brojFaksa || '0552502534', [Validators.pattern('[+]?[0-9]*'), Validators.minLength(9)]),
+        ime: new FormControl(this.patentObrazac?.patent.pronalazac?.ime || 'Ivana', [Validators.pattern('^[a-zA-Z]+$')]),
+        prezime: new FormControl(this.patentObrazac?.patent.pronalazac?.prezime || 'Milic', [Validators.pattern('^[a-zA-Z]+$')]),
         adresaPronalazaca: this.formBuilder.group({
           mesto: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.mesto || 'Bijeljina'),
           ulica: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.ulica || 'Nikole Tesle'),
           broj: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.broj || '10'),
           drzava: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.drzava || 'Srbija'),
-          postanskiBroj: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.postanskiBroj || '21000'),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.pronalazac?.adresaPronalazaca?.postanskiBroj || '21000', [Validators.pattern('[0-9]{5}')]),
         }),
       }),
       punomocnik: this.formBuilder.group({
         punomocnikZaPrijemPismena: new FormControl(this.patentObrazac?.patent.punomocnik?.punomocnikZaPrijemPismena || false),
         tipPunomocnika: new FormControl(this.patentObrazac?.patent.punomocnik?.tipPunomocnika || 'punomocnik_za_zastupanje'),
-        email: new FormControl(this.patentObrazac?.patent.punomocnik?.email || 'istevanovic3112@gmail.com'),
-        brojTelefona: new FormControl(this.patentObrazac?.patent.punomocnik?.brojTelefona || '0656564261'),
-        brojFaksa: new FormControl(this.patentObrazac?.patent.punomocnik?.brojFaksa || '0552502534'),
-        ime: new FormControl(this.patentObrazac?.patent.punomocnik?.ime || 'Ivana'),
-        prezime: new FormControl(this.patentObrazac?.patent.punomocnik?.prezime || 'Stevanovic'),
+        email: new FormControl(this.patentObrazac?.patent.punomocnik?.email || 'istevanovic3112@gmail.com', [Validators.pattern('[^@]+@[^\\.]+\\..+'), Validators.required]),
+        brojTelefona: new FormControl(this.patentObrazac?.patent.punomocnik?.brojTelefona || '0656564261', [Validators.pattern('[+]?[0-9]*'), Validators.minLength(9), Validators.required]),
+        brojFaksa: new FormControl(this.patentObrazac?.patent.punomocnik?.brojFaksa || '0552502534', [Validators.pattern('[+]?[0-9]*'), Validators.minLength(9), Validators.required]),
+        ime: new FormControl(this.patentObrazac?.patent.punomocnik?.ime || 'Ivana', [Validators.pattern('^[a-zA-Z]+$'), Validators.required]),
+        prezime: new FormControl(this.patentObrazac?.patent.punomocnik?.prezime || 'Stevanovic', [Validators.pattern('^[a-zA-Z]+$'), Validators.required]),
         adresaPunomocnika: this.formBuilder.group({
-          mesto: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.mesto || 'Novi Sad'),
-          ulica: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.ulica || 'Dr ivana ribara'),
-          broj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.broj || '5'),
-          drzava: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.drzava || 'Srbija'),
-          postanskiBroj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.postanskiBroj || '21000'),
+          mesto: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.mesto || 'Novi Sad', Validators.required),
+          ulica: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.ulica || 'Dr ivana ribara', Validators.required),
+          broj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.broj || '5', Validators.required),
+          drzava: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.drzava || 'Srbija', Validators.required),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.punomocnik?.adresaPunomocnika?.postanskiBroj || '21000', [Validators.pattern('[0-9]{5}'), Validators.required]),
         }),
       }),
       podacioDostavljanju: this.formBuilder.group({
@@ -115,7 +115,7 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
           ulica: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.ulica || 'Dr Ivana ribara'),
           broj: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.broj || '5'),
           drzava: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.drzava || 'Srbija'),
-          postanskiBroj: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.postanskiBroj || '21000'),
+          postanskiBroj: new FormControl(this.patentObrazac?.patent.podaciODostavljanju?.adresa?.postanskiBroj || '21000', [Validators.pattern('[0-9]{5}')]),
         }),
       }),
       osnovnaPrijava: this.formBuilder.group({
@@ -162,44 +162,46 @@ export class PatentObrazacComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(Xonomy.harvest())
-    let podnosilacXonomy = Xonomy.harvest();
-    let zahtev =
-      '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_priznanje_patenta xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
+    if (this.patent.valid) {
+      console.log(Xonomy.harvest())
+      let podnosilacXonomy = Xonomy.harvest();
+      let zahtev =
+        '<?xml version="1.0" encoding="UTF-8"?><zahtev_za_priznanje_patenta xmlns="http://www.xml.tim14.rs/zahtev_za_priznanje_patenta" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ks="http://www.xml.tim14.rs/korisnici">';
 
-    let prijava = this.kreirajPrijavu();
+      let prijava = this.kreirajPrijavu();
 
-    let pronalazak = this.kreirajPronalazak(this.patent.get('nazivPronalaska').value);
+      let pronalazak = this.kreirajPronalazak(this.patent.get('nazivPronalaska').value);
 
-    let podnosilac = this.kreirajPodnosioca(this.patent.get('podnosilac').value,
-      podnosilacXonomy
-    );
-    console.log(podnosilac)
+      let podnosilac = this.kreirajPodnosioca(this.patent.get('podnosilac').value,
+        podnosilacXonomy
+      );
+      console.log(podnosilac)
 
-    let pronalazac = this.kreirajPronalazaca(this.patent.get('pronalazac').value)
+      let pronalazac = this.kreirajPronalazaca(this.patent.get('pronalazac').value)
 
-    let punomocnik = this.kreirajPunomocnika(
-      this.patent.get('punomocnik').value
-    );
-    let podacioDostavljanju = this.kreirajPodatkeoDostavljanju(this.patent.get('podacioDostavljanju').value)
+      let punomocnik = this.kreirajPunomocnika(
+        this.patent.get('punomocnik').value
+      );
+      let podacioDostavljanju = this.kreirajPodatkeoDostavljanju(this.patent.get('podacioDostavljanju').value)
 
-    let osnovnaPrijava = this.kreirajOsnovnuPrijavu(this.patent.get('osnovnaPrijava').value)
+      let osnovnaPrijava = this.kreirajOsnovnuPrijavu(this.patent.get('osnovnaPrijava').value)
 
-    let ranijePrijave = this.kreirajRanijePrijave();
+      let ranijePrijave = this.kreirajRanijePrijave();
 
-    zahtev += prijava;
-    zahtev += pronalazak;
-    zahtev += podnosilac;
-    zahtev += pronalazac;
-    zahtev += punomocnik;
-    zahtev += podacioDostavljanju;
-    zahtev += osnovnaPrijava;
-    zahtev += ranijePrijave;
-    zahtev +='</zahtev_za_priznanje_patenta>'
+      zahtev += prijava;
+      zahtev += pronalazak;
+      zahtev += podnosilac;
+      zahtev += pronalazac;
+      zahtev += punomocnik;
+      zahtev += podacioDostavljanju;
+      zahtev += osnovnaPrijava;
+      zahtev += ranijePrijave;
+      zahtev += '</zahtev_za_priznanje_patenta>'
 
-    this.patentService.sacuvajObrazacIFajlove(
-      zahtev
-    );
+      this.patentService.sacuvajObrazacIFajlove(
+        zahtev
+      );
+    }
   }
 
   kreirajRanijePrijave() {

@@ -1,4 +1,4 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -18,21 +18,21 @@ export class DodajAutoraDijalogComponent implements OnInit {
   ngOnInit(): void {
     this.autorForm = this.formBuilder.group({
       preminuliAutor: new FormControl(false),
-      ime: new FormControl(''),
-      prezime: new FormControl(''),
+      ime: new FormControl('', [Validators.pattern('^[a-zA-Z]+$')]),
+      prezime: new FormControl('', [Validators.pattern('^[a-zA-Z]+$')]),
       pseudonim: new FormControl(''),
-      godinaSmrti: new FormControl(''),
+      godinaSmrti: new FormControl('', Validators.pattern('[0-9]*')),
       drzavljanstvo: this.formBuilder.group({
         tip: new FormControl('страно'),
-        jmbg: new FormControl(''),
-        brojPasosa: new FormControl(''),
+        jmbg: new FormControl('', Validators.pattern('^[0-9]{13}$')),
+        brojPasosa: new FormControl('', [Validators.minLength(8)]),
       }),
       adresa: this.formBuilder.group({
         mesto: new FormControl(''),
         ulica: new FormControl(''),
         broj: new FormControl(''),
         drzava: new FormControl(''),
-        postanskiBroj: new FormControl(''),
+        postanskiBroj: new FormControl('', [Validators.pattern('[0-9]{5}')]),
       }),
     });
   }
@@ -42,6 +42,8 @@ export class DodajAutoraDijalogComponent implements OnInit {
   }
 
   dodajAutora() {
-    this.dialogRef.close(this.autorForm.value);
+    if (this.autorForm.valid) {
+      this.dialogRef.close(this.autorForm.value);
+    }
   }
 }
