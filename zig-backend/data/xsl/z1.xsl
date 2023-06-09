@@ -61,6 +61,12 @@
                 <xsl:variable name="taksa_za_graficko_resenje" select="z1:zahtev_za_priznanje_ziga/z1:takse/z1:taksa_za_graficko_resenje/."/>
                 <xsl:variable name="boje_znaka" select="z1:zahtev_za_priznanje_ziga/z1:znak/z1:boje_znaka/."/>
                 <xsl:variable name="izgled_znaka" select="z1:zahtev_za_priznanje_ziga/z1:Prilozi_uz_zahtev/z1:primerak_znaka"/>
+                <xsl:variable name="status" select="z1:zahtev_za_priznanje_ziga/z1:statusZahteva"/>
+                <xsl:variable name="broj_prijave" select="z1:zahtev_za_priznanje_ziga/z1:prijava/z1:broj_prijave"/>
+                <xsl:variable name="split_parts" select="tokenize($izgled_znaka, 'z1')" />
+                <xsl:variable name="path_name" select="tokenize($split_parts[2], '/')"/>
+                <xsl:variable name="path" select="$path_name[2]"/>
+                <xsl:variable name="name" select="$path_name[3]"/>
 
                 <div class="container">
                     <h2>ЗАХТЕВ ЗА ПРИЗНАЊЕ ЖИГА</h2>
@@ -155,7 +161,7 @@
                             <td style="border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 5%; font-weight: bold">a)</td>
                             <td style="text-align: left; border-bottom: 1px solid; border-right: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 32%">колективни жиг</td>
                             <td style="text-align: center; border-bottom: 1px solid; border-right: 1px solid; padding-top: 2px; padding-bottom: 2px"><xsl:if test="z1:zahtev_za_priznanje_ziga/z1:vrsta_ziga='KOLEKTIVNI'">X</xsl:if></td>
-                            <td rowspan="16" style="width: 100%; background-position: center; background-repeat: no-repeat; background-size: contain; background-image: url('{$izgled_znaka}')"></td>
+                            <td rowspan="16" style="width: 100%; background-position: center; background-repeat: no-repeat; background-size: contain; background-image: url('http://localhost:7005/api/zig/resource/{$path}/{$name}')"></td>
                         </tr>
                         <tr>
                             <td style="border-right: 1px solid; border-bottom: 1px solid; padding-left: 5.2px; padding-top: 2px; padding-bottom: 2px; width: 5%"></td>
@@ -395,6 +401,11 @@
                             заштита обухвата само тако именоване, конкретне робе/услуге у њиховом јасном и недвосмисленом
                             значењу.</p>
                     </div>
+                    <xsl:if test="not($status = 'PODNET')">
+                        <div style="width: 100%; height: 250px; display: flex; justify-content: center; align-items: center">
+                            <img src="http://localhost:7005/api/zig/data/resenja/{$broj_prijave}.png"/>
+                        </div>
+                    </xsl:if>
                 </div>
             </body>
         </html>

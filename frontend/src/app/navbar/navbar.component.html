@@ -5,12 +5,12 @@
     </div>
     <div class="authentication">
       <a mat-button routerLink="/a1/novi" *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Delo</a>
-      <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated  && loggedInUser.role ==='Sluzbenik'">Autorska
+      <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated">Autorska
         Dela</a>
       <a mat-button routerLink="/patent/novi" *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Patent</a>
-      <a mat-button *ngIf="isAuthenticated && loggedInUser.role ==='Sluzbenik'" routerLink="/patent/zahtevi">Patenti</a>
-      <a mat-button *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'" routerLink="/z1/novi">Žig</a>
-      <a mat-button *ngIf="isAuthenticated && loggedInUser.role ==='Sluzbenik'" routerLink="/z1/zahtevi">Žigovi</a>
+      <a mat-button *ngIf="isAuthenticated" routerLink="/patent/zahtevi">Patenti</a>
+      <a mat-button *ngIf="isAuthenticated" routerLink="/z1/novi">Žig</a>
+      <a mat-button *ngIf="isAuthenticated" routerLink="/z1/zahtevi">Žigovi</a>
       <a mat-button *ngIf="isAuthenticated" (click)="onLogout()">Log out</a>
       <a mat-button routerLink="/auth/login" *ngIf="!isAuthenticated" id="loginBtn">Log in</a>
       <a mat-raised-button *ngIf="!isAuthenticated" routerLink="/auth/signup">Sign up</a>

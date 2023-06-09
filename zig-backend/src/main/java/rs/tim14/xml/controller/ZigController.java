@@ -1,5 +1,8 @@
 package rs.tim14.xml.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +22,8 @@ import rs.tim14.xml.dto.requests.NaprednaPretragaRequest;
 import rs.tim14.xml.dto.requests.PretragaRequest;
 import rs.tim14.xml.dto.responses.ZahteviZaPriznanjeZigaDTO;
 import rs.tim14.xml.dto.request.IzvestajRequest;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ResenjeZahteva;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.TStatusZahteva;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.VrstaPriloga;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.service.MetadataService;
@@ -27,6 +32,7 @@ import rs.tim14.xml.service.UploadFile;
 import rs.tim14.xml.service.ZigService;
 
 import java.io.ByteArrayInputStream;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/zig")
@@ -41,26 +47,23 @@ public class ZigController {
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ZahteviZaPriznanjeZigaDTO getRequestById(@RequestParam String id) throws Exception {
         List<ZahtevZaPriznanjeZiga> zahtevi = new ArrayList<>(Collections.singleton(zigService.get(id)));
-        ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
-        return autorskaPravaDTO;
+        ZahteviZaPriznanjeZigaDTO zigDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+        return zigDTO;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(path = "/all", produces = MediaType.APPLICATION_XML_VALUE)
-    public AllResponse getAllRequests() throws Exception {
-        return zigService.getAllRequests();
-    }
+    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> getAll(@RequestHeader("role") String role) {
+        try {
+            List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjePatenta = zigService.getAll();
+            if (role.equals("Klijent")) {
+                zahteviZaPriznanjePatenta = zahteviZaPriznanjePatenta.stream().filter((zahtevZaPriznanjePatenta -> zahtevZaPriznanjePatenta.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN))).collect(Collectors.toList());
+            }
+            ZahteviZaPriznanjeZigaDTO zahteviZaPriznanjePatentaDTO = new ZahteviZaPriznanjeZigaDTO(zahteviZaPriznanjePatenta);
+            return new ResponseEntity<>(zahteviZaPriznanjePatentaDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(path = "/all/podnosilac", produces = MediaType.APPLICATION_XML_VALUE)
-    public AllResponse getSelfRequests(@RequestParam String email) throws Exception {
-        return zigService.getRequestsByUser(email);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(path = "/all/status", produces = MediaType.APPLICATION_XML_VALUE)
-    public AllResponse getAllByStatus(@RequestParam boolean processed) throws Exception {
-        return zigService.getAllByStatus(processed);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -106,11 +109,14 @@ public class ZigController {
     }
 
     @PostMapping(value = "/pretragaPoTekstu", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest) {
+    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> dobaviPoTekstu(@RequestBody PretragaRequest pretragaRequest, @RequestHeader("role") String role) {
         try {
             List<ZahtevZaPriznanjeZiga> zahtevi = zigService.dobaviPoTekstu(pretragaRequest.getFilteri());
-            ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
-            return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+            if (role.equals("Klijent")) {
+                zahtevi = zahtevi.stream().filter(zahtev -> zahtev.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN)).collect(Collectors.toList());
+            }
+            ZahteviZaPriznanjeZigaDTO zahteviDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+            return new ResponseEntity<>(zahteviDTO, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -118,10 +124,13 @@ public class ZigController {
     }
 
     @PostMapping(path="/pretragaPoMetapodacima", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest) throws Exception {
+    public ResponseEntity<ZahteviZaPriznanjeZigaDTO> pretragaPoMetapodacima(@RequestBody NaprednaPretragaRequest pretragaRequest,  @RequestHeader("role") String role) throws Exception {
         List<ZahtevZaPriznanjeZiga> zahtevi = metadataService.dobaviPoMetapodacima(pretragaRequest);
-        ZahteviZaPriznanjeZigaDTO autorskaPravaDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
-        return new ResponseEntity<>(autorskaPravaDTO, HttpStatus.OK);
+        if (role.equals("Klijent")) {
+            zahtevi = zahtevi.stream().filter(zahtev -> zahtev.getStatusZahteva().equals(TStatusZahteva.PRIHVACEN)).collect(Collectors.toList());
+        }
+        ZahteviZaPriznanjeZigaDTO zahteviDTO = new ZahteviZaPriznanjeZigaDTO(zahtevi);
+        return new ResponseEntity<>(zahteviDTO, HttpStatus.OK);
     }
     
     @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -135,5 +144,33 @@ public class ZigController {
     @PostMapping(value = "/obradi-zahtev")
     public void obradiZahtev(@RequestBody ObradaZahteva obradaZahteva) throws Exception {
         resenjeService.obradiZahtev(obradaZahteva);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/pdf-resource/{path}/{name}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getPDFResource(@PathVariable String path, @PathVariable String name) throws Exception {
+        String filePath = "./zig-backend/src/main/resources/z1/" + path + "/" + name;
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/resenje", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getResenje(@RequestParam String id) throws Exception {
+        String filePath = "./zig-backend/data/result/resenja/" + id + ".pdf";
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/data/{path}/{name}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getData(@PathVariable String path, @PathVariable String name) throws Exception {
+        String filePath = "./zig-backend/data/result/" + path + "/" + name;
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/resource/{path}/{name}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getResource(@PathVariable String path, @PathVariable String name) throws Exception {
+        String filePath = "./zig-backend/src/main/resources/z1/" + path + "/" + name;
+        return Files.readAllBytes(Paths.get(filePath));
     }
 }

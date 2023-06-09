@@ -1,5 +1,8 @@
 package rs.tim14.xml.repository;
 
+import lombok.RequiredArgsConstructor;
+import org.exist.xmldb.EXistResource;
+import org.springframework.stereotype.Repository;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -8,11 +11,20 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import rs.tim14.xml.jaxb.JaxbParser;
 import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ResenjeZahteva;
+import rs.tim14.xml.model.zahtev_za_priznanje_ziga.ZahtevZaPriznanjeZiga;
 import rs.tim14.xml.util.AuthenticationUtilities;
+import rs.tim14.xml.xmldb.ExistDbManager;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import java.io.IOException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+@Repository
+@RequiredArgsConstructor
 public class ResenjeRepository {
 
     public static final String COLLECTION_ID = "/db/resenja_za_zigove";
@@ -97,5 +109,14 @@ public class ResenjeRepository {
             }
         }
         return resenjeZahteva;
+    }
+
+    public String getResenjeZahtevaPath(ResenjeZahteva resenjeZahteva) throws Exception {
+        final String path = Paths.get("zig-backend/data", "xml", "resenje_" + resenjeZahteva.getBrojPrijave() + ".xml").toAbsolutePath().toString();
+        final OutputStream os = JaxbParser.marshall(resenjeZahteva);
+        try (final OutputStream outputStream = Files.newOutputStream(Paths.get(path))) {
+            ((ByteArrayOutputStream) os).writeTo(outputStream);
+        }
+        return path;
     }
 }

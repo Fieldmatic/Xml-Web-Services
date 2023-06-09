@@ -44,7 +44,7 @@
                 <xs:element name="mesto">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
+                            <xs:minLength value="0"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

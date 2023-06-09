@@ -121,6 +121,15 @@ export class ZigRequestComponent implements OnInit, OnChanges {
     }
   }
 
+  transformLink(path: string, flag?: boolean): string {
+    let link = "http://localhost:7005/api/zig/pdf-resource/";
+    if (flag) {
+      link = "http://localhost:7005/api/zig/resource/";
+    }
+    const pathParts = path.split("resources")[1].split("/");
+    return link + pathParts[2] + "/" + pathParts[3];
+  }
+
   initForm() {
     const klaseRobe: FormGroup[] = [];
     for (let i = 0; i < 45; i++) {
@@ -337,6 +346,10 @@ export class ZigRequestComponent implements OnInit, OnChanges {
 
       this.fileReader.readAsDataURL(file);
     }
+  }
+
+  getAfterViewUrl(url) {
+    return `url("${url}")`;
   }
 
   getBackgroundImageUrl(url) {

@@ -42,11 +42,15 @@ export class PatentService {
     ).subscribe((response) => console.log(response))
   }
 
-  dobaviSveZahteve() {
+  dobaviSveZahteve(role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
+
     return this.http.get(
       this.config.patentEndpoint + 'patent/getAll',
       {
-        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        headers,
         responseType: 'text',
       }
     );
@@ -69,7 +73,11 @@ export class PatentService {
     }))
   }
 
-  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[]) {
+  pretraziZahtevePoMetapodacima(triplets: MetadataTriplet[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role)
+      .set('Accept', 'application/xml');
     let zahtev = "<metadata>"
     for (const triplet of triplets) {
       zahtev += "<triplet>" +
@@ -85,15 +93,15 @@ export class PatentService {
       {
         observe: 'body',
         responseType: 'text',
-        headers: {
-          'Content-Type': 'application/xml',
-          Accept: 'application/xml',
-        },
+        headers: headers
       }
     );
   }
 
-  pretraziZahtevePoTekstu(filteri: string[]) {
+  pretraziZahtevePoTekstu(filteri: string[], role) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/xml')
+      .set('role', role);
     let zahtev = "<pretraga>"
     for (const filter of filteri) {
       zahtev += "<filteri>" + filter + "</filteri>"
@@ -103,14 +111,13 @@ export class PatentService {
       this.config.patentEndpoint + 'patent/pretragaPoTekstu',
       zahtev,
       {
-        headers: new HttpHeaders().set('Content-Type', 'application/xml'),
+        headers: headers,
         responseType: 'text',
       }
     );
   }
 
   kreirajOsnovniPatentOdXmlZahteva(xmlZahtev: any) {
-    console.log(xmlZahtev)
     let patentZahtev = new OsnovniPodaciObrascu();
     let urlIdParts = xmlZahtev['_attributes']['about'].split("/");
     patentZahtev.id = urlIdParts[urlIdParts.length - 1];

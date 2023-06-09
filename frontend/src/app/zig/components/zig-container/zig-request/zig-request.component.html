@@ -188,7 +188,9 @@
         <div *ngIf="sadPrilazemPunomocje" class="row">
           <label for="punomocje" class="form-label">Punomoćje</label>
           <input class="form-control" accept="application/pdf" type="file" id="punomocje" [disabled]="zig"
-                 (change)="onFileChange($event, 'punomocje')">
+                 (change)="onFileChange($event, 'punomocje')" *ngIf="!zig">
+          <a *ngIf="zig?.punomocje?.punomocje?.naziv"
+             href="{{transformLink(zig.punomocje.punomocje.naziv)}}">Punomoćje</a>
         </div>
       </div>
     </section>
@@ -311,8 +313,11 @@
           </div>
           <div *ngIf="zigNijeInduvidualni" class="row">
             <label for="opstiAkt" class="form-label">Opšti akt o kolektivnom žigu/žigu garancije</label>
-            <input class="form-control" accept="application/pdf" type="file" id="opstiAkt" [disabled]="zig"
+            <input class="form-control" accept="application/pdf" type="file" id="opstiAkt" [disabled]="zig" *ngIf="!zig"
                    (change)="onFileChange($event, 'opstiAkt')">
+            <a *ngIf="zig?.opstiAktOKolektivnomZiguIliZiguGarancije?.naziv"
+               href="{{transformLink(zig.opstiAktOKolektivnomZiguIliZiguGarancije.naziv)}}">Opšti akt o kolektivnom žigu
+              ili žigu garancije</a>
           </div>
         </div>
         <div class="col me-0">
@@ -361,13 +366,17 @@
       </div>
       <div class="row">
         <div class="col ps-0">
-          <input class="form-control" accept="image/png, image/jpeg" type="file" id="izgled_znaka" [disabled]="zig"
-                 (change)="onFileChange($event, 'izgledZnaka')">
+          <input class="form-control" accept="image/png, image/jpeg" type="file" id="izgled_znaka"
+                 (change)="onFileChange($event, 'izgledZnaka')" *ngIf="!zig">
         </div>
         <div class="col form-control">
-          <div
-            style="width: 100%; aspect-ratio: 1/1; background-position: center; background-repeat: no-repeat; background-size: contain"
-            [ngStyle]="{'background-image': !izgledZnaka ? null : getBackgroundImageUrl(this.izgledZnaka)}">
+          <div *ngIf="!zig"
+               style="width: 100%; aspect-ratio: 1/1; background-position: center; background-repeat: no-repeat; background-size: contain"
+               [ngStyle]="{'background-image': !izgledZnaka ? null : getBackgroundImageUrl(this.izgledZnaka)}">
+          </div>
+          <div *ngIf="zig"
+               style="width: 100%; aspect-ratio: 1/1; background-position: center; background-repeat: no-repeat; background-size: contain"
+               [ngStyle]="{'background-image': getAfterViewUrl(transformLink(zig.znak.izgled.naziv, true))}">
           </div>
         </div>
       </div>
@@ -424,7 +433,10 @@
       <div class="row mb-1">
         <label for="spisakRobe" class="form-label">Spisak robe i usluga</label>
         <input class="form-control" accept="application/pdf" type="file" (change)="onFileChange($event, 'spisakRobe')"
+               *ngIf="!zig"
                id="spisakRobe" [disabled]="zig">
+        <a *ngIf="zig?.spisakRobeIUsluga.naziv" href="{{transformLink(zig.spisakRobeIUsluga.naziv)}}">Spisak robe i
+          usluga</a>
       </div>
       <div class="row mb-3 d-inline-block" formArrayName="klaseRobe">
         <div *ngFor="let klasaRobeControl of controls2; let id = index" class="d-inline ps-0 pe-0 "
@@ -458,7 +470,10 @@
       <div *ngIf="zatrazenoPravoPrvenstva" class="row">
         <label for="dokazPravaPrvenstva" class="form-label">Dokaz o pravu prvenstva</label>
         <input class="form-control" accept="application/pdf" type="file" id="dokazPravaPrvenstva" [disabled]="zig"
+               *ngIf="!zig"
                (change)="onFileChange($event, 'dokazPravaPrvenstva')">
+        <a *ngIf="zig?.pravoPrvenstva.dokaz?.naziv" href="{{transformLink(zig.pravoPrvenstva.dokaz.naziv)}}">Dokaz o
+          pravu prvenstva</a>
       </div>
     </section>
     <section formGroupName="takse">
@@ -470,8 +485,11 @@
       <div class="row mb-1">
         <label for="dokazUplate" class="form-label">Dokaz o uplati takse</label>
         <input class="form-control" accept="application/pdf, image/png, image/jpeg" type="file" id="dokazUplate"
+               *ngIf="!zig"
                [disabled]="zig"
                (change)="onFileChange($event, 'dokazUplate')">
+        <a *ngIf="zig?.takse.dokazOUplati.naziv" href="{{transformLink(zig.takse.dokazOUplati.naziv)}}">Dokaz o
+          uplati</a>
       </div>
       <div class="row">
         <div class="col ps-0 pe-0">

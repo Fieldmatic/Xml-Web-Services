@@ -1,15 +1,15 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, catchError, map, of, tap} from "rxjs";
-import {ToastrService} from "ngx-toastr";
-import {parseString} from 'xml2js';
-import {Router} from "@angular/router";
-import {APP_SERVICE_CONFIG} from "../../appConfig/appconfig.service";
-import {AppConfig} from "../../appConfig/appconfig.interface";
-import {LoggedInUser} from "../model/logged-in-user";
+import { Inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, catchError, map, of, tap } from "rxjs";
+import { ToastrService } from "ngx-toastr";
+import { parseString } from "xml2js";
+import { Router } from "@angular/router";
+import { APP_SERVICE_CONFIG } from "../../appConfig/appconfig.service";
+import { AppConfig } from "../../appConfig/appconfig.interface";
+import { LoggedInUser } from "../model/logged-in-user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
   loggedInUser: BehaviorSubject<LoggedInUser | null> = new BehaviorSubject(null);
@@ -18,31 +18,32 @@ export class AuthService {
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig,
     private http: HttpClient,
     private router: Router,
-    private toastrService: ToastrService,
-  ) {}
+    private toastrService: ToastrService
+  ) {
+  }
 
   logIn(email: string, password: string) {
     let body =
-      '<loginRequest>' +
-      '<email>' +
+      "<loginRequest>" +
+      "<email>" +
       email +
-      '</email>' +
-      '<password>' +
+      "</email>" +
+      "<password>" +
       password +
-      '</password>' +
-      '</loginRequest>';
+      "</password>" +
+      "</loginRequest>";
     return this.http
-      .post(this.config.usersEndpoint + 'auth/login', body, {
-        observe: 'body',
-        responseType: 'text',
+      .post(this.config.usersEndpoint + "auth/login", body, {
+        observe: "body",
+        responseType: "text",
         headers: {
-          'Content-Type': 'application/xml',
-          Accept: 'application/xml',
-        },
+          "Content-Type": "application/xml",
+          Accept: "application/xml"
+        }
       })
       .pipe(
         tap(() => {
-          this.router.navigate(['/patent']);
+          this.router.navigate(["/patent"]);
         }),
         map((resData) => {
           return this.handleAuthentication(resData);
@@ -55,44 +56,44 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem('userData');
+    localStorage.removeItem("userData");
+    this.router.navigate(["/"]);
     this.loggedInUser.next(null);
-    this.router.navigate(['/']);
   }
 
   signUp(email: string, password: string, role: string, name: string, surname: string) {
     let body =
-      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-      '<user xmlns="http://www.xml.tim14.rs/user">' +
-      '<email>' +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+      "<user xmlns=\"http://www.xml.tim14.rs/user\">" +
+      "<email>" +
       email +
-      '</email>' +
-      '<password>' +
+      "</email>" +
+      "<password>" +
       password +
-      '</password>' +
-      '<ime>' +
+      "</password>" +
+      "<ime>" +
       name +
-      '</ime>' +
-      '<prezime>' +
+      "</ime>" +
+      "<prezime>" +
       surname +
-      '</prezime>' +
-      '<role>' +
+      "</prezime>" +
+      "<role>" +
       role +
-      '</role>' +
-      '</user>';
+      "</role>" +
+      "</user>";
     return this.http
-      .post(this.config.usersEndpoint + 'auth', body, {
-        observe: 'body',
-        responseType: 'text',
+      .post(this.config.usersEndpoint + "auth", body, {
+        observe: "body",
+        responseType: "text",
         headers: {
-          'Content-Type': 'application/xml',
-          Accept: 'application/xml',
-        },
+          "Content-Type": "application/xml",
+          Accept: "application/xml"
+        }
       })
       .pipe(
         tap(() => {
-          this.notifySuccess('Uspesno ste se registrovali!');
-          this.router.navigate(['/auth/login']);
+          this.notifySuccess("Uspesno ste se registrovali!");
+          this.router.navigate(["/auth/login"]);
         }),
         catchError((errorResp) => {
           this.handleError(errorResp);
@@ -107,14 +108,14 @@ export class AuthService {
       loginResponse,
       (error, result) => {
         const user = new LoggedInUser(
-          result['loginResponse']['email'][0],
-          result['loginResponse']['role'][0],
-          result['loginResponse']['ime'][0],
-          result['loginResponse']['prezime'][0],
+          result["loginResponse"]["email"][0],
+          result["loginResponse"]["role"][0],
+          result["loginResponse"]["ime"][0],
+          result["loginResponse"]["prezime"][0]
         );
-        localStorage.setItem('userData', JSON.stringify(user));
+        localStorage.setItem("userData", JSON.stringify(user));
         this.loggedInUser.next(user);
-        this.notifySuccess('Uspesno ste se ulogovali!');
+        this.notifySuccess("Uspesno ste se ulogovali!");
         return user;
       }
     );
@@ -124,29 +125,29 @@ export class AuthService {
   handleError(errorRes: any) {
     parseString(errorRes.error, (error, result) => {
       this.toastrService.error(
-        result['exceptionResponse']['message'][0],
-        'Notification',
+        result["exceptionResponse"]["message"][0],
+        "Notification",
         {
           timeOut: 3000,
           tapToDismiss: false,
           newestOnTop: true,
-          positionClass: 'toast-top-center',
+          positionClass: "toast-top-center"
         }
       );
     });
   }
 
   notifySuccess(message: string) {
-    this.toastrService.success(message, 'Notification', {
+    this.toastrService.success(message, "Notification", {
       timeOut: 3000,
       tapToDismiss: false,
       newestOnTop: true,
-      positionClass: 'toast-top-center',
+      positionClass: "toast-top-center"
     });
   }
 
   autoLogIn() {
-    const userData = localStorage.getItem('userData');
+    const userData = localStorage.getItem("userData");
     const user = JSON.parse(userData);
     this.loggedInUser.next(user);
   }

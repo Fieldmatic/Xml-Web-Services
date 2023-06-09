@@ -6,6 +6,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.glxn.qrgen.core.image.ImageType;
+import net.glxn.qrgen.javase.QRCode;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
@@ -93,6 +95,24 @@ public class ZigService {
         XMLResource resource = existDbManager.load("/db/zahtevi_za_priznanje_ziga", id);
         byte[] out = metadataExtractor.extractMetadataFromXmlContent(resource.getContent().toString());
         fusekiWriter.saveRdf(new ByteArrayInputStream(out), "/zahtevi_za_priznanje_ziga");
+
+        String link = "http://localhost:7005/api/zig/pdf?id=" + id;
+
+        // Generate QR code from the link
+        QRCode qrCode = (QRCode) QRCode.from(link)
+                .to(ImageType.PNG)
+                .withSize(250, 250); // You can adjust the size as needed
+
+        ByteArrayOutputStream qrCodeOutputStream = qrCode.stream();
+        byte[] qrCodeByteArray = qrCodeOutputStream.toByteArray();
+
+        String filePath = "./zig-backend/data/result/" + id + ".png";
+        try (FileOutputStream qrCodeFileOutputStream = new FileOutputStream(filePath)) {
+            qrCodeFileOutputStream.write(qrCodeByteArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return zahtev;
     }
 
@@ -116,30 +136,8 @@ public class ZigService {
         return FileUtils.readFileToByteArray(new File(resultPath));
     }
 
-    public AllResponse getAllRequests() throws Exception {
-        AllResponse response = new AllResponse();
-        response.setPrijave(new ArrayList<>());
-        List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = repo.getAll();
-        for (ZahtevZaPriznanjeZiga zahtev : zahteviZaPriznanjeZiga) {
-            TPrijava prijava = zahtev.getPrijava();
-            PrijavaResponse prijavaResponse = PrijavaResponse.builder()
-                    .brojZahteva(prijava.getBrojPrijave().getValue() + "/" + prijava.getDatumPodnosenja().getValue().getYear())
-                    .datumPodnosenja(prijava.getDatumPodnosenja())
-                    .sluzbenik(prijava.getSluzbenik())
-                    .podnosilac(zahtev.getPodnosilac().getIme())
-                    .status(prijava.getSluzbenik() == null ? "U obradi" : (prijava.isPrihvacena() ? "Prihvacen" : "Odbijen"))
-                    .build();
-            response.getPrijave().add(prijavaResponse);
-        }
-        return response;
-    }
-
-    public AllResponse getRequestsByUser(String email) {
-        return null;
-    }
-
-    public AllResponse getAllByStatus(boolean processed) {
-        return null;
+    public List<ZahtevZaPriznanjeZiga> getAll() throws Exception {
+        return repo.getAll();
     }
 
     public String getRDF(String id) {
