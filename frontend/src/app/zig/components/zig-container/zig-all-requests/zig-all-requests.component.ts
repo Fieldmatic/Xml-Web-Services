@@ -1,21 +1,37 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { ZigHttpService } from "../../../services/zig-http.service";
 import { saveAs } from "file-saver";
 import { xml2json } from "xml-js";
 import { ZahtevZaPriznanjeZiga } from "../../../model/zahtev-za-priznanje-ziga.model";
 import { OsnovniPodaciObrascu } from "../../../../shared/model/OsnovniPodaciObrascu";
+import { AuthService } from "../../../../auth/services/auth.service";
+import { LoggedInUser } from "../../../../auth/model/logged-in-user";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-zig-all-requests",
   templateUrl: "./zig-all-requests.component.html",
   styleUrls: ["./zig-all-requests.component.scss"]
 })
-export class ZigAllRequestsComponent {
+export class ZigAllRequestsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ["id", "name", "date", "status", "download"];
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
+  user: LoggedInUser;
+  subscription: Subscription;
 
-  constructor(private zigService: ZigHttpService) {
+  constructor(private zigService: ZigHttpService, private authService: AuthService) {
+  }
+
+  ngOnInit() {
+    this.subscription = this.authService.loggedInUser.subscribe(user => {
+      this.user = user;
+      this.zigService.getAllRequests(this.user.role).subscribe(response => this.prikaziRezultatePretrage(response));
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   preuzmiHtml(id) {
@@ -43,13 +59,13 @@ export class ZigAllRequestsComponent {
   }
 
   izvrsiObicnuPretragu($event: any) {
-    this.zigService.getAllByText($event).subscribe((result) => {
+    this.zigService.getAllByText($event, this.user.role).subscribe((result) => {
       this.prikaziRezultatePretrage(result);
     });
   }
 
   izvrsiNaprednuPetragu($event: any) {
-    this.zigService.getAllByMetadata($event).subscribe((result) => {
+    this.zigService.getAllByMetadata($event, this.user.role).subscribe((result) => {
       this.prikaziRezultatePretrage(result);
     });
   }

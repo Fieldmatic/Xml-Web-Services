@@ -6,7 +6,7 @@
 >
     <xsl:template match="/">
         <fo:root>
-            <xsl:variable name="broj_prijave" select="z1:broj_prijave"/>
+            <xsl:variable name="broj_prijave" select="//z1:broj_prijave"/>
 
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="a1-page">
@@ -88,22 +88,14 @@
                             </fo:table-row>
                         </fo:table-body>
                     </fo:table>
-                    <fo:table>
-                        <fo:table-body>
-                            <fo:table-row>
-                                <fo:table-cell display-align="center" width="100%">
-                                    <fo:block-container>
-                                        <fo:block>
-                                            <fo:external-graphic src="..data/result/{$broj_prijave}.png"
-                                                                 width="100%"
-                                                                 content-width="scale-to-fit"
-                                                                 content-height="scale-to-fit"/>
-                                        </fo:block>
-                                    </fo:block-container>
-                                </fo:table-cell>
-                            </fo:table-row>
-                        </fo:table-body>
-                    </fo:table>
+                    <fo:block-container display-align="center" width="100%">
+                        <fo:block>
+                            <fo:external-graphic src="../data/result/{$broj_prijave}.png"
+                                                 width="100%"
+                                                 content-width="scale-to-fit"
+                                                 content-height="scale-to-fit"/>
+                        </fo:block>
+                    </fo:block-container>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>

@@ -18,11 +18,16 @@ export class ZigHttpService {
   ) {
   }
 
-  getAllRequests() {
-    return this.http.get(this.config.zigEndpoint + "all", {
-      headers: new HttpHeaders().append("Content-Type", "application/xml"),
-      responseType: "text"
-    });
+  getAllRequests(role: string) {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/xml")
+      .set("role", role);
+    return this.http.get(this.config.zigEndpoint + "getAll",
+      {
+        headers,
+        responseType: "text"
+      }
+    );
   }
 
   getRequest(id: string) {
@@ -40,7 +45,11 @@ export class ZigHttpService {
     }));
   }
 
-  getAllByMetadata(triplets: MetadataTriplet[]) {
+  getAllByMetadata(triplets: MetadataTriplet[], role: string) {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/xml")
+      .set("role", role)
+      .set("Accept", "application/xml");
     let zahtev = "<metadata>";
     for (const triplet of triplets) {
       zahtev += "<triplet>" +
@@ -56,15 +65,15 @@ export class ZigHttpService {
       {
         observe: "body",
         responseType: "text",
-        headers: {
-          "Content-Type": "application/xml",
-          Accept: "application/xml"
-        }
+        headers
       }
     );
   }
 
-  getAllByText(text: string[]) {
+  getAllByText(text: string[], role: string) {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/xml")
+      .set("role", role);
     let zahtev = "<pretraga>";
     for (const filter of text) {
       zahtev += "<filteri>" + filter + "</filteri>";
@@ -74,7 +83,7 @@ export class ZigHttpService {
       this.config.zigEndpoint + "pretragaPoTekstu",
       zahtev,
       {
-        headers: new HttpHeaders().set("Content-Type", "application/xml"),
+        headers,
         responseType: "text"
       }
     );

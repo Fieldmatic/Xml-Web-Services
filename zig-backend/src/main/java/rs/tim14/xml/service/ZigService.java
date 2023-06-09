@@ -136,30 +136,8 @@ public class ZigService {
         return FileUtils.readFileToByteArray(new File(resultPath));
     }
 
-    public AllResponse getAllRequests() throws Exception {
-        AllResponse response = new AllResponse();
-        response.setPrijave(new ArrayList<>());
-        List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = repo.getAll();
-        for (ZahtevZaPriznanjeZiga zahtev : zahteviZaPriznanjeZiga) {
-            TPrijava prijava = zahtev.getPrijava();
-            PrijavaResponse prijavaResponse = PrijavaResponse.builder()
-                    .brojZahteva(prijava.getBrojPrijave().getValue() + "/" + prijava.getDatumPodnosenja().getValue().getYear())
-                    .datumPodnosenja(prijava.getDatumPodnosenja())
-                    .sluzbenik(prijava.getSluzbenik())
-                    .podnosilac(zahtev.getPodnosilac().getIme())
-                    .status(prijava.getSluzbenik() == null ? "U obradi" : (prijava.isPrihvacena() ? "Prihvacen" : "Odbijen"))
-                    .build();
-            response.getPrijave().add(prijavaResponse);
-        }
-        return response;
-    }
-
-    public AllResponse getRequestsByUser(String email) {
-        return null;
-    }
-
-    public AllResponse getAllByStatus(boolean processed) {
-        return null;
+    public List<ZahtevZaPriznanjeZiga> getAll() throws Exception {
+        return repo.getAll();
     }
 
     public String getRDF(String id) {
