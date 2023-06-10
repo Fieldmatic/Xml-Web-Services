@@ -5,7 +5,7 @@
       <a mat-button routerLink="/a1/novi"
          *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Autorsko Delo</a>
       <a mat-button routerLink="/patent/novi" *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Patent</a>
-      <a mat-button *ngIf="isAuthenticated" routerLink="/z1/novi">Žig</a>
+      <a mat-button *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'" routerLink="/z1/novi">Žig</a>
     </div>
     <div class="toolbar-right">
       <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated">Autorska

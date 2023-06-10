@@ -9,6 +9,7 @@ import {A1Obrazac, AutorskoDelo, Drzavljanstvo, Opis, OriginalnoDelo, Podnosilac
 import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
 import {Autor} from "../components/a1-container/a1-obrazac/a1-obrazac.component";
 import {auto} from "@popperjs/core";
+import {ToastrService} from "ngx-toastr";
 
 declare var require: any;
 
@@ -19,6 +20,7 @@ export class A1Service {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private toastrService: ToastrService,
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig
   ) {}
 
@@ -51,6 +53,7 @@ export class A1Service {
         return this.sacuvajA1Obrazac(zahtev).pipe(
           tap((rezultat) => {
             console.log(rezultat);
+            this.toastrService.success('Uspešno ste poslali zahtev.', 'Zahtev poslat')
           })
         );
       })

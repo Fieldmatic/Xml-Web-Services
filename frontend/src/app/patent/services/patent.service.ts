@@ -6,6 +6,7 @@ import {APP_SERVICE_CONFIG} from 'src/app/appConfig/appconfig.service';
 import {MetadataTriplet} from "../../shared/model/MetadataTriplet";
 import {OsnovniPodaciObrascu} from "../../shared/model/OsnovniPodaciObrascu";
 import {map} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 declare var require: any;
 
@@ -16,6 +17,7 @@ export class PatentService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private toastrService: ToastrService,
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig
   ) {
   }
@@ -39,7 +41,10 @@ export class PatentService {
           Accept: 'application/xml',
         },
       }
-    ).subscribe((response) => console.log(response))
+    ).subscribe((response) => {
+      console.log(response)
+      this.toastrService.success('Uspešno ste poslali zahtev.', 'Zahtev poslat')
+    })
   }
 
   dobaviSveZahteve(role) {

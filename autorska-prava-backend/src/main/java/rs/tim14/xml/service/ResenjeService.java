@@ -39,7 +39,7 @@ public class ResenjeService {
         ResenjeRepository.write(resenjeZahteva);
 
         ZahtevZaAutorskaPrava a1 = autorskaPravaService.setObradjen(obradaZahteva.getId(), obradaZahteva.isOdbijen());
-        mailService.sendMailWithAttachment(a1.getEmailKlijenta(), resenjeZahteva, getPDF(resenjeZahteva));
+        mailService.sendMailWithAttachment(a1.getPodnosilac().getEmail().getValue(), resenjeZahteva, getPDF(resenjeZahteva));
     }
 
     public byte[] getPDF(final ResenjeZahteva resenjeZahteva) throws Exception {

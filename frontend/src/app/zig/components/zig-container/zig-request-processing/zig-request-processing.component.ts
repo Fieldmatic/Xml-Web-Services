@@ -68,7 +68,7 @@ export class ZigRequestProcessingComponent implements OnInit {
           razlogOdbijanja: result.reason
         };
         this.resenjeService.obradiZahtev(request).subscribe(() => {
-          console.log("vrh");
+          this.ngOnInit();
         });
       }
     });

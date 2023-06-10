@@ -35,7 +35,7 @@ public class AutorskaPravaController {
     private final UploadFile uploadFile;
 
     private final MetadataService metadataService;
-    private static final String resourcePath = "http://192.168.1.18:8081/autorska-prava-backend/src/main/resources/a1/";
+    private static final String resourcePath = "http://127.0.0.1:8081/autorska-prava-backend/src/main/resources/a1/";
     @PostMapping
     public ResponseEntity<ZahtevZaAutorskaPrava> create(@RequestBody ZahtevZaAutorskaPrava zahtev) throws Exception {
         return new ResponseEntity<>(autorskaPravaService.create(zahtev), HttpStatus.CREATED);

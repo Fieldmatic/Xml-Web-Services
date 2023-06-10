@@ -13,6 +13,7 @@ import { Znak } from "../../../model/znak.model";
 import { PravoPrvenstva } from "../../../model/pravo-prvenstva.model";
 import { Takse } from "../../../model/takse.model";
 import { ZigHttpService } from "../../../services/zig-http.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: "app-zig-request",
@@ -36,6 +37,7 @@ export class ZigRequestComponent implements OnInit, OnChanges {
     private router: Router,
     private formBuilder: FormBuilder,
     private zigService: ZigHttpService,
+    private toastrService: ToastrService,
     @Inject(DOCUMENT) private document: Document
   ) {
   }
@@ -43,7 +45,10 @@ export class ZigRequestComponent implements OnInit, OnChanges {
   sendRequest() {
     if (this.zigForma.valid) {
       const request = this.formValuesToZahtevZaPriznavanjeZiga();
-      this.zigService.postRequest(request).subscribe(response => console.log(response));
+      this.zigService.postRequest(request).subscribe(response => {
+        console.log(response)
+        this.toastrService.success('Uspešno ste poslali zahtev.', 'Zahtev poslat')
+      });
     }
   }
 

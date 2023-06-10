@@ -19,6 +19,13 @@ export class ZigAllRequestsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<OsnovniPodaciObrascu>;
   user: LoggedInUser;
   subscription: Subscription;
+  metadataElementi: string[] = [
+    'brojPrijave',
+    'datumPodnosenja',
+    'imePodnosioca',
+    'prezimePodnosioca',
+    'vrstaZiga',
+  ];
 
   constructor(private zigService: ZigHttpService, private authService: AuthService) {
   }

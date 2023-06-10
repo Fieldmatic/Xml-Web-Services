@@ -52,12 +52,12 @@ export class PatentObrazac {
       },
       pronalazac: {
         neZeliDaBudeNaveden: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'true',
-        email: getFieldValue(pronalazac['pronalazac']['ns2:email']),
-        brojTelefona: getFieldValue(pronalazac['pronalazac']['ns2:broj_mobilnog_telefona']),
-        brojFaksa: getFieldValue(pronalazac['pronalazac']['ns2:broj_faksa']),
-        ime: getFieldValue(pronalazac['pronalazac']['ns2:puno_ime']['ns2:ime']),
-        prezime: getFieldValue(pronalazac['pronalazac']['ns2:puno_ime']['ns2:prezime']),
-        adresaPronalazaca: parseAdresa(pronalazac['pronalazac']['ns2:adresa']),
+        email: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'? getFieldValue(pronalazac['pronalazac']['ns2:email']): null,
+        brojTelefona: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'? getFieldValue(pronalazac['pronalazac']['ns2:broj_mobilnog_telefona']): null,
+        brojFaksa: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'?  getFieldValue(pronalazac['pronalazac']['ns2:broj_faksa']): null,
+        ime:getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'?   getFieldValue(pronalazac['pronalazac']['ns2:puno_ime']['ns2:ime']): null,
+        prezime: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'?  getFieldValue(pronalazac['pronalazac']['ns2:puno_ime']['ns2:prezime']): null,
+        adresaPronalazaca: getFieldText(pronalazac['ne_zeli_da_bude_naveden']) === 'false'? parseAdresa(pronalazac['pronalazac']['ns2:adresa']): null,
       },
       punomocnik: {
         punomocnikZaPrijemPismena: getFieldText(punomocnik['punomocnik_za_prijem_pismena']) === 'true',
@@ -89,5 +89,6 @@ export class PatentObrazac {
             oznakaDrzave: getFieldValue(ranijePrijave['ranija_prijava']['oznaka_drzave'])
           }] : [],
     };
+    console.log(this.patent)
   }
 }
