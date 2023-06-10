@@ -158,7 +158,6 @@ export class A1Service {
   }
 
   kreirajA1ZahtevOdXmlZahteva(xmlZahtev: any) {
-    console.log(xmlZahtev)
     let a1Zahtev = new OsnovniPodaciObrascu();
     a1Zahtev.id = xmlZahtev['ns3:idZahteva']['_text']
 

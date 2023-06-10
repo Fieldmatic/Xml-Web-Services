@@ -1,11 +1,12 @@
 <div class="a1Form">
   <form
-    class="p-4"
+    class="p-4 mt-0"
     [formGroup]="a1Form"
     #formDirective="ngForm"
     (ngSubmit)="onSubmit()"
   >
     <section formGroupName="podnosilac">
+      <h1 class="text-center mb-4">Zahtev za autorska prava</h1>
       <div class="d-flex flex-row">
         <h3 class="w-25 fw-bold">Podnosilac</h3>
         <div class="form-check" style="width: 30%">

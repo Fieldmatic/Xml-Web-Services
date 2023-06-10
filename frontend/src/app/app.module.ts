@@ -16,7 +16,8 @@ import {ZigModule} from './zig/zig.module';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PatentiPrikazComponent } from './patent/components/patenti-prikaz/patenti-prikaz.component';
 import { PatentContainerComponent } from './patent/components/patent-container/patent-container.component';
-import { ObradaPatentaComponent } from './patent/components/obrada-patenta/obrada-patenta.component';
+import {ObradaPatentaComponent} from './patent/components/obrada-patenta/obrada-patenta.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomepageComponent, PatentiPrikazComponent, PatentContainerComponent, ObradaPatentaComponent],
@@ -31,7 +32,8 @@ import { ObradaPatentaComponent } from './patent/components/obrada-patenta/obrad
     AppRoutingModule,
     DirectivesModule,
     A1Module,
-    PatentModule
+    PatentModule,
+    NgOptimizedImage
   ],
   providers: [
     {
