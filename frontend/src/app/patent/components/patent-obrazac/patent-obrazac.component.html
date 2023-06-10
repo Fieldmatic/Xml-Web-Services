@@ -1,11 +1,12 @@
 <div class="patent">
   <form
-    class="p-4"
+    class="p-4 mt-0"
     [formGroup]="patent"
     #formDirective="ngForm"
     (ngSubmit)="onSubmit()"
   >
     <section formGroupName="nazivPronalaska">
+      <h1 class="text-center mb-4">Zahtev za priznanje patenta</h1>
       <div class="d-flex flex-column">
         <h3 class="w-25 fw-bold">Naziv pronalaska</h3>
         <div class="d-flex">

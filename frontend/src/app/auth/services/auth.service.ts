@@ -43,7 +43,7 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
-          this.router.navigate(["/patent"]);
+          this.router.navigate(["/"]);
         }),
         map((resData) => {
           return this.handleAuthentication(resData);
