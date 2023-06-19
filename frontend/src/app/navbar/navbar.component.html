@@ -1,0 +1,20 @@
+<mat-toolbar class="toolbar" color="primary">
+  <div class="toolbar-content">
+    <div class="toolbar-left">
+      <a routerLink="/" mat-button style="margin-right: 10%">MUP</a>
+      <a mat-button routerLink="/a1/novi"
+         *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Autorsko Delo</a>
+      <a mat-button routerLink="/patent/novi" *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'">Patent</a>
+      <a mat-button *ngIf="isAuthenticated && loggedInUser.role ==='Klijent'" routerLink="/z1/novi">Žig</a>
+    </div>
+    <div class="toolbar-right">
+      <a mat-button routerLink="/a1/zahtevi" *ngIf="isAuthenticated">Autorska
+        Dela</a>
+      <a mat-button *ngIf="isAuthenticated" routerLink="/patent/zahtevi">Patenti</a>
+      <a mat-button *ngIf="isAuthenticated" routerLink="/z1/zahtevi">Žigovi</a>
+      <a mat-button *ngIf="isAuthenticated" (click)="onLogout()">Log out</a>
+      <a mat-button routerLink="/auth/login" *ngIf="!isAuthenticated" id="loginBtn">Log in</a>
+      <a mat-raised-button *ngIf="!isAuthenticated" routerLink="/auth/signup">Sign up</a>
+    </div>
+  </div>
+</mat-toolbar>

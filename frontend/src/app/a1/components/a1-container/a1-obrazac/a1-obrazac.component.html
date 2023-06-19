@@ -1,0 +1,618 @@
+<div class="a1Form">
+  <form
+    class="p-4 mt-0"
+    [formGroup]="a1Form"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <section formGroupName="podnosilac">
+      <h1 class="text-center mb-4">Zahtev za autorska prava</h1>
+      <div class="d-flex flex-row">
+        <h3 class="w-25 fw-bold">Podnosilac</h3>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="Fizicko_Lice"
+            id="fizickoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="fizickoLice">
+            Fizicko lice
+          </label>
+        </div>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="Pravno_Lice"
+            id="pravnoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="pravnoLice"> Pravno lice </label>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="mb-3 me-5 w-25">
+          <label for="email" class="form-label">Email adresa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            formControlName="email"
+          />
+          <div *ngIf="a1Form.get('podnosilac').get('email').touched && a1Form.get('podnosilac').get('email').invalid" class="text-danger">
+            Neispravan format email-a.
+          </div>
+        </div>
+        <div class="mb-3 w-25">
+          <label for="brTelefona" class="form-label">Broj telefona</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brTelefona"
+            formControlName="brojTelefona"
+          />
+          <div *ngIf="a1Form.get('podnosilac').get('brojTelefona').touched && a1Form.get('podnosilac').get('brojTelefona').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
+        </div>
+      </div>
+
+      <!-- puno ime -->
+      <div
+        class="d-flex"
+        *ngIf="
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Fizicko_Lice'
+        "
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="ime" class="form-label">Ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ime"
+            formControlName="ime"
+          />
+          <div *ngIf="a1Form.get('podnosilac').get('ime').touched && a1Form.get('podnosilac').get('ime').invalid" class="text-danger">
+            Ime može imati samo slova.
+          </div>
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="prezime" class="form-label">Prezime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="prezime"
+            formControlName="prezime"
+          />
+          <div *ngIf="a1Form.get('podnosilac').get('prezime').touched && a1Form.get('podnosilac').get('prezime').invalid" class="text-danger">
+            Prezime može imati samo slova.
+          </div>
+        </div>
+      </div>
+
+      <!-- poslovno ime -->
+      <div
+        class="d-flex"
+        *ngIf="
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Pravno_Lice'
+        "
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="poslovnoIme" class="form-label">Poslovno ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="poslovnoIme"
+            formControlName="poslovnoIme"
+          />
+        </div>
+      </div>
+
+      <!-- drzavljanstvo -->
+      <div
+        formGroupName="drzavljanstvo"
+        *ngIf="
+          a1Form.get('podnosilac').get('tipPodnosioca').value === 'Fizicko_Lice'
+        "
+      >
+        <h3>Drzavljanstvo podnosioca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="tipDrzavljanstva" class="form-label"
+              >Tip drzavljanstva</label
+            >
+            <select formControlName="tip" id="tipDrzavljanstva" style="width: 100%; height: 60%">
+              <option value="домаће">Domace</option>
+              <option value="страно">Strano</option>
+            </select>
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="jmbg" class="form-label">Jmbg</label>
+            <input
+              type="text"
+              class="form-control"
+              id="jmbg"
+              formControlName="jmbg"
+            />
+            <div *ngIf="a1Form.get('podnosilac').get('drzavljanstvo').get('jmbg').touched && a1Form.get('podnosilac').get('drzavljanstvo').get('jmbg').invalid" class="text-danger">
+              Jmbg mora imati tačno 13 cifara.
+            </div>
+          </div>
+          <div class="mb-3" style="width: 30%">
+            <label for="brojPasosa" class="form-label">Broj pasosa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojPasosa"
+              formControlName="brojPasosa"
+            />
+            <div *ngIf="a1Form.get('podnosilac').get('drzavljanstvo').get('brojPasosa').touched && a1Form.get('podnosilac').get('drzavljanstvo').get('brojPasosa').invalid" class="text-danger">
+              Minimalna dužina broja pasoša je 8.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- adresa podnosioca -->
+      <div formGroupName="adresaPodnosioca" class="d-flex flex-column">
+        <h3>Adresa podnosioca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('ulica').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('ulica').invalid" class="text-danger">
+              Ulica je obavezna.
+            </div>
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('broj').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('broj').invalid" class="text-danger">
+              Broj je obavezan.
+            </div>
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+            <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('mesto').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('mesto').invalid" class="text-danger">
+              Grad je obavezan.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+              <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('drzava').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('drzava').invalid" class="text-danger">
+                Država je obavezna.
+              </div>
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+              <div *ngIf="a1Form.get('podnosilac').get('adresaPodnosioca').get('postanskiBroj').touched && a1Form.get('podnosilac').get('adresaPodnosioca').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- punomocnik -->
+    <section formGroupName="punomocnik" class="mt-4">
+      <div class="d-flex">
+        <h3 class="w-50 fw-bold">Punomocnik</h3>
+        <div class="form-check" style="width: 50%">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="prijavaPrekoPunomocnika"
+            formControlName="prijavaSePodnosiPrekoPunomocnika"
+          />
+          <label class="form-check-label" for="prijavaPrekoPunomocnika">
+            Prijava se podnosi preko punomocnika
+          </label>
+        </div>
+      </div>
+
+      <!-- puno ime punomocnika -->
+      <div
+        class="d-flex flex-column"
+        *ngIf="
+          a1Form.get('punomocnik').get('prijavaSePodnosiPrekoPunomocnika').value
+        "
+      >
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ime" class="form-label">Ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ime"
+              formControlName="ime"
+            />
+            <div *ngIf="a1Form.get('punomocnik').get('ime').touched && a1Form.get('punomocnik').get('ime').invalid" class="text-danger">
+              Ime može imati samo slova.
+            </div>
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="prezime"
+              formControlName="prezime"
+            />
+            <div *ngIf="a1Form.get('punomocnik').get('prezime').touched && a1Form.get('punomocnik').get('prezime').invalid" class="text-danger">
+              Prezime može imati samo slova.
+            </div>
+          </div>
+        </div>
+
+        <!-- adresa punomocnika -->
+        <div formGroupName="adresaPunomocnika">
+          <h3>Adresa punomocnika</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="ulica" class="form-label">Ulica</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ulica"
+                formControlName="ulica"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="broj" class="form-label">Broj</label>
+              <input
+                type="text"
+                class="form-control"
+                id="broj"
+                formControlName="broj"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="grad" class="form-label">Grad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="grad"
+                formControlName="mesto"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="d-flex">
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="drzava" class="form-label">Drzava</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="drzava"
+                  formControlName="drzava"
+                />
+              </div>
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="postanskiBroj" class="form-label"
+                  >Postanski broj</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="postanskiBroj"
+                  formControlName="postanskiBroj"
+                />
+                <div *ngIf="a1Form.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').touched && a1Form.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').invalid" class="text-danger">
+                  Poštanski broj mora imati tačno 5 cifara.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- autorsko delo -->
+    <section formGroupName="autorskoDelo" class="mt-4">
+      <div class="d-flex">
+        <h3 class="w-50 fw-bold">Autorsko delo</h3>
+        <div class="form-check" style="width: 50%">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="uRadnomOdnosu"
+            formControlName="uRadnomOdnosu"
+          />
+          <label class="form-check-label" for="uRadnomOdnosu">
+            Autorsko delo stvoreno u radnom odnosu
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-3 me-5 w-100">
+          <label for="naslovDela" class="form-label">Naslov dela</label>
+          <input
+            type="text"
+            class="form-control"
+            id="naslovDela"
+            formControlName="naslov"
+          />
+        </div>
+
+        <div class="d-flex justify-content-between mt-1">
+          <div style="width: 45%">
+            <label for="vrstaDela" class="form-label">Vrsta dela</label>
+            <select
+              class="form-select"
+              id="vrstaDela"
+              formControlName="vrstaDela"
+            >
+              <option value="књижевно дело" selected>Knjizevno delo</option>
+              <option value="рачунарски програм">Racunarski program</option>
+              <option value="музичко дело">Muzicko delo</option>
+              <option value="драмско дело">Dramsko delo</option>
+              <option value="филмско дело">Filmsko delo</option>
+              <option value="ликовно дело">Likovno delo</option>
+              <option value="примењено дело">Primenjeno delo</option>
+              <option value="патенти">Patenti</option>
+              <option value="научна теорија">Naucna teorija</option>
+              <option value="научна делатност">Naucna delatnost</option>
+            </select>
+          </div>
+
+          <div style="width: 45%">
+            <label for="formaZapisa" class="form-label">Forma zapisa</label>
+            <select
+              class="form-select"
+              id="formaZapisa"
+              formControlName="formaZapisa"
+            >
+              <option value="рукопис">Rukopis</option>
+              <option value="штампани текст">Stampani tekst</option>
+              <option value="музичка партитура">Muzicka partitura</option>
+              <option value="звучни запис">Zvucni zapis</option>
+              <option value="визуелни запис">Vizuelni zapis</option>
+              <option value="аудиовизуелни запис">Audiovizuelni zapis</option>
+              <option value="дигитална форма">Digitalna forma</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 me-5 mt-3" style="width: 100%">
+          <label for="nacinKoriscenja" class="form-label"
+            >Nacin koriscenja</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="nacinKoriscenja"
+            formControlName="nacinKoriscenja"
+          />
+          <div *ngIf="a1Form.get('autorskoDelo').get('nacinKoriscenja').touched && a1Form.get('autorskoDelo').get('nacinKoriscenja').invalid" class="text-danger">
+            Morate navesti način korišćenja.
+          </div>
+        </div>
+
+        <!-- autori -->
+        <section>
+          <div class="d-flex">
+            <h3 class="w-50 fw-bold">Autori</h3>
+            <div class="form-check" style="width: 50%">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="autorRadio1"
+                value="podnosilac"
+                formControlName="tipAutora"
+              />
+              <label class="form-check-label" for="autorRadio1">
+                Podnosilac je i autor
+              </label>
+            </div>
+            <div class="form-check" style="width: 50%">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="autorRadio2"
+                value="anonimni"
+                formControlName="tipAutora"
+              />
+              <label class="form-check-label" for="autorRadio2">
+                Anonimni autor
+              </label>
+            </div>
+            <div class="form-check" style="width: 50%">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="autorRadio3"
+                value="poznati"
+                formControlName="tipAutora"
+              />
+              <label class="form-check-label" for="autorRadio3">
+                Poznati autori
+              </label>
+            </div>
+          </div>
+          <div
+            *ngIf="
+              a1Form.get('autorskoDelo').get('tipAutora').value === 'poznati'
+            "
+          >
+            <button
+              type="button"
+              style="left: 40%; width: 20%"
+              mat-button
+              (click)="dodajAutora()"
+              *ngIf="!a1Obrazac"
+            >
+              Dodaj autora
+            </button>
+            <div *ngIf="autori.length">
+              <h4 class="fw-bold">Izabrani autori:</h4>
+              <ul>
+                <li *ngFor="let autor of autori">
+                  <p>Autor {{ autor.ime }} {{ autor.prezime }} {{autor.godinaSmrti}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- originalno autorsko delo -->
+        <section formGroupName="originalnoDelo" class="mt-4">
+          <div class="d-flex">
+            <h3 class="w-50 fw-bold">Originalno autorsko delo</h3>
+            <div class="form-check" style="width: 50%">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="originalnoDeloRadio1"
+                value="true"
+                formControlName="originalno"
+              />
+              <label class="form-check-label" for="originalnoDeloRadio1">
+                U pitanju je originalno autorsko delo
+              </label>
+            </div>
+            <div class="form-check" style="width: 50%">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="originalnoDeloRadio2"
+                value="false"
+                formControlName="originalno"
+              />
+              <label class="form-check-label" for="originalnoDeloRadio2">
+                U pitanju je autorsko delo prerade
+              </label>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              a1Form.get('autorskoDelo').get('originalnoDelo').get('originalno')
+                .value === 'false'
+            "
+          >
+            <div class="mb-3" style="width: 100%">
+              <label for="naslovIzvornogDela" class="form-label"
+                >Naslov originalnog dela</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="naslovIzvornogDela"
+                formControlName="naslov"
+              />
+              <div class="d-flex mt-2">
+                <div class="mb-3 me-5" style="width: 30%">
+                  <label for="imeAutora" class="form-label">Ime originalnog autora</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="imeAutora"
+                    formControlName="imeOriginalnogAutora"
+                  />
+                </div>
+                <div class="mb-3 me-5" style="width: 30%">
+                  <label for="prezimeAutora" class="form-label">Prezime originalnog autora</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="prezimeAutora"
+                    formControlName="prezimeOriginalnogAutora"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- prilozi uz prijavu -->
+        <section>
+          <h3 class="fw-bold">Prilozi uz prijavu</h3>
+          <div class="d-flex">
+            <ng-container *ngIf="a1Obrazac">
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="primer"
+                   *ngIf="a1Obrazac.autorskoDelo.primer.putanjaDoPrimera && a1Obrazac.autorskoDelo.primer.putanjaDoPrimera!= ''">
+                <a [href]="a1Obrazac.autorskoDelo.primer.putanjaDoPrimera" target=”_blank”> Pogledaj primer</a>
+              </div>
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="opis"
+                   *ngIf="a1Obrazac.autorskoDelo.opis.putanjaDoOpisa && a1Obrazac.autorskoDelo.opis.putanjaDoOpisa!= ''">
+                <a [href]="a1Obrazac.autorskoDelo.opis.putanjaDoOpisa" target=”_blank”> Pogledaj opis</a>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!a1Obrazac">
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="primer">
+                <label for="primerAutorskogDela" class="form-label"
+                >Primer dela</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="primerAutorskogDela"
+                  formControlName="putanjaDoPrimera"
+                  (change)="sacuvajPrimerDela($event)"
+                />
+                <div *ngIf="a1Form.get('autorskoDelo').get('primer').get('putanjaDoPrimera').touched && a1Form.get('autorskoDelo').get('primer').get('putanjaDoPrimera').invalid" class="text-danger">
+                  Primer je obavezno polje.
+                </div>
+              </div>
+              <div class="mb-3 me-5" style="width: 100%" formGroupName="opis">
+                <label for="opisAutorskogDela" class="form-label"
+                >Opis dela</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="opisAutorskogDela"
+                  formControlName="putanjaDoOpisa"
+                  (change)="sacuvajOpisDela($event)"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </section>
+      </div>
+    </section>
+    <ng-container *ngIf="!a1Obrazac">
+      <button type="submit" mat-button style="width: 30%; left: 35%">
+        Submit
+      </button>
+    </ng-container>
+  </form>
+</div>

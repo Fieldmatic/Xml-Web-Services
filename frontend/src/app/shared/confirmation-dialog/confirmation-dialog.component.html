@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p [innerHTML]="data.text"></p>
+
+  <div *ngIf="!data.hideReason">
+    <mat-form-field>
+      <textarea matInput placeholder="Razlog za odbijanje" [(ngModel)]="reason"></textarea>
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()" style="width: 40%; border: 1px solid black; margin-right: 5%">Izlaz</button>
+  <button mat-button mat-dialog-close *ngIf="!data.hideReason" (click)="onReject()" style="width: 50%; color: white; background-color: black">Odbij</button>
+  <button mat-button mat-dialog-close *ngIf="data.hideReason" (click)="onAccept()" style="width: 50%;  color: white; background-color: black">Prihvati</button>
+</div>

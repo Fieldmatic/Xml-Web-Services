@@ -1,0 +1,69 @@
+<h3>PRETRAGA</h3>
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Pretraga</mat-label>
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip *ngFor="let s of filters" (removed)="ukloniFilter(s)">
+      {{s}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    <input placeholder="Unesite rec, frazu..."
+           [matChipInputFor]="chipList"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [matChipInputAddOnBlur]="addOnBlur"
+           (matChipInputTokenEnd)="dodajFilter($event)">
+  </mat-chip-list>
+</mat-form-field>
+<br>
+<button type="button" (click)="izvrsiObicnuPretragu()" mat-button class="searchButton">
+  Pretraži
+</button>
+<h3 class="mt-5">NAPREDNA PRETRAGA</h3>
+<form [formGroup]="metadataSearchForm" (submit)="izvrsiNaprednuPetragu()">
+  <div formArrayName="triplets">
+    <div *ngFor="let triplet of triplets.controls; let i = index" [formGroupName]="i">
+      <div class="row">
+        <div class="col-4">
+          <mat-form-field appearance="fill">
+            <mat-label>Operator</mat-label>
+            <mat-select formControlName="operator" name="option">
+              <mat-option value="I" *ngIf="i">I</mat-option>
+              <mat-option value="ILI" *ngIf="i">ILI</mat-option>
+              <mat-option value="DA" *ngIf="!i">DA</mat-option>
+              <mat-option value="NE">NE</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill">
+            <mat-label>Element</mat-label>
+            <mat-select formControlName="predikat">
+              <mat-option *ngFor="let metaEl of metadataElementi" [value]="metaEl">{{ metaEl }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field appearance="fill">
+            <mat-label>Vrednost</mat-label>
+            <input matInput formControlName="objekat"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!--          <div class="col-4"></div>-->
+      <div class="col">
+        <button type="submit" mat-button class="searchButton">
+          Pretraga metapodatka
+        </button>
+      </div>
+      <div class="col me-auto">
+        <button type="button" (click)="dodajTriplet()" mat-button>
+          ➕ Dodaj triplet
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+

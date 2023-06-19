@@ -1,0 +1,541 @@
+<div
+  class="col-xs-12 col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 col-xxl-6 offset-xxl-3">
+  <h1 class="text-center mt-3">Zahtev za priznanje žiga</h1>
+  <form class="p-4 rounded-1" [formGroup]="zigForma" (ngSubmit)="sendRequest()">
+    <section class="mb-5 mt-3" formGroupName="podnosilac">
+      <div class="row mb-2">
+        <div class="col-4 ps-0">
+          <legend>Podnosilac zahteva</legend>
+        </div>
+        <div class="col pe-0">
+          <select class="form-select" formControlName="tip">
+            <option value="fizickoLice" selected>Fizičko lice</option>
+            <option value="pravnoLice">Pravno lice</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="podnosilacIsFizickoLice" class="col ps-0">
+          <label for="podnosilacIme" class="form-label">Ime</label>
+          <input type="text" class="form-control" id="podnosilacIme" formControlName="ime" />
+        </div>
+        <div *ngIf="podnosilacIsFizickoLice" class="col pe-0">
+          <label for="podnosilacPrezime" class="form-label">Prezime</label>
+          <input type="text" class="form-control" id="podnosilacPrezime" formControlName="prezime" />
+        </div>
+        <div *ngIf="!podnosilacIsFizickoLice" class="col-6 ps-0 pe-0">
+          <label for="podnosilacPoslovnoIme" class="form-label">Poslovno ime</label>
+          <input type="text" class="form-control" id="podnosilacPoslovnoIme" formControlName="poslovnoIme" />
+        </div>
+      </div>
+      <div formGroupName="adresa">
+        <div class="row mt-3">
+          <h3 class="mb-1 ps-1">Adresa podnosioca zahteva</h3>
+        </div>
+        <div class="row">
+          <div class="col-8 ps-0">
+            <label for="podnosilacUlica" class="form-label">Ulica</label>
+            <input type="text" class="form-control" id="podnosilacUlica" formControlName="ulica" />
+          </div>
+          <div class="col pe-0">
+            <label for="podnosilacBroj" class="form-label">Broj</label>
+            <input type="text" class="form-control" id="podnosilacBroj" formControlName="broj" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 ps-0">
+            <label for="podnosilacMesto" class="form-label">Mesto</label>
+            <input type="text" class="form-control" id="podnosilacMesto" formControlName="mesto" />
+          </div>
+          <div class="col pe-0">
+            <label for="podnosilacPostanskiBroj" class="form-label">Poštanski broj</label>
+            <input type="text" class="form-control" id="podnosilacPostanskiBroj" formControlName="postanskiBroj" />
+          </div>
+        </div>
+        <div class="row">
+          <label for="podnosilacDrzava" class="form-label">Država</label>
+          <input type="text" class="form-control" id="podnosilacDrzava" formControlName="drzava" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <h3 class="mb-1 ps-1">Kontakt podaci podnosioca zahteva</h3>
+      </div>
+      <div class="row">
+        <label for="podnosilacTelefon" class="form-label">Broj telefona</label>
+        <input type="text" class="form-control" id="podnosilacTelefon" formControlName="telefon" />
+      </div>
+      <div class="row">
+        <label for="podnosilacEmail" class="form-label">E-mail</label>
+        <input type="text" class="form-control" id="podnosilacEmail" formControlName="email" />
+      </div>
+      <div class="row">
+        <label for="podnosilacFaks" class="form-label">Faks</label>
+        <input type="text" class="form-control" id="podnosilacFaks" formControlName="faks" />
+      </div>
+    </section>
+    <section class="mb-5" formGroupName="punomocnik">
+      <div class="row mb-2">
+        <div class="col-4 ps-0">
+          <legend>Punomoćnik</legend>
+        </div>
+        <div class="col pe-0">
+          <select class="form-select" formControlName="tip">
+            <option value="fizickoLice" selected>Fizičko lice</option>
+            <option value="pravnoLice">Pravno lice</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="punomocnikIsFizickoLice" class="col ps-0">
+          <label for="punomocnikIme" class="form-label">Ime</label>
+          <input type="text" class="form-control" id="punomocnikIme" formControlName="ime" />
+        </div>
+        <div *ngIf="punomocnikIsFizickoLice" class="col pe-0">
+          <label for="punomocnikPrezime" class="form-label">Prezime</label>
+          <input type="text" class="form-control" id="punomocnikPrezime" formControlName="prezime" />
+        </div>
+        <div *ngIf="!punomocnikIsFizickoLice" class="col-6 ps-0 pe-0">
+          <label for="punomocnikPoslovnoIme" class="form-label">Poslovno ime</label>
+          <input type="text" class="form-control" id="punomocnikPoslovnoIme" formControlName="poslovnoIme" />
+        </div>
+      </div>
+      <div formGroupName="adresa">
+        <div class="row mt-3">
+          <h3 class="mb-1 ps-1">Adresa punomoćnika</h3>
+        </div>
+        <div class="row">
+          <div class="col-8 ps-0">
+            <label for="punomocnikUlica" class="form-label">Ulica</label>
+            <input type="text" class="form-control" id="punomocnikUlica" formControlName="ulica" />
+          </div>
+          <div class="col pe-0">
+            <label for="punomocnikBroj" class="form-label">Broj</label>
+            <input type="text" class="form-control" id="punomocnikBroj" formControlName="broj" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 ps-0">
+            <label for="punomocnikMesto" class="form-label">Mesto</label>
+            <input type="text" class="form-control" id="punomocnikMesto" formControlName="mesto" />
+          </div>
+          <div class="col pe-0">
+            <label for="punomocnikPostanskiBroj" class="form-label">Poštanski broj</label>
+            <input type="text" class="form-control" id="punomocnikPostanskiBroj" formControlName="postanskiBroj" />
+          </div>
+        </div>
+        <div class="row">
+          <label for="punomocnikDrzava" class="form-label">Država</label>
+          <input type="text" class="form-control" id="punomocnikDrzava" formControlName="drzava" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <h3 class="mb-1 ps-1">Kontakt podaci punomoćnika</h3>
+      </div>
+      <div class="row">
+        <label for="punomocnikTelefon" class="form-label">Broj telefona</label>
+        <input type="text" class="form-control" id="punomocnikTelefon" formControlName="telefon" />
+      </div>
+      <div class="row">
+        <label for="punomocnikEmail" class="form-label">E-mail</label>
+        <input type="text" class="form-control" id="punomocnikEmail" formControlName="email" />
+      </div>
+      <div class="row">
+        <label for="punomocnikFaks" class="form-label">Faks</label>
+        <input type="text" class="form-control" id="punomocnikFaks" formControlName="faks" />
+      </div>
+      <div class="row mt-1">
+        <div class="col ps-0">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="sad"
+            name="vremePrilozenjaPunomocja"
+            formControlName="vremePrilozenjaPunomocja"
+            id="prilazem_punomocje"
+          />
+          <label class="form-check-label ms-1" for="prilazem_punomocje">
+            Prilažem punomoćje
+          </label>
+        </div>
+        <div class="col">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="vremePrilozenjaPunomocja"
+            formControlName="vremePrilozenjaPunomocja"
+            value="pre"
+            id="prilozio_sam_punomocje"
+          />
+          <label class="form-check-label ms-1" for="prilozio_sam_punomocje">
+            Generalno punomoćje ranije priloženo
+          </label>
+        </div>
+        <div class="col pe-0">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="vremePrilozenjaPunomocja"
+            formControlName="vremePrilozenjaPunomocja"
+            value="posle"
+            id="prilozicu_punomocje"
+          />
+          <label class="form-check-label ms-1" for="prilozicu_punomocje">
+            Punomoćje će biti naknadno dostavljeno
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="sadPrilazemPunomocje" class="row">
+          <label for="punomocje" class="form-label">Punomoćje</label>
+          <input class="form-control" accept="application/pdf" type="file" id="punomocje" [disabled]="zig"
+                 (change)="onFileChange($event, 'punomocje')" *ngIf="!zig">
+          <a *ngIf="zig?.punomocje?.punomocje?.naziv"
+             href="{{transformLink(zig.punomocje.punomocje.naziv)}}">Punomoćje</a>
+        </div>
+      </div>
+    </section>
+    <section class="mb-5" formGroupName="zajednickiPredstavnik">
+      <div class="row mb-2">
+        <div class="col-4 ps-0">
+          <legend>Zajednički predstavnik</legend>
+        </div>
+        <div *ngIf="zajednickiPredstavnikPostoji" class="col">
+          <select class="form-select" formControlName="tip">
+            <option value="fizickoLice" selected>Fizičko lice</option>
+            <option value="pravnoLice">Pravno lice</option>
+          </select>
+        </div>
+        <div class="col pe-0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="zajednickiPredstavnikPostoji"
+            id="prijavaSaZajednickimPredstavnikom"
+          />
+          <label class="form-check-label ms-1" for="prijavaSaZajednickimPredstavnikom">
+            Zajednički predstavnik postoji
+          </label>
+        </div>
+      </div>
+      <div *ngIf="zajednickiPredstavnikPostoji">
+        <div class="row">
+          <div *ngIf="zajednickiPredstavnikIsFizickoLice" class="col ps-0">
+            <label for="zajednickiPredstavnikIme" class="form-label">Ime</label>
+            <input type="text" class="form-control" id="zajednickiPredstavnikIme" formControlName="ime" />
+          </div>
+          <div *ngIf="zajednickiPredstavnikIsFizickoLice" class="col pe-0">
+            <label for="zajednickiPredstavnikPrezime" class="form-label">Prezime</label>
+            <input type="text" class="form-control" id="zajednickiPredstavnikPrezime" formControlName="prezime" />
+          </div>
+          <div *ngIf="!zajednickiPredstavnikIsFizickoLice" class="col-6 ps-0 pe-0">
+            <label for="zajednickiPredstavnikPoslovnoIme" class="form-label">Poslovno ime</label>
+            <input type="text" class="form-control" id="zajednickiPredstavnikPoslovnoIme"
+                   formControlName="poslovnoIme" />
+          </div>
+        </div>
+        <div formGroupName="adresa">
+          <div class="row mt-3">
+            <h3 class="mb-1 ps-1">Adresa zajedničkog predstavnika</h3>
+          </div>
+          <div class="row">
+            <div class="col-8 ps-0">
+              <label for="zajednickiPredstavnikUlica" class="form-label">Ulica</label>
+              <input type="text" class="form-control" id="zajednickiPredstavnikUlica" formControlName="ulica" />
+            </div>
+            <div class="col pe-0">
+              <label for="zajednickiPredstavnikBroj" class="form-label">Broj</label>
+              <input type="text" class="form-control" id="zajednickiPredstavnikBroj" formControlName="broj" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8 ps-0">
+              <label for="zajednickiPredstavnikMesto" class="form-label">Mesto</label>
+              <input type="text" class="form-control" id="zajednickiPredstavnikMesto" formControlName="mesto" />
+            </div>
+            <div class="col pe-0">
+              <label for="zajednickiPredstavnikPostanskiBroj" class="form-label">Poštanski broj</label>
+              <input type="text" class="form-control" id="zajednickiPredstavnikPostanskiBroj"
+                     formControlName="postanskiBroj" />
+            </div>
+          </div>
+          <div class="row">
+            <label for="zajednickiPredstavnikDrzava" class="form-label">Država</label>
+            <input type="text" class="form-control" id="zajednickiPredstavnikDrzava" formControlName="drzava" />
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <h3 class="mb-1 ps-1">Kontakt podaci zajedničkog predstavnika</h3>
+        </div>
+        <div class="row">
+          <label for="zajednickiPredstavnikTelefon" class="form-label">Broj telefona</label>
+          <input type="text" class="form-control" id="zajednickiPredstavnikTelefon" formControlName="telefon" />
+        </div>
+        <div class="row">
+          <label for="zajednickiPredstavnikEmail" class="form-label">E-mail</label>
+          <input type="text" class="form-control" id="zajednickiPredstavnikEmail" formControlName="email" />
+        </div>
+        <div class="row">
+          <label for="zajednickiPredstavnikFaks" class="form-label">Faks</label>
+          <input type="text" class="form-control" id="zajednickiPredstavnikFaks" formControlName="faks" />
+        </div>
+      </div>
+    </section>
+    <section class="mb-5">
+      <div class="row mb-2">
+        <legend class="ps-0">Prijava se podnosi za:</legend>
+      </div>
+      <div class="row">
+        <div class="col ms-0">
+          <div class="row mt-3">
+            <h3 class="mb-1 ps-1">Vrsta žiga</h3>
+          </div>
+          <div class="form-check">
+            <input checked class="form-check-input" name="tipZiga" value="INDUVIDUALNI" type="radio"
+                   id="induvidualni_zig" formControlName="tipZiga">
+            <label class="form-check-label" for="induvidualni_zig">
+              Induvidualni žig
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZiga" value="KOLEKTIVNI" type="radio" id="kolektivni_zig"
+                   formControlName="tipZiga">
+            <label class="form-check-label" for="kolektivni_zig">
+              Kolektivni žig
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZiga" value="ZIG_GARANCIJE" type="radio" id="zig_garancije"
+                   formControlName="tipZiga">
+            <label class="form-check-label" for="zig_garancije">
+              Žig garancije
+            </label>
+          </div>
+          <div *ngIf="zigNijeInduvidualni" class="row">
+            <label for="opstiAkt" class="form-label">Opšti akt o kolektivnom žigu/žigu garancije</label>
+            <input class="form-control" accept="application/pdf" type="file" id="opstiAkt" [disabled]="zig" *ngIf="!zig"
+                   (change)="onFileChange($event, 'opstiAkt')">
+            <a *ngIf="zig?.opstiAktOKolektivnomZiguIliZiguGarancije?.naziv"
+               href="{{transformLink(zig.opstiAktOKolektivnomZiguIliZiguGarancije.naziv)}}">Opšti akt o kolektivnom žigu
+              ili žigu garancije</a>
+          </div>
+        </div>
+        <div class="col me-0">
+          <div class="row mt-3">
+            <h3 class="mb-1 ps-1">Vrsta znaka</h3>
+          </div>
+          <div class="form-check">
+            <input checked class="form-check-input" name="tipZnaka" value="VERBALNI" type="radio"
+                   id="verbalni_znak" formControlName="tipZnaka">
+            <label class="form-check-label" for="verbalni_znak">
+              Verbalni znak
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZnaka" value="GRAFICKI" type="radio" id="graficki_znak"
+                   formControlName="tipZnaka">
+            <label class="form-check-label" for="graficki_znak">
+              Grafički znak
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZnaka" value="KOMBINOVANI" type="radio" id="kombinovani_znak"
+                   formControlName="tipZnaka">
+            <label class="form-check-label" for="kombinovani_znak">
+              Kombinovani znak
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZnaka" value="TRODIMENZIONALNI" type="radio"
+                   id="trodimenzionalni_znak" formControlName="tipZnaka">
+            <label class="form-check-label" for="trodimenzionalni_znak">
+              Trodimenzionalni znak
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" name="tipZnaka" value="DRUGI" type="radio" id="drugi_znak"
+                   formControlName="tipZnaka">
+            <label class="form-check-label" for="drugi_znak">
+              Drugi znak
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label for="izgled_znaka" class="form-label">Izgled znaka</label>
+      </div>
+      <div class="row">
+        <div class="col ps-0">
+          <input class="form-control" accept="image/png, image/jpeg" type="file" id="izgled_znaka"
+                 (change)="onFileChange($event, 'izgledZnaka')" *ngIf="!zig">
+        </div>
+        <div class="col form-control">
+          <div *ngIf="!zig"
+               style="width: 100%; aspect-ratio: 1/1; background-position: center; background-repeat: no-repeat; background-size: contain"
+               [ngStyle]="{'background-image': !izgledZnaka ? null : getBackgroundImageUrl(this.izgledZnaka)}">
+          </div>
+          <div *ngIf="zig"
+               style="width: 100%; aspect-ratio: 1/1; background-position: center; background-repeat: no-repeat; background-size: contain"
+               [ngStyle]="{'background-image': getAfterViewUrl(transformLink(zig.znak.izgled.naziv, true))}">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3" formArrayName="bojeZnaka">
+        <label class="form-label">Boje znaka</label>
+        <div class="row" *ngIf="!zig">
+          <div class="col-12 ps-0">
+            <button type="button" class="rounded-1 pt-1 pb-1" (click)="dodajBoju()">Dodaj boju</button>
+          </div>
+        </div>
+        <div class="row mt-1"
+             *ngFor="let bojaZnakaControl of controls; let id = index"
+             [formGroupName]="id">
+          <div class="col-6 ps-0">
+            <label class="form-label">Boja {{id + 1}}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="boja">
+          </div>
+          <div class="col" *ngIf="!zig">
+            <button type="button" class="btn btn-danger" style="margin-top: 20px" (click)="ukloniBoju(id)">X</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="transliteracijaZnaka" class="form-label">Transliteracija znaka*</label>
+        <input type="text" class="form-control" id="transliteracijaZnaka" formControlName="transliteracijaZnaka" />
+      </div>
+
+      <div class="row">
+        <label for="prevodZnaka" class="form-label">Prevod znaka*</label>
+        <input type="text" class="form-control" id="prevodZnaka" formControlName="prevodZnaka" />
+      </div>
+
+      <div class="row">
+        <label class="form-text">*Popunjavati samo ako je znak ili element znaka ispisan slovima koja nisu ćirilična ili
+          latinična</label>
+      </div>
+
+      <div class="row">
+        <label for="opisZnaka" class="form-label">Opis znaka</label>
+        <textarea class="form-control" maxlength="200" id="opisZnaka" formControlName="opisZnaka"></textarea>
+      </div>
+    </section>
+    <section class="mb-5">
+      <div class="row mb-2">
+        <div class="col ps-0">
+          <legend>Klase robe ili usluga po Ničanskoj klasifikaciji</legend>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <label for="spisakRobe" class="form-label">Spisak robe i usluga</label>
+        <input class="form-control" accept="application/pdf" type="file" (change)="onFileChange($event, 'spisakRobe')"
+               *ngIf="!zig"
+               id="spisakRobe" [disabled]="zig">
+        <a *ngIf="zig?.spisakRobeIUsluga.naziv" href="{{transformLink(zig.spisakRobeIUsluga.naziv)}}">Spisak robe i
+          usluga</a>
+      </div>
+      <div class="row mb-3 d-inline-block" formArrayName="klaseRobe">
+        <div *ngFor="let klasaRobeControl of controls2; let id = index" class="d-inline ps-0 pe-0 "
+             [formGroupName]="id">
+          <input formControlName="klasa" type="checkbox" class="btn-check" [id]="id" autocomplete="off" />
+          <label class="btn btn-outline-dark" [for]="id">{{id + 1 | number : '2.0-0'}}</label>
+        </div>
+      </div>
+    </section>
+    <section class="mb-5" formGroupName="pravoPrvenstva">
+      <div class="row">
+        <div class="col-4 ps-0">
+          <legend>Pravo prvenstva</legend>
+        </div>
+        <div class="col pe-0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="zatrazeno"
+            id="pravoPrvenstaZatrazeno"
+          />
+          <label class="form-check-label ms-1" for="prijavaSaZajednickimPredstavnikom">
+            Zahtevam pravo prvenstva
+          </label>
+        </div>
+      </div>
+      <div *ngIf="zatrazenoPravoPrvenstva" class="row mt-2">
+        <label for="osnovPravaPrvenstva" class="form-label">Osnov prava prvenstva</label>
+        <textarea class="form-control" maxlength="200" id="osnovPravaPrvenstva" formControlName="osnov"></textarea>
+      </div>
+      <div *ngIf="zatrazenoPravoPrvenstva" class="row">
+        <label for="dokazPravaPrvenstva" class="form-label">Dokaz o pravu prvenstva</label>
+        <input class="form-control" accept="application/pdf" type="file" id="dokazPravaPrvenstva" [disabled]="zig"
+               *ngIf="!zig"
+               (change)="onFileChange($event, 'dokazPravaPrvenstva')">
+        <a *ngIf="zig?.pravoPrvenstva.dokaz?.naziv" href="{{transformLink(zig.pravoPrvenstva.dokaz.naziv)}}">Dokaz o
+          pravu prvenstva</a>
+      </div>
+    </section>
+    <section formGroupName="takse">
+      <div class="row mb-2">
+        <div class="col ps-0">
+          <legend>Plaćene takse</legend>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <label for="dokazUplate" class="form-label">Dokaz o uplati takse</label>
+        <input class="form-control" accept="application/pdf, image/png, image/jpeg" type="file" id="dokazUplate"
+               *ngIf="!zig"
+               [disabled]="zig"
+               (change)="onFileChange($event, 'dokazUplate')">
+        <a *ngIf="zig?.takse.dokazOUplati.naziv" href="{{transformLink(zig.takse.dokazOUplati.naziv)}}">Dokaz o
+          uplati</a>
+      </div>
+      <div class="row">
+        <div class="col ps-0 pe-0">
+          <label for="osnovna_taksa">Osnovna taksa</label>
+          <div class="input-group">
+            <input type="number" class="form-control" min="0" id="osnovna_taksa" aria-labelledby="valuta"
+                   formControlName="osnovna">
+            <span class="input-group-text" id="valuta">RSD</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col ps-0 pe-0">
+          <label for="taksa_klasa" class="col-form-label">Taksa za {{numberOfSelectedKlase}} klasa</label>
+          <div class="input-group">
+            <input type="number" class="form-control" min="0" id="taksa_klasa" aria-labelledby="valuta1"
+                   formControlName="zaKlase">
+            <span class="input-group-text" id="valuta1">RSD</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col ps-0 pe-0">
+          <label for="taksa_grafickog_resenja" class="col-form-label">Taksa za grafičko rešenje</label>
+          <div class="input-group">
+            <input type="number" class="form-control" min="0" id="taksa_grafickog_resenja"
+                   aria-labelledby="valuta2"
+                   formControlName="zaGrafickoResenje">
+            <span class="input-group-text" id="valuta2">RSD</span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row mt-2">
+        <div class="col ps-0 pe-0">
+          <div class="input-group">
+            <input disabled type="number" placeholder="{{totalPaidAmount | number:'.2-2'}}" class="form-control"
+                   id="takse_ukupno"
+                   aria-labelledby="valuta3">
+            <span class="input-group-text" id="valuta3">RSD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="row mb-3" *ngIf="!zig">
+      <button class="rounded-1 mt-5 pt-1 pb-1" type="submit">Pošalji zahtev</button>
+    </div>
+  </form>
+</div>

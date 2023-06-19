@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:pred="http://www.ftn.uns.ac.rs/p1/predicate/">
+
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/a1/primer1">
+    <pred:brojPrijave>1</pred:brojPrijave>
+    <pred:datumPodnosenja>2022-12-12</pred:datumPodnosenja>
+    <pred:poslovnoImePodnosioca>MILIC-PROM</pred:poslovnoImePodnosioca>
+    <pred:naslovAutorskogDela>Covek po imenu Ive</pred:naslovAutorskogDela>
+    <pred:imeAutora>Nikola</pred:imeAutora>
+    <pred:prezimeAutora>Stevanovic</pred:prezimeAutora>
+  </rdf:Description>
+</rdf:RDF>

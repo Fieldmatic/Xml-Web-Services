@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col"><app-patent-obrazac [patentObrazac]="patentObrazac"></app-patent-obrazac>
+  </div>
+  <div class="col p-4" style="margin-left: 3%">
+    <ng-container *ngIf="patentObrazac?.patent['statusZahteva'] === 'PODNET'">
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="row">
+              <div class="col"></div>
+              <div class="col"><h2>Popunjava zavod</h2></div>
+              <div class="col"></div>
+            </div>
+            <div class="row" style="margin-bottom: 2%">
+              <div class="col"><span style="margin-left: 5%">Da li prikazani zahtev za priznanje patenta ispunjava sve uslove da bude prihvaćen?</span>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 5%">
+              <div class="col">
+                <button type="button" mat-button style="color: white; background-color: black; width: 80%; margin-left: 20%"
+                        (click)="openConfirmationDialog()">Prihvati
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" mat-button style="color: white; background-color: black; width: 80%; margin-right: 10%"
+                        (click)="openRejectDialog()">Odbij
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="patentObrazac?.patent['statusZahteva'] === 'PRIHVACEN'"
+                  style="display: flex; align-items: center">
+      <span style="font-weight: bold">Status zahteva: </span>
+      <span style="color: green; margin-left: 10px; font-weight: bold">Zahtev je PRIHVAĆEN.</span>
+    </ng-container>
+    <ng-container *ngIf="patentObrazac?.patent['statusZahteva'] === 'ODBIJEN'"
+                  style="display: flex; align-items: center">
+      <span style="font-weight: bold">Status zahteva: </span>
+      <span style="color: red; margin-left: 10px; font-weight: bold">Zahtev je ODBIJEN.</span>
+    </ng-container>
+  </div>
+</div>

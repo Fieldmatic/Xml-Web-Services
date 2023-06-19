@@ -1,0 +1,781 @@
+<div class="patent">
+  <form
+    class="p-4 mt-0"
+    [formGroup]="patent"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <section formGroupName="nazivPronalaska">
+      <h1 class="text-center mb-4">Zahtev za priznanje patenta</h1>
+      <div class="d-flex flex-column">
+        <h3 class="w-25 fw-bold">Naziv pronalaska</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5 w-35">
+            <label for="nazivPronalaskaRS" class="form-label">Naziv pronalaska na srpskom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nazivPronalaskaRS"
+              formControlName="nazivPronalaskaRS"
+            />
+            <div *ngIf="patent.get('nazivPronalaska').get('nazivPronalaskaRS').touched && patent.get('nazivPronalaska').get('nazivPronalaskaRS').invalid" class="text-danger">
+              Naziv pronalaska je obavezno polje.
+            </div>
+          </div>
+          <div class="mb-3 w-35">
+            <label for="nazivPronalaskaENG" class="form-label">Naziv pronalaska na engleskom</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nazivPronalaskaENG"
+              formControlName="nazivPronalaskaENG"
+            />
+            <div *ngIf="patent.get('nazivPronalaska').get('nazivPronalaskaENG').touched && patent.get('nazivPronalaska').get('nazivPronalaskaENG').invalid" class="text-danger">
+              Naziv pronalaska je obavezno polje.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section formGroupName="podnosilac">
+      <div class="d-flex flex-row">
+        <h3 class="w-25 fw-bold">Podnosilac</h3>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="fizickoLice"
+            id="fizickoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="fizickoLice">
+            Fizicko lice
+          </label>
+        </div>
+        <div class="form-check" style="width: 30%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPodnosioca"
+            value="pravnoLice"
+            id="pravnoLice"
+            formControlName="tipPodnosioca"
+          />
+          <label class="form-check-label" for="pravnoLice"> Pravno lice </label>
+        </div>
+        <div class="form-check" style="width: 30%">
+          <input
+              class="form-check-input"
+              type="checkbox"
+              id="jePronalazac"
+              formControlName="jePronalazac"
+            />
+          <label class="form-check-label" for="jePronalazac">
+              Je pronalazac
+          </label>
+        </div>
+      </div>
+      <ng-container>
+        <div [hidden]="samoPrikaz" id="podnosilac">{{samoPrikaz}}</div>
+      </ng-container>
+      <ng-container *ngIf="samoPrikaz">
+        <div *ngIf="patentObrazac" class="d-flex">
+          <div class="mb-3 me-5 w-25">
+            <label for="email" class="form-label">Email adresa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+          </div>
+          <div class="mb-3 w-25">
+            <label for="brTelefona" class="form-label">Broj telefona</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brTelefona"
+              formControlName="brojTelefona"
+            />
+          </div>
+        </div>
+
+        <!-- puno ime -->
+        <div
+          class="d-flex"
+          *ngIf="
+            patent.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+          "
+        >
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ime" class="form-label">Ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ime"
+              formControlName="ime"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="prezime"
+              formControlName="prezime"
+            />
+          </div>
+        </div>
+
+        <!-- poslovno ime -->
+        <div
+          class="d-flex"
+          *ngIf="
+            patent.get('podnosilac').get('tipPodnosioca').value === 'pravnoLice'
+          "
+        >
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="poslovnoIme" class="form-label">Poslovno ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="poslovnoIme"
+              formControlName="poslovnoIme"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="brojFaksa" class="form-label">Broj faksa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojFaksa"
+              formControlName="brojFaksa"
+            />
+          </div>
+        </div>
+
+        <!-- drzavljanstvo -->
+        <div
+          formGroupName="drzavljanstvo"
+          *ngIf="
+            patent.get('podnosilac').get('tipPodnosioca').value === 'fizickoLice'
+          "
+        >
+          <h3>Drzavljanstvo podnosioca</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="tipDrzavljanstva" class="form-label"
+              >Tip drzavljanstva</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="tipDrzavljanstva"
+                formControlName="tip"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="jmbg" class="form-label">Jmbg</label>
+              <input
+                type="text"
+                class="form-control"
+                id="jmbg"
+                formControlName="jmbg"
+              />
+            </div>
+            <div class="mb-3" style="width: 30%">
+              <label for="brojPasosa" class="form-label">Broj pasosa</label>
+              <input
+                type="text"
+                class="form-control"
+                id="brojPasosa"
+                formControlName="brojPasosa"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- adresa podnosioca -->
+        <div formGroupName="adresaPodnosioca" class="d-flex flex-column">
+          <h3>Adresa podnosioca</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="ulica" class="form-label">Ulica</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ulica"
+                formControlName="ulica"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="broj" class="form-label">Broj</label>
+              <input
+                type="text"
+                class="form-control"
+                id="broj"
+                formControlName="broj"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="grad" class="form-label">Grad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="grad"
+                formControlName="mesto"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="d-flex">
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="drzava" class="form-label">Drzava</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="drzava"
+                  formControlName="drzava"
+                />
+              </div>
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="postanskiBroj"
+                  formControlName="postanskiBroj"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+
+    <section formGroupName="pronalazac" *ngIf="
+    !patent.get('podnosilac').get('jePronalazac').value
+  ">
+      <div class="d-flex flex-row">
+        <h3 class="w-25 fw-bold">Pronalazac</h3>
+        <div class="form-check" style="width: 30%">
+          <input
+              class="form-check-input"
+              type="checkbox"
+              id="neZeliDaBudeNaveden"
+              formControlName="neZeliDaBudeNaveden"
+            />
+          <label class="form-check-label" for="neZeliDaBudeNaveden">
+              Ne zeli da bude naveden
+          </label>
+        </div>
+      </div>
+      <div class="d-flex" *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value">
+        <div class="mb-3 me-5 w-25">
+          <label for="email" class="form-label">Email adresa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            formControlName="email"
+          />
+          <div *ngIf="patent.get('pronalazac').get('email').touched && patent.get('pronalazac').get('email').invalid" class="text-danger">
+            Neispravan format email-a.
+          </div>
+        </div>
+        <div class="mb-3 w-25">
+          <label for="brTelefona" class="form-label">Broj telefona</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brTelefona"
+            formControlName="brojTelefona"
+          />
+          <div *ngIf="patent.get('pronalazac').get('brojTelefona').touched && patent.get('pronalazac').get('brojTelefona').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
+        </div>
+        <div class="ms-5" style="width: 30%">
+          <label for="brojFaksa" class="form-label">Broj faksa</label>
+          <input
+            type="text"
+            class="form-control"
+            id="brojFaksa"
+            formControlName="brojFaksa"
+          />
+          <div *ngIf="patent.get('pronalazac').get('brojFaksa').touched && patent.get('pronalazac').get('brojFaksa').invalid" class="text-danger">
+            Broj telefona mora imati minimalno 9 cifara.
+          </div>
+        </div>
+      </div>
+
+      <!-- puno ime -->
+      <div
+        class="d-flex"
+        *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value"
+      >
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="ime" class="form-label">Ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ime"
+            formControlName="ime"
+          />
+          <div *ngIf="patent.get('pronalazac').get('ime').touched && patent.get('pronalazac').get('ime').invalid" class="text-danger">
+            Ime može imati samo slova.
+          </div>
+        </div>
+        <div class="mb-3 me-5" style="width: 30%">
+          <label for="prezime" class="form-label">Prezime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="prezime"
+            formControlName="prezime"
+          />
+          <div *ngIf="patent.get('pronalazac').get('prezime').touched && patent.get('pronalazac').get('prezime').invalid" class="text-danger">
+            Prezime može imati samo slova.
+          </div>        </div>
+      </div>
+
+      <!-- adresa pronalazaca -->
+      <div formGroupName="adresaPronalazaca" class="d-flex flex-column" *ngIf="!patent.get('pronalazac').get('neZeliDaBudeNaveden').value">
+        <h3>Adresa pronalazaca</h3>
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ulica" class="form-label">Ulica</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ulica"
+              formControlName="ulica"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="broj" class="form-label">Broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="broj"
+              formControlName="broj"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="grad" class="form-label">Grad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="grad"
+              formControlName="mesto"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+              <div *ngIf="patent.get('pronalazac').get('adresaPronalazaca').get('postanskiBroj').touched && patent.get('pronalazac').get('adresaPronalazaca').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- punomocnik -->
+    <section formGroupName="punomocnik" class="mt-4 mb-2">
+      <div class="d-flex mb-2">
+        <h3 class="w-50 fw-bold">Punomocnik</h3>
+        <div class="form-check" style="width: 50%">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="punomocnikZaPrijemPismena"
+            formControlName="punomocnikZaPrijemPismena"
+          />
+          <label class="form-check-label" for="punomocnikZaPrijemPismena">
+            Punomocnik za prijem pismena
+          </label>
+        </div>
+        <div class="form-check" style="width: 35%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPunomocnika"
+            value="punomocnik_za_zastupanje"
+            id="punomocnik_za_zastupanje"
+            formControlName="tipPunomocnika"
+          />
+          <label class="form-check-label" for="punomocnik_za_zastupanje">
+            Punomocnik za zastupanje
+          </label>
+        </div>
+        <div class="form-check" style="width: 35%">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="tipPunomocnika"
+            value="zajednicki_predstavnik"
+            id="zajednicki_predstavnik"
+            formControlName="tipPunomocnika"
+          />
+          <label class="form-check-label" for="zajednicki_predstavnik"> Zajednicki predstavnik </label>
+        </div>
+      </div>
+
+      <!-- puno ime punomocnika -->
+      <div
+        class="d-flex flex-column"
+      >
+        <div class="d-flex">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="ime" class="form-label">Ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ime"
+              formControlName="ime"
+            />
+            <div *ngIf="patent.get('punomocnik').get('ime').touched && patent.get('punomocnik').get('ime').invalid" class="text-danger">
+              Ime može imati samo slova.
+            </div>
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="prezime"
+              formControlName="prezime"
+            />
+            <div *ngIf="patent.get('punomocnik').get('prezime').touched && patent.get('punomocnik').get('prezime').invalid" class="text-danger">
+              Prezime može imati samo slova.
+            </div>
+          </div>
+        </div>
+        <div class="d-flex mt-2">
+          <div class="mb-3 me-5 w-25">
+            <label for="email" class="form-label">Email adresa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+            <div *ngIf="patent.get('punomocnik').get('email').touched && patent.get('punomocnik').get('email').invalid" class="text-danger">
+              Neispravan format email-a.
+            </div>
+          </div>
+          <div class="mb-3 w-25">
+            <label for="brojTelefona" class="form-label">Broj telefona</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojTelefona"
+              formControlName="brojTelefona"
+            />
+            <div *ngIf="patent.get('punomocnik').get('brojTelefona').touched && patent.get('punomocnik').get('brojTelefona').invalid" class="text-danger">
+              Broj telefona mora imati minimalno 9 cifara.
+            </div>
+          </div>
+          <div class="ms-5" style="width: 30%">
+            <label for="brojFaksa" class="form-label">Broj faksa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojFaksa"
+              formControlName="brojFaksa"
+            />
+            <div *ngIf="patent.get('punomocnik').get('brojFaksa').touched && patent.get('punomocnik').get('brojFaksa').invalid" class="text-danger">
+              Broj telefona mora imati minimalno 9 cifara.
+            </div>
+          </div>
+        </div>
+
+        <!-- adresa punomocnika -->
+        <div formGroupName="adresaPunomocnika">
+          <h3>Adresa punomocnika</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="ulica" class="form-label">Ulica</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ulica"
+                formControlName="ulica"
+              />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('ulica').touched && patent.get('punomocnik').get('adresaPunomocnika').get('ulica').invalid" class="text-danger">
+                Ulica je obavezna.
+              </div>
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="broj" class="form-label">Broj</label>
+              <input
+                type="text"
+                class="form-control"
+                id="broj"
+                formControlName="broj"
+              />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('broj').touched && patent.get('punomocnik').get('adresaPunomocnika').get('broj').invalid" class="text-danger">
+                Broj je obavezan.
+              </div>
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="grad" class="form-label">Grad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="grad"
+                formControlName="mesto"
+              />
+              <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('mesto').touched && patent.get('punomocnik').get('adresaPunomocnika').get('mesto').invalid" class="text-danger">
+                Grad je obavezan.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex">
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="drzava" class="form-label">Drzava</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="drzava"
+                  formControlName="drzava"
+                />
+                <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('drzava').touched && patent.get('punomocnik').get('adresaPunomocnika').get('drzava').invalid" class="text-danger">
+                  Drzava je obavezna.
+                </div>
+              </div>
+              <div class="mb-3 me-5" style="width: 30%">
+                <label for="postanskiBroj" class="form-label"
+                  >Postanski broj</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="postanskiBroj"
+                  formControlName="postanskiBroj"
+                />
+                <div *ngIf="patent.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').touched && patent.get('punomocnik').get('adresaPunomocnika').get('postanskiBroj').invalid" class="text-danger">
+                  Poštanski broj mora imati tačno 5 cifara.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section formGroupName="podacioDostavljanju" class="mt-4">
+      <div class="d-flex-column">
+        <h3 class="w-50 fw-bold">Podaci o dostavljanju</h3>
+        <div class="d-flex mb-3">
+          <div class="form-check" style="width: 30%">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="nacinDostavljanja"
+              value="elektronskim_putem"
+              id="elektronskim_putem"
+              formControlName="nacinDostavljanja"
+            />
+            <label class="form-check-label" for="elektronskim_putem">
+              Elektronskim putem
+            </label>
+          </div>
+          <div class="form-check" style="width: 30%">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="nacinDostavljanja"
+              value="u_papirnoj_formi"
+              id="u_papirnoj_formi"
+              formControlName="nacinDostavljanja"
+            />
+            <label class="form-check-label" for="u_papirnoj_formi">U papirnoj formi</label>
+          </div>
+        </div>
+        <div formGroupName="adresa"
+             *ngIf="patent.get('podacioDostavljanju').get('nacinDostavljanja').value === 'u_papirnoj_formi'">
+          <h3>Adresa</h3>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="ulica" class="form-label">Ulica</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ulica"
+                formControlName="ulica"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="broj" class="form-label">Broj</label>
+              <input
+                type="text"
+                class="form-control"
+                id="broj"
+                formControlName="broj"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="grad" class="form-label">Grad</label>
+              <input
+                type="text"
+                class="form-control"
+                id="grad"
+                formControlName="mesto"
+              />
+            </div>
+          </div>
+        <div>
+          <div class="d-flex">
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="drzava" class="form-label">Drzava</label>
+              <input
+                type="text"
+                class="form-control"
+                id="drzava"
+                formControlName="drzava"
+              />
+            </div>
+            <div class="mb-3 me-5" style="width: 30%">
+              <label for="postanskiBroj" class="form-label"
+                >Postanski broj</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="postanskiBroj"
+                formControlName="postanskiBroj"
+              />
+              <div *ngIf="patent.get('podacioDostavljanju').get('adresa').get('postanskiBroj').touched && patent.get('podacioDostavljanju').get('adresa').get('postanskiBroj').invalid" class="text-danger">
+                Poštanski broj mora imati tačno 5 cifara.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <section formGroupName="osnovnaPrijava" class="mt-4">
+      <div class="d-flex-column" *ngIf="!patentObrazac">
+        <div class="d-flex mb-3">
+          <div class="form-check" style="width: 30%">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="dopunskaPrijava"
+              formControlName="dopunskaPrijava"
+            />
+            <label class="form-check-label" for="dopunskaPrijava">
+              Dopunska prijava
+            </label>
+           </div>
+        </div>
+        <div class="d-flex mb-3" *ngIf = "patent.get('osnovnaPrijava').get('dopunskaPrijava').value">
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="brojPrijave" class="form-label">Broj osnovne prijave</label>
+            <input
+              type="text"
+              class="form-control"
+              id="brojPrijave"
+              formControlName="brojPrijave"
+            />
+          </div>
+          <div class="mb-3 me-5" style="width: 30%">
+            <label for="datumPodnosenja" class="form-label"
+            >Datum podnosenja</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="datumPodnosenja"
+              formControlName="datumPodnosenja"
+            />
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="patentObrazac">
+        <div class="d-flex-column">
+          <div class="d-flex mb-3" *ngIf="patentObrazac.patent['osnovnaPrijava']">
+            <div class="d-flex-column mb-3">
+              <h3 class="w-50 fw-bold">Osnovna prijava</h3>
+              <a target=”_blank”
+                 [href]="'/patent/obrada/' + patentObrazac.patent['osnovnaPrijava']['brojPrijave'].replaceAll(' ', '').replaceAll('/', '-')"
+              >
+                Prijava broj: {{ patentObrazac.patent['osnovnaPrijava']['brojPrijave'] }} datum
+                podnosenja: {{ patentObrazac.patent['osnovnaPrijava']['datumPodnosenja'] }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+    <section class="mb-5">
+      <div class="d-flex-column">
+        <ng-container *ngIf="!patentObrazac">
+          <h3 class="w-50 fw-bold">Ranije prijave</h3>
+          <button
+            type="button"
+            style="left: 40%; width: 20%"
+            mat-button
+            (click)="dodajRanijuPrijavu()"
+          >
+            Dodaj prijavu
+          </button>
+          <div *ngIf="ranijePrijave.length" class="mt-5">
+            <ul>
+              <li *ngFor="let prijava of ranijePrijave">
+                <p>Prijava broj: {{ prijava.brojPrijave }}, datum podnosenja: {{ prijava.datumPodnosenja }}, oznaka
+                  drzave: {{prijava.oznakaDrzave}}</p>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="patentObrazac">
+
+          <div class="mt-5" *ngIf="patentObrazac.patent['ranijePrijave'].length > 0">
+            <h3 class="w-50 fw-bold">Ranije prijave</h3>
+            <ul>
+              <li *ngFor="let prijava of patentObrazac.patent['ranijePrijave']">
+                <a target=”_blank”
+                   [href]="'/patent/obrada/' + prijava['brojPrijave'].replaceAll(' ', '').replaceAll('/', '-')">
+                  Prijava broj: {{ prijava['brojPrijave'] }}, datum podnosenja: {{ prijava['datumPodnosenja'] }},
+                  oznaka
+                  drzave: {{prijava['oznakaDrzave']}}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+    <ng-container *ngIf="!patentObrazac">
+      <button type="submit" mat-button style="width: 30%; left: 35%">
+        Submit
+      </button>
+    </ng-container>
+  </form>
+</div>
